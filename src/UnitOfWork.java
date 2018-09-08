@@ -1,41 +1,43 @@
 import java.util.ArrayList;
 import java.util.List;
+import dies.mappers.DataMapper;
+import dies.models.*;
 
 public class UnitOfWork {
 	
-	private static List<Object> clean = new ArrayList<Object>();
-	private static List<Object> updated = new ArrayList<Object>();
-	private static List<Object> created = new ArrayList<Object>();
-	private static List<Object> deleted = new ArrayList<Object>();
+	private static List<DomainObject> clean = new ArrayList<DomainObject>();
+	private static List<DomainObject> updated = new ArrayList<DomainObject>();
+	private static List<DomainObject> created = new ArrayList<DomainObject>();
+	private static List<DomainObject> deleted = new ArrayList<DomainObject>();
 
-	public static void registerClean(Object obj) {
+	public static void registerClean(DomainObject obj) {
 		clean.add(obj);
 	}
 	
-	public static void registerUpdated(Object obj) {
+	public static void registerUpdated(DomainObject obj) {
 		if (!updated.contains(obj) && !created.contains(obj)) {
 			updated.add(obj);
 		}
 	}
 	
-	public static void registerCreated(Object obj) {
+	public static void registerCreated(DomainObject obj) {
 		created.add(obj);
 	}
 	
-	public static void registerDeleted(Object obj) {
+	public static void registerDeleted(DomainObject obj) {
 		deleted.add(obj);
 	}
 	
 	public static void commit() {
-		for (Object obj : created) {
+		for (DomainObject obj : created) {
 			DataMapper.getMapper(obj.getClass()).insert(obj);
 		}
 		
-		for (Object obj : updated) {
+		for (DomainObject obj : updated) {
 			DataMapper.getMapper(obj.getClass()).update(obj);
 		}
 		
-		for (Object obj : deleted) {
+		for (DomainObject obj : deleted) {
 			DataMapper.getMapper(obj.getClass()).delete(obj);
 		}
 	}
