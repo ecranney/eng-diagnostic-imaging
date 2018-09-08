@@ -1,5 +1,7 @@
 package dies.models;
 
+import dies.data.UnitOfWork;
+
 public class Patient extends DomainObject  {
 
 	private final int id;
@@ -18,6 +20,9 @@ public class Patient extends DomainObject  {
 		this.address = address;
 		this.phone = phone;
 		this.medicareNo = medicareNo;
+		
+		// add to UnitOfWork
+		UnitOfWork.registerCreated(this);
 	}
 	
 	public int getId() {

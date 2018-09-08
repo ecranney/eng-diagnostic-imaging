@@ -1,3 +1,4 @@
+package dies.data;
 import java.util.ArrayList;
 import java.util.List;
 import dies.mappers.DataMapper;
@@ -25,7 +26,9 @@ public class UnitOfWork {
 	}
 	
 	public static void registerDeleted(DomainObject obj) {
-		deleted.add(obj);
+		if (!deleted.contains(obj)) {
+			deleted.add(obj);
+		}
 	}
 	
 	public static void commit() {

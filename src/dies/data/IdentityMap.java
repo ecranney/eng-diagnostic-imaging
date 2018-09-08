@@ -1,12 +1,11 @@
+package dies.data;
 import java.util.Map;
 import java.util.HashMap;
 
 public class IdentityMap<E> {
-
-	private HashMap<Long, E> map = new HashMap<Long, E>();
 	
-	private static Map<Class, IdentityMap> singletons = 
-			new HashMap<Class, IdentityMap>();
+	private static Map<Class<?>, IdentityMap> singletons = 
+			new HashMap<Class<?>, IdentityMap>();
 	
 	public static <E> IdentityMap<E> getInstance(E e) {
 		IdentityMap<E> result = singletons.get(e.getClass());
@@ -16,6 +15,8 @@ public class IdentityMap<E> {
 		}
 		return result;
 	}
+	
+	private HashMap<Long, E> map = new HashMap<Long, E>();
 	
 	public void put(long id, E obj) {
 		map.put(id, obj);

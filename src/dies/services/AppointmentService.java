@@ -7,13 +7,14 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class AppointmentService {
-	
+
 	private AppointmentMapper appointmentMapper;
 	private UserMapper userMapper;
 	
 	public AppointmentService() {
 		appointmentMapper = new AppointmentMapper();
 		userMapper = new UserMapper();
+
 	}
 //
 //	public ArrayList<Appointment> findAllAppointments() {
