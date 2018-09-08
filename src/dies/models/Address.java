@@ -1,6 +1,6 @@
 package dies.models;
 
-public class Address {
+public class Address extends DomainObject {
 	
 	private final int id;
 	

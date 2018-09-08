@@ -1,17 +1,17 @@
 package dies.models;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-public class Appointment {
+public class Appointment extends DomainObject  {
 
 	private final int id;
-	private Date date;
+	private LocalDateTime date;
 	private Patient patient;
 	private Technician technician;
 	private State state;
 	
 	public enum State {FUTURE, COMPLETED, MISSED}
 	
-	public Appointment(int id, Date date, Patient patient,
+	public Appointment(int id, LocalDateTime date, Patient patient,
 			Technician technician) {
 		this.id = id;
 		this.date = date;
@@ -19,7 +19,7 @@ public class Appointment {
 		this.technician = technician;
 	}
 	
-	public Appointment(int id, Date date, Patient patient,
+	public Appointment(int id, LocalDateTime date, Patient patient,
 			Technician technician, State state) {
 		this.id = id;
 		this.date = date;
@@ -32,7 +32,7 @@ public class Appointment {
 		return id;
 	}
 	
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 	
@@ -48,7 +48,7 @@ public class Appointment {
 		return this.state;
 	}
 	
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 	

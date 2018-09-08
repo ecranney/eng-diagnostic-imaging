@@ -1,17 +1,17 @@
 package dies.mappers;
-import dies.models.Patient;
+import dies.models.*;
 
-public class PatientMapper {
+public class PatientMapper extends DataMapper {
 	
-	public static void insert() {
+	public void insert(DomainObject patient) {
 		
 	}
 	
-	public static void update() {
+	public void update(DomainObject patient) {
 		
 	}
 	
-	public static void delete() {
+	public void delete(DomainObject patient) {
 		
 	}
 }

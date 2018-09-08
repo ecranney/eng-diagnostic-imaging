@@ -1,18 +1,25 @@
 package dies.mappers;
-import dies.models.User;
+import dies.models.*;
 
-public class UserMapper {
+public class UserMapper extends DataMapper {
 	
-	public static void insert() {
-		
+	public User find(String username) {
+		// SQL
 	}
 	
-	public static void update() {
-		
+	public void findAllTechnicians() {
+		// SQL
 	}
 	
-	public static void delete() {
-		
+	public void insert(DomainObject user) {
+		// SQL
 	}
-
+	
+	public void update(DomainObject user) {
+		// SQL
+	}
+	
+	public void delete(DomainObject user) {
+		// SQL
+	}
 }
