@@ -1,4 +1,4 @@
-package dies;
+package dies.domain;
 import java.util.Date;
 
 public class Appointment {

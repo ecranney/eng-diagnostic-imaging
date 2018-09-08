@@ -1,4 +1,4 @@
-package dies;
+package dies.domain;
 
 public class Technician extends User {
 
