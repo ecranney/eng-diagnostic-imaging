@@ -1,7 +1,7 @@
 package dies.models;
 import java.time.LocalDateTime;
 
-public class Appointment {
+public class Appointment extends DomainObject  {
 
 	private final int id;
 	private LocalDateTime date;

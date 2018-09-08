@@ -1,6 +1,6 @@
 package dies.models;
 
-public class User {
+public class User extends DomainObject {
 
 	private final int id;
 	
