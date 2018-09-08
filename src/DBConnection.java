@@ -53,7 +53,7 @@ public class DBConnection {
 		return null;
 
 	}
-	
+
 	public static void selectRecordsFromDbUserTable() throws SQLException {
 
 		Connection dbConnection = null;
