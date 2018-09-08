@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="LoginServlet" method="post">
-		Email:<input type="text" name="email" /><br /> <br /> 
+	<form action="login" method="post">
+		Email:<input type="text" name="username" /><br /> <br /> 
 		Password:<input	type="password" name="password" /><br /> <br /> 
 		<input type="submit" value="login" />"
 	</form>
