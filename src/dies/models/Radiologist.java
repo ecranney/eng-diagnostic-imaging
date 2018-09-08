@@ -1,4 +1,4 @@
-package dies.domain;
+package dies.models;
 
 public class Radiologist extends User {
 
