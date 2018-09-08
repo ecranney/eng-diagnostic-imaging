@@ -7,10 +7,18 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class AppointmentService {
-
-	public ArrayList<Appointment> findAllAppointments() {
-		return AppointmentMapper.findAllAppointments();
+	
+	private AppointmentMapper appointmentMapper;
+	private UserMapper userMapper;
+	
+	public AppointmentService() {
+		appointmentMapper = new AppointmentMapper();
+		userMapper = new UserMapper();
 	}
+//
+//	public ArrayList<Appointment> findAllAppointments() {
+//		return appointmentMapper.findAllAppointments();
+//	}
 	
 	public ArrayList<LocalDateTime> findAvailableDates() {
 		// STUB: returns all datetimes (by hour) from current
@@ -23,10 +31,10 @@ public class AppointmentService {
 		return dates;
 	}
 	
-	public ArrayList<Technician> findAvailableTechnicians(
-			Appointment appointment) {
-		// STUB logic: returns all techncians
-		return UserMapper.findAllTechnicians();
-	}
+//	public ArrayList<Technician> findAvailableTechnicians(
+//			Appointment appointment) {
+//		// STUB logic: returns all techncians
+//		return userMapper.findAllTechnicians();
+//	}
 	
 }

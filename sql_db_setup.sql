@@ -13,14 +13,14 @@
 --      LC_CTYPE = 'English_Australia.1252'
 --      CONNECTION LIMIT = -1;
 
-CREATE TABLE public.USER(
- USERNAME TEXT PRIMARY KEY,
- PASSWORD TEXT NOT NULL
-);
+--CREATE TABLE public.USER(
+-- USERNAME TEXT PRIMARY KEY,
+-- PASSWORD TEXT NOT NULL
+--);
 
 INSERT INTO public.USER(username, password)
 VALUES
- ('admin', 'admin');
+ ('admin1', 'admin');
 
  
 --CREATE TABLE public.ADDRESS(

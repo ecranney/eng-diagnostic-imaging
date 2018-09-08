@@ -5,14 +5,16 @@ import java.util.ArrayList;
 
 public class AppointmentMapper extends DataMapper {
 	
-	public Appointment findAppointment(int id) {
-		// SQL
-	}
-	
-	public ArrayList<Appointment> findAllAppointments() {
-		// SQL
-	}
-
+//	public Appointment findAppointment(int id) {
+//		// SQL
+//		return null;
+//	}
+//	
+//	public ArrayList<Appointment> findAllAppointments() {
+//		return null;
+//		// SQL
+//	}
+//
 	public void insert(DomainObject appointment) {
 		// SQL
 	}

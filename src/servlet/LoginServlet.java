@@ -1,7 +1,7 @@
-package authentication;
+package servlet;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,10 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dies.mappers.UserMapper;
+import dies.models.User;
+import dies.services.LoginService;
+
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/login")
+@WebServlet("/loginconfirm")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,13 +48,16 @@ public class LoginServlet extends HttpServlet {
 		// doGet(request, response);
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		User user = null;
 		
-		
-		if (username.equals("admin") && password.equals("admin")) {
+	    LoginService lg = new LoginService();
+		boolean x = lg.login(username, password);
+		if (x==true) {
 			response.sendRedirect("booking.jsp");
-		} else {
-			response.sendRedirect("booking.jsp");
+		}else {
+			response.sendRedirect("booking2.jsp");
 		}
+		
 
 	}
 

@@ -1,9 +1,10 @@
+package db;
 
 import java.sql.*;
 
 public class DBConnection {
 
-	private static final String DB_CONNECTION = "jdbc:postgresql://localhost/dies";
+	private static final String DB_CONNECTION = "jdbc:postgresql://localhost:5432/dies";
 	private static final String DB_USER = "user";
 	private static final String DB_PASSWORD = "password";
 
@@ -25,7 +26,7 @@ public class DBConnection {
 		return preparedStatement;
 	}
 
-	private static Connection getDBConnection() {
+	public static Connection getDBConnection() {
 
 		System.out.println("-------- PostgreSQL JDBC Connection Testing ------------");
 
@@ -51,46 +52,6 @@ public class DBConnection {
 		}
 		System.out.println("Connection problem");
 		return null;
-
-	}
-
-	public static void selectRecordsFromDbUserTable() throws SQLException {
-
-		Connection dbConnection = null;
-		Statement statement = null;
-
-		String selectTableSQL = "SELECT username from users";
-
-		try {
-			dbConnection = getDBConnection();
-			statement = dbConnection.createStatement();
-
-			System.out.println(selectTableSQL);
-
-			// execute select SQL stetement
-			ResultSet rs = statement.executeQuery(selectTableSQL);
-
-			while (rs.next()) {
-
-				String username = rs.getString("username");
-				System.out.println("username : " + username);
-			}
-
-		} catch (SQLException e) {
-
-			System.out.println(e.getMessage());
-
-		} finally {
-
-			if (statement != null) {
-				statement.close();
-			}
-
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-
-		}
 
 	}
 
