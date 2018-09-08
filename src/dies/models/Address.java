@@ -22,17 +22,6 @@ public class Address extends DomainObject {
 		this.postCode = postCode;
 	}
 	
-	public Address(int id, Integer streetNo, String streetName,
-			String city, String state, Integer postCode) {
-		this.id = id;
-		this.unitNo = null;
-		this.streetNo = streetNo;
-		this.streetName = streetName;
-		this.city = city;
-		this.state = state;
-		this.postCode = postCode;
-	}
-	
 	public int getId() {
 		return id;
 	}

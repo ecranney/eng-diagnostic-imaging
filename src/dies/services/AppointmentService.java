@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit;
 public class AppointmentService {
 
 	public ArrayList<Appointment> findAllAppointments() {
-		return AppointmentMapper.findAllAppointments();
+		return ((AppointmentMapper) DataMapper.getMapper(Appointment.class)).findAllAppointments();
 	}
 	
 	public ArrayList<LocalDateTime> findAvailableDates() {
