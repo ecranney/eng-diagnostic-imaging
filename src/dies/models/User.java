@@ -2,14 +2,21 @@ package dies.models;
 
 public class User {
 
+	private final int id;
+	
 	private String username;
 	private String password;
 	private String firstName;
 	private String lastName;
 	
-	public User(String username, String password) {
+	public User(int id, String username, String password) {
+		this.id = id;
 		this.username = username;
 		this.password = password;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public String getUsername() {
