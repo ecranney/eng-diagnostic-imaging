@@ -3,6 +3,7 @@ import java.util.Date;
 
 public class Appointment {
 
+	private final int id;
 	private Date date;
 	private Patient patient;
 	private Technician technician;
@@ -10,18 +11,25 @@ public class Appointment {
 	
 	public enum State {FUTURE, COMPLETED, MISSED}
 	
-	public Appointment(Date date, Patient patient, Technician technician) {
+	public Appointment(int id, Date date, Patient patient,
+			Technician technician) {
+		this.id = id;
 		this.date = date;
 		this.patient = patient;
 		this.technician = technician;
 	}
 	
-	public Appointment(Date date, Patient patient, Technician technician,
-			State state) {
+	public Appointment(int id, Date date, Patient patient,
+			Technician technician, State state) {
+		this.id = id;
 		this.date = date;
 		this.patient = patient;
 		this.technician = technician;
 		this.state = state;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public Date getDate() {

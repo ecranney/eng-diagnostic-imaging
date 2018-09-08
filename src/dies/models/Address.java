@@ -1,6 +1,9 @@
 package dies.models;
 
 public class Address {
+	
+	private final int id;
+	
 	private Integer unitNo;
 	private Integer streetNo;
 	private String streetName;
@@ -8,8 +11,9 @@ public class Address {
 	private String state;
 	private Integer postCode;
 	
-	public Address(Integer unitNo, Integer streetNo, String streetName,
-			String city, String state, Integer postCode) {
+	public Address(int id, Integer unitNo, Integer streetNo,
+			String streetName, String city, String state, Integer postCode) {
+		this.id = id;
 		this.unitNo = unitNo;
 		this.streetNo = streetNo;
 		this.streetName = streetName;
@@ -18,14 +22,19 @@ public class Address {
 		this.postCode = postCode;
 	}
 	
-	public Address(Integer streetNo, String streetName, String city,
-			String state, Integer postCode) {
+	public Address(int id, Integer streetNo, String streetName,
+			String city, String state, Integer postCode) {
+		this.id = id;
 		this.unitNo = null;
 		this.streetNo = streetNo;
 		this.streetName = streetName;
 		this.city = city;
 		this.state = state;
 		this.postCode = postCode;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public Integer getUnitNo() {

@@ -4,9 +4,9 @@ public class Radiologist extends User {
 
 	private String registrationNo;
 	
-	public Radiologist(String username, String password,
+	public Radiologist(int id, String username, String password,
 			String registrationNo) {
-		super(username, password);
+		super(id, username, password);
 		this.registrationNo = registrationNo;
 	}
 	

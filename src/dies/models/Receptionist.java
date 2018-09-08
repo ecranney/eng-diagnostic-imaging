@@ -2,8 +2,8 @@ package dies.models;
 
 public class Receptionist extends User {
 
-	public Receptionist(String username, String password) {
-		super(username, password);
+	public Receptionist(int id, String username, String password) {
+		super(id, username, password);
 	}
 	
 }

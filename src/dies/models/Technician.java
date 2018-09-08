@@ -2,8 +2,8 @@ package dies.models;
 
 public class Technician extends User {
 
-	public Technician(String username, String password) {
-		super(username, password);
+	public Technician(int id, String username, String password) {
+		super(id, username, password);
 	}
 	
 }
