@@ -1,18 +1,28 @@
 package dies.mappers;
-import dies.models.Appointment;
+import dies.models.*;
 
-public class AppointmentMapper {
+import java.util.ArrayList;
 
-	public static void insert(Appointment appointment) {
-		
+public class AppointmentMapper extends DataMapper {
+	
+	public Appointment findAppointment(int id) {
+		// SQL
 	}
 	
-	public static void update(Appointment appointment) {
-		
+	public ArrayList<Appointment> findAllAppointments() {
+		// SQL
+	}
+
+	public void insert(DomainObject appointment) {
+		// SQL
 	}
 	
-	public static void delete(Appointment appointment) {
-		
+	public void update(DomainObject appointment) {
+		// SQL
+	}
+	
+	public void delete(DomainObject appointment) {
+		// SQL
 	}
 	
 }
