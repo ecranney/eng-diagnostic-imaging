@@ -2,8 +2,8 @@
  * A Radiologist user for the DIES system. This user-type has access to the
  * report-writing interface.
  * 
- * Note: this class is a stub. It has been included for convenience but will
- * not be used until Feature B is implemented.
+ * Note: this class is a stub. It has been included for a more complete view of
+ * the User-type hierarchy, but will not be used until Feature B is implemented.
  */
 package dies.models;
 

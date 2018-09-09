@@ -1,36 +1,28 @@
+
 package dies.services;
 
 import dies.models.*;
-
-import java.sql.SQLException;
-
 import dies.mappers.*;
 
 public class LoginService {
 	
+	// data mapper required for login service
 	private UserMapper userMapper;
 	
 	public LoginService() {
 		userMapper = new UserMapper();
 	}
 
-	
-	public boolean login(String username, String password) {
-		User user = null;
-		
-		try {
-			user = userMapper.find(username, password);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println(user.getUsername() + " this is the user name in loginservice");
+	// attempt a user login using a given username and password
+	public User login(String username, String password) {
+		User user = userMapper.find(username, password);
+
+		// check that we have actually retrieved a user, and password matches
 		if (user != null && user.getPassword().equalsIgnoreCase(password)) {
 			System.out.println(user.getUsername());
-			return true;
+			return null;
 		}
-		return false;
+		return user;
 	}
 
 }
