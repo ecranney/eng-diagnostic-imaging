@@ -35,45 +35,45 @@ public class DBConnectionTest {
 
 	}
 
-	public static void selectRecordsFromDbUserTable() throws SQLException {
-
-		Connection dbConnection = null;
-		Statement statement = null;
-
-		String selectTableSQL = "SELECT username from public.user";
-
-		try {
-			dbConnection = DBConnection.getDBConnection();
-			statement = dbConnection.createStatement();
-
-			System.out.println(selectTableSQL);
-
-			// execute select SQL stetement
-			ResultSet rs = statement.executeQuery(selectTableSQL);
-
-			while (rs.next()) {
-
-				String username = rs.getString("username");
-				System.out.println("username : " + username);
-			}
-
-		} catch (SQLException e) {
-
-			System.out.println(e.getMessage());
-
-		} finally {
-
-			if (statement != null) {
-				statement.close();
-			}
-
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-
-		}
-
-	}
+//	public static void selectRecordsFromDbUserTable() throws SQLException {
+//
+//		Connection dbConnection = null;
+//		Statement statement = null;
+//
+//		String selectTableSQL = "SELECT username from public.user";
+//
+//		try {
+//			dbConnection = DBConnection.getConnection();
+//			statement = dbConnection.createStatement();
+//
+//			System.out.println(selectTableSQL);
+//
+//			// execute select SQL stetement
+//			ResultSet rs = statement.executeQuery(selectTableSQL);
+//
+//			while (rs.next()) {
+//
+//				String username = rs.getString("username");
+//				System.out.println("username : " + username);
+//			}
+//
+//		} catch (SQLException e) {
+//
+//			System.out.println(e.getMessage());
+//
+//		} finally {
+//
+//			if (statement != null) {
+//				statement.close();
+//			}
+//
+//			if (dbConnection != null) {
+//				dbConnection.close();
+//			}
+//
+//		}
+//
+//	}
 
 	public static void find() throws SQLException {
 //		Connection con = ds.getConnection();
