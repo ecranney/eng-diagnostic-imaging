@@ -1,18 +1,18 @@
 package dies.mappers;
 
-import dies.models.DomainObject;
+import dies.models.IDomainObject;
 
 public class MachineMapper extends DataMapper {
 
-	public void insert(DomainObject machine) {
+	public void insert(IDomainObject machine) {
 		// SQL
 	}
 	
-	public void update(DomainObject machine) {
+	public void update(IDomainObject machine) {
 		// SQL
 	}
 	
-	public void delete(DomainObject machine) {
+	public void delete(IDomainObject machine) {
 		// SQL
 	}
 	

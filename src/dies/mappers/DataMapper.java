@@ -3,6 +3,7 @@ package dies.mappers;
 import dies.models.*;
 import java.util.Map;
 import java.util.HashMap;
+import dies.models.IDomainObject;
 
 public abstract class DataMapper {
 	
@@ -19,7 +20,7 @@ public abstract class DataMapper {
 		return map.get(c);
 	}
 	
-	public abstract void update(DomainObject obj);
-	public abstract void insert(DomainObject obj);
-	public abstract void delete(DomainObject obj);
+	public abstract void update(IDomainObject obj);
+	public abstract void insert(IDomainObject obj);
+	public abstract void delete(IDomainObject obj);
 }

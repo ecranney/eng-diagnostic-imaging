@@ -33,15 +33,15 @@ public class UserMapper extends DataMapper {
 		// SQL
 	}
 
-	public void insert(DomainObject user) {
+	public void insert(IDomainObject user) {
 		// SQL
 	}
 
-	public void update(DomainObject user) {
+	public void update(IDomainObject user) {
 		// SQL
 	}
 
-	public void delete(DomainObject user) {
+	public void delete(IDomainObject user) {
 		// SQL
 	}
 }

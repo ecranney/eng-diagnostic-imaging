@@ -15,15 +15,15 @@ public class AppointmentMapper extends DataMapper {
 //		// SQL
 //	}
 //
-	public void insert(DomainObject appointment) {
+	public void insert(IDomainObject appointment) {
 		// SQL
 	}
 	
-	public void update(DomainObject appointment) {
+	public void update(IDomainObject appointment) {
 		// SQL
 	}
 	
-	public void delete(DomainObject appointment) {
+	public void delete(IDomainObject appointment) {
 		// SQL
 	}
 	
