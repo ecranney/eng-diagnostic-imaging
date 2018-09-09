@@ -51,8 +51,8 @@ public class LoginServlet extends HttpServlet {
 		User user = null;
 		
 	    LoginService lg = new LoginService();
-		boolean x = lg.login(username, password);
-		if (x==true) {
+		User x = lg.login(username, password);
+		if (x!=null) {
 			response.sendRedirect("booking.jsp");
 		}else {
 			response.sendRedirect("booking2.jsp");

@@ -28,6 +28,8 @@
 --VALUES
 -- ('admin', 'admin', 'firsname1', 'lastname1');
 
+SELECT username, password, firstname, lastname from public.user where username='admin' 
+
 drop table public.appointment;
 
 CREATE TABLE public.appointment(

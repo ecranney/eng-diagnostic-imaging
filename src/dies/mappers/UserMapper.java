@@ -14,22 +14,29 @@ public class UserMapper extends DataMapper {
 	private DBConnection db = new DBConnection();
 	private String findUserSQL = "SELECT username, password, firstname, lastname from public.user where username=? and password=?";
 
-	public User find(String username, String password) throws SQLException {
-		Connection con = db.getConnection();
-		PreparedStatement statement = con.prepareStatement(findUserSQL);
-		statement.setString(1, username);
-		statement.setString(2, password);
+	public User find(String username, String password) {
+		Connection con;
 		User user = null;
+		try {
+			con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(findUserSQL);
+			statement.setString(1, username);
+			statement.setString(2, password);
 
-		ResultSet rs = statement.executeQuery();
-		
-		while (rs.next()) {
-			System.out.println(rs.getString("username") + " " + rs.getString("password") + " " + rs.getString("firstname")
-			+ " " + rs.getString("lastname"));
-			user = new User(0, rs.getString("username"), rs.getString("password"), rs.getString("firstname"),
-					rs.getString("lastname")) {
-			};
+			ResultSet rs = statement.executeQuery();
+			
+			while (rs.next()) {
+				System.out.println(rs.getString("username") + " " + rs.getString("password") + " " + rs.getString("firstname")
+				+ " " + rs.getString("lastname"));
+				user = new User(0, rs.getString("username"), rs.getString("password"), rs.getString("firstname"),
+						rs.getString("lastname")) {
+				};
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		
+		;
 		return user;
 	}
 
