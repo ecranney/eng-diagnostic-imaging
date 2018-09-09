@@ -2,57 +2,41 @@ package db;
 
 import java.sql.*;
 
-public class DBConnection {
+import org.postgresql.ds.PGSimpleDataSource;
 
-	private static final String DB_CONNECTION = "jdbc:postgresql://localhost:5432/dies";
+public class DBConnection {
+	private static final String DB_NAME = "dies";
+	private static final String DB_SERVERNAME = "user";
+	private static final int DB_SERVERPORT = 5432;
 	private static final String DB_USER = "user";
 	private static final String DB_PASSWORD = "password";
 
 	public static PreparedStatement prepare(String stm) throws SQLException {
-
 		PreparedStatement preparedStatement = null;
 		try {
-
 			Connection dbConnection = getDBConnection();
-
 			preparedStatement = dbConnection.prepareStatement(stm);
-
 		} catch (SQLException e) {
-
 			System.out.println(e.getMessage());
-
 		}
-
 		return preparedStatement;
 	}
 
 	public static Connection getDBConnection() {
-
 		System.out.println("-------- PostgreSQL JDBC Connection Testing ------------");
-
 		try {
-
-			Class.forName("org.postgresql.Driver");
-
-		} catch (ClassNotFoundException e) {
-
-			System.out.println("Where is your PostgreSQL JDBC Driver? Include in your library path!");
-			System.out.println(e.getMessage());
-		}
-
-		try {
-
-			Connection dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+			PGSimpleDataSource ds = new PGSimpleDataSource();
+			ds.setServerName(DB_SERVERNAME);
+			ds.setDatabaseName(DB_NAME);
+			ds.setUser(DB_USER);
+			ds.setPassword(DB_PASSWORD);
+			ds.setPortNumber(DB_SERVERPORT);
+			Connection dbConnection = ds.getConnection();
 			return dbConnection;
-
 		} catch (SQLException e) {
-
 			System.out.println(e.getMessage());
-
 		}
 		System.out.println("Connection problem");
 		return null;
-
 	}
-
 }
