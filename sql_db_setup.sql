@@ -13,24 +13,114 @@
 --      LC_CTYPE = 'English_Australia.1252'
 --      CONNECTION LIMIT = -1;
 
-drop table public.user;
+--drop table public.user;
+--
+--CREATE TABLE public.user
+--(
+--  id BIGSERIAL PRIMARY KEY,
+--  username text NOT NULL,
+--  password text NOT NULL,
+--  firstname text,
+--  lastname text
+--);
+--
+--INSERT INTO public.USER(username, password, firstname, lastname)
+--VALUES
+-- ('admin', 'admin', 'firsname1', 'lastname1');
 
-CREATE TABLE public.user
-(
-  id BIGSERIAL PRIMARY KEY,
-  username text NOT NULL,
-  password text NOT NULL,
-  firstname text,
-  lastname text
-);
+--drop table public.appointment;
+--
+--CREATE TABLE public.appointment(
+-- ID	       	BIGSERIAL PRIMARY KEY,
+-- DATE          	TEXT,
+-- PATIENT_ID    	INT,
+-- TECHNICIAN_ID 	INT,
+-- APPOINTMENT_MACHINE_ID	INT,
+-- STATE	       	TEXT 
+--);
+--
+--INSERT INTO public.appointment(date, patient_id, technician_id, APPOINTMENT_MACHINE_ID, state)
+--VALUES
+-- ('2017', '1', '1', '1', 'COMPLETED');
+--
+--DROP TABLE public.MACHINE;
+--DROP TABLE public.APPOINTMENT_MACHINE;
+--
 
-INSERT INTO public.USER(username, password, firstname, lastname)
-VALUES
- ('admin', 'admin', 'firsname1', 'lastname1');
+--INSERT INTO public.TECHNICIAN(QUALIFICATION)
+--VALUES
+--('');
+--
+--drop table public.TECHNICIAN;
+--CREATE TABLE public.TECHNICIAN(
+-- ID		BIGSERIAL PRIMARY KEY,
+-- QUALIFICATION      TEXT
+--);
+--
+--select * from public.appointment;
+--select * from public.user;
 
+SELECT t1.id as ap_id, t1.date as ap_date, t1.state as ap_state,
+t2.FIRST_NAME as patient_first_name, t2.last_name as patient_last_name, 
+t6.id, t6.unit_no, t6.street_no, t6.street_name, t6.city, t6.state, t6.post_code, 
+t2.phone as patient_mobile, 
+t2.medicare_no as patient_medicate_no,
+t5join.id as tech_id, t5join.firstname as tech_first_name, t5join.lastname as tech_last_name,
+t8join.MACHINE_id, t8join.SERIAL_CODE, t8join.TYPE
+from public.appointment t1
+inner join public.patient t2
+on t1.patient_id = t2.id
+FULL OUTER join 
+(SELECT t4.id, t4.firstname, t4.lastname
+from public.user t4
+inner join public.TECHNICIAN t3
+on t4.id = t3.id
+) t5join on t5join.id = t1.TECHNICIAN_ID
+left join public.address t6
+on t6.id = t2.address_id
+full outer join
+(SELECT t7.id, t7.MACHINE_id, t7.APPOINTMENT_ID, t8.SERIAL_CODE, t8.TYPE
+from public.APPOINTMENT_MACHINE t7
+FULL OUTER join public.MACHINE t8
+on t7.MACHINE_id = t8.id)
+t8join on t8join.APPOINTMENT_ID = t1.ID
+
+
+
+--INSERT INTO public.APPOINTMENT_MACHINE(APPOINTMENT_ID, MACHINE_id)
+--VALUES
+--('1','2');
+
+--INSERT INTO public.MACHINE(SERIAL_CODE, TYPE)
+--VALUES
+-- ('2018-x32', 'PET');
  
+--INSERT INTO public.MACHINE(SERIAL_CODE, TYPE)
+--VALUES
+--('98-x32', 'XRAY');
+
+--CREATE TABLE public.APPOINTMENT_MACHINE(
+-- ID	       	BIGSERIAL PRIMARY KEY,
+-- APPOINTMENT_ID INT,
+-- MACHINE_ID 	INT
+--);
+--
+--CREATE TABLE public.MACHINE(
+-- ID	      	BIGSERIAL PRIMARY KEY,
+-- SERIAL_CODE    TEXT,
+-- TYPE     	TEXT
+--);
+-- 
+
+
+--
+--INSERT INTO public.ADDRESS(date, patient_id, technician_id, APPOINTMENT_MACHINE_ID, state)
+--VALUES
+-- ('2017', '1', '1', '1', 'COMPLETED');
+--
+--DROP TABLE public.ADDRESS;
 --CREATE TABLE public.ADDRESS(
--- ID	      	INT PRIMARY KEY,
+-- ID	      	BIGSERIAL PRIMARY KEY,
 -- UNIT_NO      	INT,
 -- STREET_NO    	INT,
 -- STREET_NAME  	TEXT,
@@ -38,23 +128,38 @@ VALUES
 -- STATE        	TEXT,
 -- POST_CODE    	INT
 --);
---
---CREATE TABLE public.APPOITNMENT(
--- ID	       	INT PRIMARY KEY,
--- DATE          	TEXT,
--- PATIENT_ID    	INT,
--- TECHNICIAN_ID 	INT,
--- STATE	       	TEXT 
---);
---
+
+--drop table public.PATIENT;
 --CREATE TABLE public.PATIENT(
--- ID	      	INT PRIMARY KEY,
+-- ID	      	BIGSERIAL PRIMARY KEY,
 -- FIRST_NAME    	TEXT,
 -- LAST_NAME     	TEXT,
 -- ADDRESS_ID    	INT,
 -- PHONE         	TEXT,
 -- MEDICARE_NO   	TEXT 
 --);
+--
+--INSERT INTO public.PATIENT(first_name, last_name, address_id, phone, medicare_no)
+--VALUES ('shalitha', 'weerakoon', '1', '123456789', '1');
+--
+--select * from public.patient;
+
+
+--CREATE TABLE public.APPOINTMENT_MACHINE(
+-- ID	       	BIGSERIAL PRIMARY KEY,
+-- APPOINTMENT_ID INT,
+-- MACHINE_ID 	INT
+--);
+--
+--CREATE TABLE public.MACHINE(
+-- ID	      	BIGSERIAL PRIMARY KEY,
+-- SERIAL_CODE    TEXT,
+-- TYPE     	TEXT
+--);
+-- 
+
+--
+
 --
 --CREATE TABLE public.RADIOLOGIST(
 -- ID		INT PRIMARY KEY,
@@ -66,9 +171,7 @@ VALUES
 --);
 --
 --
---CREATE TABLE public.TECHNICIAN(
--- ID		INT PRIMARY KEY
---);
+
 --
 --CREATE TABLE public.USERS(
 -- ID	      	INT PRIMARY KEY,
@@ -76,8 +179,4 @@ VALUES
 -- LAST_NAME     	TEXT
 --);
 --
---CREATE TABLE public.MACHINE(
--- ID	      	INT PRIMARY KEY,
--- SERIAL_CODE    TEXT,
--- TYPE     	TEXT
---);
+
