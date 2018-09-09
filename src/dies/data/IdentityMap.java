@@ -1,28 +1,48 @@
+/**
+ * 
+ * 
+ * 
+ */
+
 package dies.data;
+
 import java.util.Map;
 import java.util.HashMap;
 
 public class IdentityMap<E> {
 	
-	private static Map<Class<?>, IdentityMap> singletons = 
+	/*
+	 * IdentityMap (the class) acts as a singleton to store the map of maps
+	 * from each (domain layer) class to its respective map.
+	 */
+	// map from each (domain layer) class to its respective identity map
+	private static Map<Class<?>, IdentityMap> maps = 
 			new HashMap<Class<?>, IdentityMap>();
 	
+	// retrieve the map for a particular class; create one if it doesn't exist
 	public static <E> IdentityMap<E> getInstance(E e) {
-		IdentityMap<E> result = singletons.get(e.getClass());
-		if (result == null) {
-			result = new IdentityMap<E>();
-			singletons.put(e.getClass(), result);
+		IdentityMap<E> map = maps.get(e.getClass());
+		if (map == null) {
+			map = new IdentityMap<E>();
+			maps.put(e.getClass(), map);
 		}
-		return result;
+		return map;
 	}
 	
-	private HashMap<Long, E> map = new HashMap<Long, E>();
 	
-	public void put(long id, E obj) {
+	/*
+	 * When instantiated, IdentityMap maps object Ids (for a given class)
+	 * to particular objects.
+	 */
+	private HashMap<Integer, E> map = new HashMap<Integer, E>();
+	
+	// add an object to the map
+	public void put(Integer id, E obj) {
 		map.put(id, obj);
 	}
 	
-	public E get(long id) {
+	// fetch an object from the map
+	public E get(Integer id) {
 		return map.get(id);
 	}
 	
