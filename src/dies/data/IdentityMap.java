@@ -29,7 +29,6 @@ public class IdentityMap<E> {
 		return map;
 	}
 	
-	
 	/*
 	 * When instantiated, IdentityMap maps object Ids (for a given class)
 	 * to particular objects.
