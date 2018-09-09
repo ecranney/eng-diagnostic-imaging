@@ -88,4 +88,13 @@ public class Appointment implements IDomainObject  {
 	public void setState(State state) {
 		this.state = state;
 	}
+
+	@Override
+	public String toString() {
+		return "Appointment [id=" + id + ", date=" + date + ", patient=" + patient.getFirstName() + ", technician=" + technician.getFirstName()
+				+ ", machines=" + machines + ", state=" + state + ", getId()=" + getId() + ", getDate()=" + getDate() + ", getMachines()="
+				+ getMachines().get(0).getSerialNo() + ", getState()=" + getState() + " ]";
+	}
+	
+	
 }

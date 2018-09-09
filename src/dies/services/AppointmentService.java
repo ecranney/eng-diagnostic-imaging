@@ -34,6 +34,7 @@ public class AppointmentService {
 	// load an appointment object by id
 	public Appointment findAppointment(int id) throws SQLException {
 		Appointment appointment = appointmentMapper.find(id);
+		appointment.toString();
 		transaction.registerClean(appointment); // start EDIT transaction
 		return appointment;
 	}

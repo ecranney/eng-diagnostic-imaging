@@ -49,13 +49,22 @@ public class AppointmentMapper extends DataMapper {
 		Connection con = db.getConnection();
 		PreparedStatement statement = con.prepareStatement(findAppointmentSQL);
 		statement.setInt(1, id);
+		int app_id = 0;
+		LocalDateTime app_date = null;
+		Appointment.State app_state = null;
+
 		Appointment app = null;
+		Address patientAddress = null;
+		Patient patient = null;
+		Technician technician = null;
+		Machine machine = null;
 		List<Machine> machines = new ArrayList<Machine>();
 
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
 			try {
+
 				System.out.println(rs.getInt("ap_id") + " " + rs.getTimestamp("ap_date").toLocalDateTime() + " "
 						+ Appointment.State.valueOf(rs.getString("ap_state")) + " " + rs.getString("patient_first_name")
 						+ " " + rs.getString("patient_last_name") + " " + rs.getInt("patient_address_id")
@@ -66,27 +75,30 @@ public class AppointmentMapper extends DataMapper {
 						+ rs.getString("tech_first_name") + rs.getString("tech_last_name") + rs.getInt("MACHINE_id")
 						+ rs.getLong("SERIAL_CODE") + Machine.Type.valueOf(rs.getString("TYPE")));
 
-				Address patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
+				patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
 						rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
 						rs.getString("patient_city"), rs.getString("patient_state"), rs.getInt("patient_post_code"));
 
-				Patient patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
+				patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
 						rs.getString("patient_last_name"), patientAddress, rs.getString("patient_mobile"),
 						rs.getString("patient_medicate_no"));
 
-				Technician technician = new Technician(rs.getInt("tech_id"), rs.getString("tech_username"),
+				technician = new Technician(rs.getInt("tech_id"), rs.getString("tech_username"),
 						rs.getString("tech_password"), rs.getString("tech_first_name"), rs.getString("tech_last_name"));
-				Machine machine = new Machine(rs.getInt("MACHINE_id"), rs.getLong("SERIAL_CODE"),
+				machine = new Machine(rs.getInt("MACHINE_id"), rs.getLong("SERIAL_CODE"),
 						Machine.Type.valueOf(rs.getString("TYPE")));
 				machines.add(machine);
+				app_id = rs.getInt("ap_id");
+				app_date = rs.getTimestamp("ap_date").toLocalDateTime();
+				app_state = Appointment.State.valueOf(rs.getString("ap_state"));
 
-				app = new Appointment(rs.getInt("ap_id"), rs.getTimestamp("ap_date").toLocalDateTime(), patient,
-						technician, machines, Appointment.State.valueOf(rs.getString("ap_state")));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 
 		}
+		app = new Appointment(app_id, app_date, patient, technician, machines, app_state);
+		
 		return app;
 
 //		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
