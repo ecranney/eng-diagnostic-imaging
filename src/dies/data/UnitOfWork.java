@@ -10,10 +10,17 @@ import dies.models.*;
 
 public class UnitOfWork {
 	
-	private List<IDomainObject> clean = new ArrayList<IDomainObject>();
-	private List<IDomainObject> updated = new ArrayList<IDomainObject>();
-	private List<IDomainObject> created = new ArrayList<IDomainObject>();
-	private List<IDomainObject> deleted = new ArrayList<IDomainObject>();
+	private List<IDomainObject> clean;
+	private List<IDomainObject> updated;
+	private List<IDomainObject> created;
+	private List<IDomainObject> deleted;
+	
+	public UnitOfWork() {
+		clean = new ArrayList<IDomainObject>();
+		updated = new ArrayList<IDomainObject>();
+		created = new ArrayList<IDomainObject>();
+		deleted = new ArrayList<IDomainObject>();	
+	}
 
 	public void registerClean(IDomainObject obj) {
 		clean.add(obj);

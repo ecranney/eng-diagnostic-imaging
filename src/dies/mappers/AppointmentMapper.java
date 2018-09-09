@@ -97,8 +97,13 @@ public class AppointmentMapper extends DataMapper {
 			}
 
 		}
-		app = new Appointment(app_id, app_date, patient, technician, machines, app_state);
 		
+		app = new Appointment(app_id, app_date, patient, technician, machines, app_state);
+		System.out.println("this is from the app mapper ");
+		System.out.println(app);
+		app.toString();
+		System.out.println("this is from the app mapper ");
+		System.out.println("this is from the app mapper ");
 		return app;
 
 //		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);

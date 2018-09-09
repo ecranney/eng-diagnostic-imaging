@@ -24,6 +24,7 @@ public class AppointmentService {
 		appointmentMapper = new AppointmentMapper();
 		userMapper = new UserMapper();
 		patientMapper = new PatientMapper();
+		transaction = new UnitOfWork();
 	}
 	
 	// load all appointment objects
@@ -34,7 +35,7 @@ public class AppointmentService {
 	// load an appointment object by id
 	public Appointment findAppointment(int id) throws SQLException {
 		Appointment appointment = appointmentMapper.find(id);
-		appointment.toString();
+		System.out.println(appointment.toString());
 		transaction.registerClean(appointment); // start EDIT transaction
 		return appointment;
 	}
