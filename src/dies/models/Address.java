@@ -1,7 +1,18 @@
+/**
+ *
+ * An Address object registered in the DIES system. This is used to record
+ * the addresses of employees (system Users), and the contact addresses for
+ * Patients.
+ * 
+ * @author ecranney
+ * @since 2018-09-09
+ * 
+ */
 package dies.models;
 
-public class Address extends DomainObject {
+public class Address implements IDomainObject {
 	
+	// identity field, used for database lookup
 	private final int id;
 	
 	private Integer unitNo;

@@ -1,12 +1,26 @@
+/**
+ * A Technician user for the DIES system. This user-type has access to the
+ * image-taking interface.
+ * 
+ * Note: This class is effectively a stub. It is included because Feature A
+ * requires a Technician to be assigned to a patient's Appointment. Technicians
+ * will eventually have their own interface for the DIES system (for taking
+ * and uploading patients images) - the class will be completed when this is
+ * is implemented.
+ * 
+ * @author ecranney
+ * @since 2018-09-09
+ * 
+ */
 package dies.models;
-
-import dies.data.UnitOfWork;
 
 public class Technician extends User {
 
-	public Technician(int id, String username, String password) {
-		super(id, username, password);
-		UnitOfWork.registerClean(this);
+	// note, identity field inherited from User
+	
+	public Technician(int id, String username, String password,
+			String firstName, String lastName) {
+		super(id, username, password, firstName, lastName);
 	}
 	
 }
