@@ -5,7 +5,7 @@
 	<groupId>unimelb.dies</groupId>
 	<artifactId>dies</artifactId>
 	<packaging>war</packaging>
-	<version>1.1</version>
+	<version>1.2</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
