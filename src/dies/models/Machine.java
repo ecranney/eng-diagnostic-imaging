@@ -15,10 +15,31 @@ package dies.models;
 
 public class Machine implements IDomainObject {
 
+	// identity field, used for database lookup
+	private final int id;
 	
+	// the machine's serial number
+	private long serialNo;
 	
-	public Machine() {
-		
+	// the machine type
+	public enum Type {XRAY, MRI, CAT}
+	private Type type;
+	
+	public Machine(int id, long serialNo, Type type) {
+		this.id = id;
+		this.serialNo = serialNo;
+		this.type = type;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
+	public long getSerialNo() {
+		return serialNo;
+	}
+	
+	public Type getType() {
+		return type;
+	}
 }
