@@ -45,7 +45,7 @@ public class AppointmentMapper extends DataMapper {
 			+ ") t5join on t5join.id = t1.TECHNICIAN_ID\r\n" + "inner join public.address t6\r\n"
 			+ "on t6.id = t2.address_id";
 
-	public Appointment findAppointment(int id) throws SQLException {
+	public Appointment find(int id) throws SQLException {
 		Connection con = db.getConnection();
 		PreparedStatement statement = con.prepareStatement(findAppointmentSQL);
 		statement.setInt(1, id);
@@ -87,7 +87,7 @@ public class AppointmentMapper extends DataMapper {
 			}
 
 		}
-		return null;
+		return app;
 
 //		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
 //		if (map.contains(id)) {
@@ -98,29 +98,27 @@ public class AppointmentMapper extends DataMapper {
 //		return null;
 	}
 
-	public ArrayList<Appointment> findAllAppointments() throws SQLException {
+	public ArrayList<Appointment> findAll() throws SQLException {
 		/*
 		 * if {IdentityMap.getInstance(User.class).contains(id)} { User user =
 		 * IdentityMap.getInstance(User.class).get(id); return user; } 1) move to data
 		 * mappers, then (2) try to access identity map every time find is called
 		 */
 		Connection con = db.getConnection();
-		PreparedStatement statement = con.prepareStatement(findAppointmentSQL);
+		PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
 		Appointment app = null;
+		ArrayList<Appointment> appList = new ArrayList<Appointment>();
 
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
 			try {
-				System.out.println(rs.getInt("ap_id") + " " + rs.getString("ap_date") + " " + rs.getString("ap_state")
-						+ " " + rs.getString("patient_first_name") + " " + rs.getString("patient_last_name") + " "
-						+ rs.getInt("patient_medicate_no"));
+				Patient patient = new Patient(0, rs.getString("patient_first_name"), rs.getString("patient_last_name"),
+						null, "", "");
 
-//				
-//				app = new Appointment(rs.getInt("id"), rs.getString("date"), rs.getInt("patient_id"),
-//						Technician technician, List<Machine> machines, State state);
-//				user = new Appointment(rs.getInt("id"), rs.getString("date") , rs.getInt("patient_id"), rs.getInt("technician_id")
-//				, rs.getInt("APPOINTMENT_MACHINE_ID") , rs.getString("state"));
+				app = new Appointment(rs.getInt("ap_id"), rs.getTimestamp("ap_date").toLocalDateTime(), patient, null,
+						null, Appointment.State.valueOf(rs.getString("ap_state")));
+				appList.add(app);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 
@@ -128,7 +126,7 @@ public class AppointmentMapper extends DataMapper {
 			}
 			//
 		}
-		return null;
+		return appList;
 
 //		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
 //		if (map.contains(id)) {

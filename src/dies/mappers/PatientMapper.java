@@ -14,4 +14,9 @@ public class PatientMapper extends DataMapper {
 	public void delete(IDomainObject patient) {
 		
 	}
+
+	public Patient find(String medicareNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

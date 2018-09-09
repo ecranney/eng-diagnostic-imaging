@@ -5,6 +5,7 @@ import dies.mappers.*;
 import dies.data.*;
 
 import java.util.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -26,12 +27,12 @@ public class AppointmentService {
 	}
 	
 	// load all appointment objects
-	public List<Appointment> findAllAppointments() {
+	public List<Appointment> findAllAppointments() throws SQLException {
 		return appointmentMapper.findAll();
 	}
 	
 	// load an appointment object by id
-	public Appointment findAppointment(int id) {
+	public Appointment findAppointment(int id) throws SQLException {
 		Appointment appointment = appointmentMapper.find(id);
 		transaction.registerClean(appointment); // start EDIT transaction
 		return appointment;

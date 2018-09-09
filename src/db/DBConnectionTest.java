@@ -13,6 +13,6 @@ public class DBConnectionTest {
 //			System.out.println(x);
 		
 		AppointmentMapper ap = new AppointmentMapper();
-		ap.findAppointment(1);
+		ap.find(1);
 	}
 }
