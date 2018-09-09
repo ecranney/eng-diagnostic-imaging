@@ -52,14 +52,12 @@ public class AppointmentMapper extends DataMapper {
 		int app_id = 0;
 		LocalDateTime app_date = null;
 		Appointment.State app_state = null;
-
 		Appointment app = null;
 		Address patientAddress = null;
 		Patient patient = null;
 		Technician technician = null;
 		Machine machine = null;
 		List<Machine> machines = new ArrayList<Machine>();
-
 		ResultSet rs = statement.executeQuery();
 
 		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
@@ -68,7 +66,6 @@ public class AppointmentMapper extends DataMapper {
 		} else {
 			while (rs.next()) {
 				try {
-
 					System.out.println(rs.getInt("ap_id") + " " + rs.getTimestamp("ap_date").toLocalDateTime() + " "
 							+ Appointment.State.valueOf(rs.getString("ap_state")) + " "
 							+ rs.getString("patient_first_name") + " " + rs.getString("patient_last_name") + " "
@@ -116,16 +113,10 @@ public class AppointmentMapper extends DataMapper {
 	}
 
 	public ArrayList<Appointment> findAll() throws SQLException {
-		/*
-		 * if {IdentityMap.getInstance(User.class).contains(id)} { User user =
-		 * IdentityMap.getInstance(User.class).get(id); return user; } 1) move to data
-		 * mappers, then (2) try to access identity map every time find is called
-		 */
 		Connection con = db.getConnection();
 		PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
 		Appointment app = null;
 		ArrayList<Appointment> appList = new ArrayList<Appointment>();
-
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
@@ -137,21 +128,10 @@ public class AppointmentMapper extends DataMapper {
 						null, Appointment.State.valueOf(rs.getString("ap_state")));
 				appList.add(app);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-
 				e.printStackTrace();
 			}
-			//
 		}
 		return appList;
-
-//		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
-//		if (map.contains(id)) {
-//			Appointment appointment = map.get(id);
-//		} else {
-//			
-//		}
-//		return null;
 	}
 
 	public void insert(IDomainObject appointment) {
