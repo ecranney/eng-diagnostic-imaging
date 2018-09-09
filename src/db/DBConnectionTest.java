@@ -14,8 +14,8 @@ import dies.services.LoginService;
 
 public class DBConnectionTest {
 
-	@Resource(name = "jdbc/postgresql")
-	private static DataSource ds;
+//	@Resource(name = "jdbc/postgresql")
+//	private static DataSource ds;
 
 	public static void main(String[] args) {
 //		try {
@@ -76,16 +76,16 @@ public class DBConnectionTest {
 	}
 
 	public static void find() throws SQLException {
-		Connection con = ds.getConnection();
-		Statement statement = con.createStatement();
-
-		String selectTableSQL = "SELECT username from public.user";
-
-		ResultSet rs = statement.executeQuery(selectTableSQL);
-		while (rs.next()) {
-
-			String un = rs.getString("username");
-			System.out.println("username : " + un);
-		}
+//		Connection con = ds.getConnection();
+//		Statement statement = con.createStatement();
+//
+//		String selectTableSQL = "SELECT username from public.user";
+//
+//		ResultSet rs = statement.executeQuery(selectTableSQL);
+//		while (rs.next()) {
+//
+//			String un = rs.getString("username");
+//			System.out.println("username : " + un);
+//		}
 	}
 }
