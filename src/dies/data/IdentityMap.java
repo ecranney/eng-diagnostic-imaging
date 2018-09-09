@@ -1,5 +1,16 @@
 /**
- * (1) move to data mappers, then
+ * 
+ * 
+ * Whenever you call a "find(id)" or "findAll()" method in one of the Mappers,
+ * you should check if the object already exists in the IdentityMap.
+ * 
+ * e.g. if findUser(id)
+ * 
+ * if {IdentityMap.getInstance(User.class).contains(id)} {
+ * 		User user = IdentityMap.getInstance(User.class).get(id);
+ * 		return user;
+ * }
+ * 1) move to data mappers, then
  * (2) try to access identity map every time find is called
  */
 

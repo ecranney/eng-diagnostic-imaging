@@ -1,6 +1,7 @@
 package dies.services;
 import dies.models.*;
 import dies.mappers.*;
+import dies.data.*;
 
 import java.util.ArrayList;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ public class AppointmentService {
 
 	private AppointmentMapper appointmentMapper;
 	private UserMapper userMapper;
+	private UnitOfWork createAppointmentTransaction;
 	
 	public AppointmentService() {
 		appointmentMapper = new AppointmentMapper();
@@ -38,4 +40,11 @@ public class AppointmentService {
 //		return userMapper.findAllTechnicians();
 //	}
 	
+	public void registerNewPatient(Patient patient) {
+		createAppointmentTransaction.registerCreated(patient);
+	}
+	
+	public void createNewAppointment(Appointment appointment) {
+		createAppointmentTransaction.registerCreated(appointment);
+	}
 }
