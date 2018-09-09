@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import dies.models.Address;
 import dies.models.Appointment;
 import dies.models.Machine;
+import dies.models.Machine.Type;
 import dies.models.Patient;
 import dies.models.Technician;
 import dies.models.User;
@@ -60,33 +62,40 @@ public class AppointmentServlet extends HttpServlet {
 		String patientMedicareNo = request.getParameter("patientMedicareNo");
 		
 		//String patientUnitNo = request.getParameter("patientUnitNo");
-		String patientStreetNo = request.getParameter("patientStreetNo");
+		Integer patientStreetNo = Integer.parseInt(request.getParameter("patientStreetNo"));
 		String patientStreetName = request.getParameter("patientStreetName");
 		String patientCity = request.getParameter("patientCity");
 		String patientState = request.getParameter("patientState");
-		String patientPostCode = request.getParameter("patientPostalCode");
+		Integer patientPostCode = Integer.parseInt(request.getParameter("patientPostalCode"));
 		
 		String appointmentType = request.getParameter("appointmentType");
-//		List<Machine> machines = new ArrayList<Machine>();
 //		String machineId = request.getParameter("machineId");
 //		String machineSerialCode = request.getParameter("machineSerialCode");
 //		String machineType = request.getParameter("machineType");
 		
-		String technicianId = request.getParameter("technician");
+		int technicianId = Integer.parseInt(request.getParameter("technician"));
 //		String technicianFirstName = request.getParameter("technicianFirstName");
 //		String technicianLastName = request.getParameter("technicianLastName");
 		
-	
-	
-		int app_id = 0;
-		LocalDateTime app_date = null;
-		Appointment.State app_state = null;
+		LocalDateTime date = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS);
+		
+		LocalDateTime app_date = date;
+		Appointment.State app_state = Appointment.State.FUTURE;
 
-		Appointment app = null;
-		Address patientAddress = null;
-		Patient patient = null;
-		Technician technician = null;
-		Machine machine = null;
+		
+		Address patientAddress = new Address(0, 0, patientStreetNo, patientStreetName, patientCity, patientState, patientPostCode);
+		Patient patient = new Patient(0, patientFirstName, patientLastName, patientAddress, patientMobile, patientMedicareNo);
+		
+		Technician technician = new Technician(technicianId, "", "", "", "");
+		Machine machine = new Machine(1, 0, Type.CAT);		
+		List<Machine> machines = new ArrayList<Machine>();
+		machines.add(machine);
+		AppointmentService as = new AppointmentService();
+		
+		Appointment appointment = new Appointment(0, date, patient, technician, machines, app_state);
+		as.finishCreatePatient(patient);
+		as.finishCreateAppointment(appointment);
+		
 		
 		response.sendRedirect("booking.jsp");
 //	    LoginService lg = new LoginService();
