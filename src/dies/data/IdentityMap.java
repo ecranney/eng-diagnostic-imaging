@@ -17,6 +17,9 @@
 package dies.data;
 
 import java.util.Map;
+
+import db.DBConnection;
+
 import java.util.HashMap;
 
 public class IdentityMap<E> {
@@ -28,13 +31,13 @@ public class IdentityMap<E> {
 	// map from each (domain layer) class to its respective identity map
 	private static Map<Class<?>, IdentityMap> maps = 
 			new HashMap<Class<?>, IdentityMap>();
-	
+
 	// retrieve the map for a particular class; create one if it doesn't exist
-	public static <E> IdentityMap<E> getInstance(E e) {
-		IdentityMap<E> map = maps.get(e.getClass());
+	public static <E> IdentityMap<E> getInstance(Class c) {
+		IdentityMap<E> map = maps.get(c);
 		if (map == null) {
 			map = new IdentityMap<E>();
-			maps.put(e.getClass(), map);
+			maps.put(c, map);
 		}
 		return map;
 	}
@@ -55,4 +58,8 @@ public class IdentityMap<E> {
 		return map.get(id);
 	}
 	
+	// check if map contains object
+	public Boolean contains(Integer id) {
+		return map.containsKey(id);
+	}
 }
