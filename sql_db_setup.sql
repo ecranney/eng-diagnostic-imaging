@@ -13,14 +13,20 @@
 --      LC_CTYPE = 'English_Australia.1252'
 --      CONNECTION LIMIT = -1;
 
---CREATE TABLE public.USER(
--- USERNAME TEXT PRIMARY KEY,
--- PASSWORD TEXT NOT NULL
---);
+drop table public.user;
 
-INSERT INTO public.USER(username, password)
+CREATE TABLE public.user
+(
+  id BIGSERIAL PRIMARY KEY,
+  username text NOT NULL,
+  password text NOT NULL,
+  firstname text,
+  lastname text
+);
+
+INSERT INTO public.USER(username, password, firstname, lastname)
 VALUES
- ('admin1', 'admin');
+ ('admin', 'admin', 'firsname1', 'lastname1');
 
  
 --CREATE TABLE public.ADDRESS(
