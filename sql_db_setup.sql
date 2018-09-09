@@ -28,6 +28,8 @@
 --VALUES
 -- ('admin', 'admin', 'firsname1', 'lastname1');
 
+select * from appointment
+
 SELECT username, password, firstname, lastname from public.user where username='admin' 
 
 drop table public.appointment;
@@ -43,7 +45,7 @@ CREATE TABLE public.appointment(
 
 INSERT INTO public.appointment(date, patient_id, technician_id, APPOINTMENT_MACHINE_ID, state)
 VALUES
- (current_timestamp, '1', '1', '1', 'FUTURE');
+ (current_timestamp, '1', '1', '1', 'MISSED');
 
  INSERT INTO public.appointment(date, patient_id, technician_id, APPOINTMENT_MACHINE_ID, state)
 VALUES

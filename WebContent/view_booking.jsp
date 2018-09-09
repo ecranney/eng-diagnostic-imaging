@@ -13,10 +13,12 @@
 		<tbody>
 			<%
 				AppointmentService appointmentService = new AppointmentService();
-				Appointment app = appointmentService.findAppointment(1);
+				int app_id = Integer.parseInt(request.getParameter("appointmentid"));
+
+				Appointment app = appointmentService.findAppointment(app_id);
 			%>
 			<tr>
-
+				<td>app_id</td>
 				<td>Appointment Date</td>
 				<td><%=app.getDate()%></td>
 
@@ -43,13 +45,10 @@
 			</tr>
 			<tr>
 				<td>Address</td>
-				<td><%=app.getPatient().getAddress().getUnitNo()%>,
-					<%=app.getPatient().getAddress().getStreetNo()%>,
-					<%=app.getPatient().getAddress().getStreetName()%>,
-					<%=app.getPatient().getAddress().getCity()%>,
-					<%=app.getPatient().getAddress().getState()%>
-					<%=app.getPatient().getAddress().getPostCode()%>
-					</td>
+				<td><%=app.getPatient().getAddress().getUnitNo()%>, <%=app.getPatient().getAddress().getStreetNo()%>,
+					<%=app.getPatient().getAddress().getStreetName()%>, <%=app.getPatient().getAddress().getCity()%>,
+					<%=app.getPatient().getAddress().getState()%> <%=app.getPatient().getAddress().getPostCode()%>
+				</td>
 
 			</tr>
 			<tr>
