@@ -1,23 +1,27 @@
 package dies.mappers;
 
 import dies.models.*;
-import java.util.Map;
-import java.util.HashMap;
-import dies.models.IDomainObject;
+import java.util.*;
 
 public abstract class DataMapper {
 	
-	private static Map<Class<?>, DataMapper> map = map();
-	private static Map<Class<?>, DataMapper> map() {
-		Map<Class<?>, DataMapper> map = new HashMap<Class<?>, DataMapper>();
-		map.put(Appointment.class, new AppointmentMapper());
-		map.put(Patient.class, new PatientMapper());
-		map.put(User.class, new UserMapper());
-		return map;
+	private static Map<Class<?>, DataMapper> maps = buildMaps();
+	
+	private static Map<Class<?>, DataMapper> buildMaps() {
+		// create the maps object
+		Map<Class<?>, DataMapper> maps = new HashMap<Class<?>, DataMapper>();
+		
+		// add each of the data mappers to the maps object
+		maps.put(Appointment.class, new AppointmentMapper());
+		maps.put(Patient.class, new PatientMapper());
+		maps.put(User.class, new UserMapper());
+		
+		// return
+		return maps;
 	} 
 	
 	public static DataMapper getMapper(Class<?> c) {
-		return map.get(c);
+		return maps.get(c);
 	}
 	
 	public abstract void update(IDomainObject obj);

@@ -12,8 +12,6 @@ package dies.models;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import dies.data.UnitOfWork;
-
 public class Appointment implements IDomainObject  {
 
 	// identity field, used for database lookup
@@ -41,9 +39,6 @@ public class Appointment implements IDomainObject  {
 		this.technician = technician;
 		this.machines = machines;
 		this.state = state;
-		
-		// add to UnitOfWork
-		UnitOfWork.registerCreated(this);
 	}
 	
 	public int getId() {
@@ -72,17 +67,14 @@ public class Appointment implements IDomainObject  {
 	
 	public void setDate(LocalDateTime date) {
 		this.date = date;
-		UnitOfWork.registerUpdated(this);
 	}
 	
 	public void setPatient(Patient patient) {
 		this.patient = patient;
-		UnitOfWork.registerUpdated(this);
 	}
 	
 	public void setTechnician(Technician technician) {
 		this.technician = technician;
-		UnitOfWork.registerUpdated(this);
 	}
 	
 	public void addMachine(Machine machine) {
@@ -95,10 +87,5 @@ public class Appointment implements IDomainObject  {
 	
 	public void setState(State state) {
 		this.state = state;
-		UnitOfWork.registerUpdated(this);
-	}
-	
-	public void delete() {
-		UnitOfWork.registerDeleted(this);
 	}
 }

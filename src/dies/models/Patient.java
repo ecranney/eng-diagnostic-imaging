@@ -12,10 +12,7 @@
  * @since 2018-09-09
  * 
  */
-
 package dies.models;
-
-import dies.data.UnitOfWork;
 
 public class Patient implements IDomainObject  {
 
@@ -36,9 +33,6 @@ public class Patient implements IDomainObject  {
 		this.address = address;
 		this.phone = phone;
 		this.medicareNo = medicareNo;
-		
-		// add to UnitOfWork
-		UnitOfWork.registerCreated(this);
 	}
 	
 	public int getId() {
