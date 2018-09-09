@@ -50,25 +50,32 @@ public class AppointmentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		String patientUnitNo = request.getParameter("patient_unit_no");
-		String patientStreetNo = request.getParameter("patient_street_no");
-		String patientStreetName = request.getParameter("patient_street_name");
-		String patientCity = request.getParameter("patient_city");
-		String patientState = request.getParameter("patient_state");
-		String patientPostCode = request.getParameter("patient_post_code");
-		String patientId = request.getParameter("patient_id");
-		String patientFirstName = request.getParameter("patient_first_name");
-		String patientLastName = request.getParameter("patient_last_name");
-		String patientMobile = request.getParameter("patient_mobile");
-		String patientMedicareNo = request.getParameter("patient_medicate_no");
-		String technicianId = request.getParameter("tech_id");
-		String technicianFirstName = request.getParameter("patient_first_name");
-		String technicianLastName = request.getParameter("patient_last_name");
-		List<Machine> machines = new ArrayList<Machine>();
+		String appointmentDate = request.getParameter("appointmentDate");
+		String appointmentTime= request.getParameter("appointmentTime");
 		
-		String machineId = request.getParameter("machineId");
-		String machineSerialCode = request.getParameter("machineSerialCode");
-		String machineType = request.getParameter("machineType");
+		//String patientId = request.getParameter("patientId");
+		String patientFirstName = request.getParameter("patientFirstName");
+		String patientLastName = request.getParameter("patientLastName");
+		String patientMobile = request.getParameter("patientMobile");
+		String patientMedicareNo = request.getParameter("patientMedicareNo");
+		
+		//String patientUnitNo = request.getParameter("patientUnitNo");
+		String patientStreetNo = request.getParameter("patientStreetNo");
+		String patientStreetName = request.getParameter("patientStreetName");
+		String patientCity = request.getParameter("patientCity");
+		String patientState = request.getParameter("patientState");
+		String patientPostCode = request.getParameter("patientPostalCode");
+		
+		String appointmentType = request.getParameter("appointmentType");
+//		List<Machine> machines = new ArrayList<Machine>();
+//		String machineId = request.getParameter("machineId");
+//		String machineSerialCode = request.getParameter("machineSerialCode");
+//		String machineType = request.getParameter("machineType");
+		
+		String technicianId = request.getParameter("technician");
+//		String technicianFirstName = request.getParameter("technicianFirstName");
+//		String technicianLastName = request.getParameter("technicianLastName");
+		
 	
 	
 		int app_id = 0;
@@ -80,6 +87,15 @@ public class AppointmentServlet extends HttpServlet {
 		Patient patient = null;
 		Technician technician = null;
 		Machine machine = null;
+		
+		response.sendRedirect("booking.jsp");
+//	    LoginService lg = new LoginService();
+//		User x = lg.login(username, password);
+//		if (x!=null) {
+//			response.sendRedirect("booking.jsp");
+//		}else {
+//			response.sendRedirect("booking2.jsp");
+//		}
 		
 	}
 

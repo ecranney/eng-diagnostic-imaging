@@ -20,7 +20,7 @@
 		<div>
 			<table class="table table-striped custab">
 				<thead>
-					<a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b>
+					<a href="create_booking.jsp" class="btn btn-primary btn-xs pull-right"><b>+</b>
 						Add new appointment</a>
 					<tr>
 						<th>Date</th>
