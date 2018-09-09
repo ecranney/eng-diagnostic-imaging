@@ -1,7 +1,6 @@
 /**
- * 
- * 
- * 
+ * (1) move to data mappers, then
+ * (2) try to access identity map every time find is called
  */
 
 package dies.data;
