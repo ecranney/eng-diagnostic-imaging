@@ -1,3 +1,5 @@
+<%@page import="dies.models.Appointment"%>
+<%@page import="dies.services.AppointmentService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -9,55 +11,61 @@
 <body>
 	<table>
 		<tbody>
+			<%
+				AppointmentService appointmentService = new AppointmentService();
+				Appointment app = appointmentService.findAppointment(1);
+			%>
 			<tr>
-				<td>Booking Date</td>
-				
+
+				<td>Appointment Date</td>
+				<td><%=app.getDate()%></td>
+
 			</tr>
 			<tr>
-				<td>Booking Reference</td>
-				
+				<td>Appointment Reference</td>
+				<td><%=app.getId()%></td>
 			</tr>
 			<tr>
 				<td>
 					<p>Patient Details</p>
 				</td>
-				
+
 			</tr>
 			<tr>
 				<td>First Name</td>
-				
+				<td><%=app.getPatient().getFirstName()%></td>
+
 			</tr>
 			<tr>
 				<td>Last Name</td>
-				
+				<td><%=app.getPatient().getLastName()%></td>
+
 			</tr>
 			<tr>
 				<td>Address</td>
-				
-			</tr>
-			<tr>
-				<td>Sex</td>
-				
-			</tr>
-			<tr>
-				<td>Date of Birth</td>
-				
+				<td><%=app.getPatient().getAddress().getUnitNo()%>,
+					<%=app.getPatient().getAddress().getStreetNo()%>,
+					<%=app.getPatient().getAddress().getStreetName()%>,
+					<%=app.getPatient().getAddress().getCity()%>,
+					<%=app.getPatient().getAddress().getState()%>
+					<%=app.getPatient().getAddress().getPostCode()%>
+					</td>
+
 			</tr>
 			<tr>
 				<td>Medicare No</td>
-				
-			</tr>
-			<tr>
-				<td>Email</td>
-				
+				<td><%=app.getPatient().getMedicareNo()%></td>
+
 			</tr>
 			<tr>
 				<td>Phone Number</td>
-				
+				<td><%=app.getPatient().getPhone()%></td>
+
 			</tr>
 			<tr>
 				<td>Issuer</td>
-				
+				<td><%=app.getTechnician().getFirstName()%></td>
+
 			</tr>
 		</tbody>
 	</table>

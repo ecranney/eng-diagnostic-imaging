@@ -12,11 +12,7 @@
 <body>
 	<table>
 		<tbody>
-			<%
-				AppointmentService appointmentService = new AppointmentService();
-				Appointment app = appointmentService.findAppointment(1);
-				
-			%>
+			
 			<tr>
 				<td>Select Date <input type="text" name="fdate"></td>
 			</tr>
@@ -79,17 +75,6 @@
 				<td><input type="text" name=""></td>
 
 			</tr>
-			<tr>
-				<td><%=app.getDate()%></td>
-				<td><%=app.getPatient().getFirstName()%></td>
-				<td><%=app.getPatient().getMedicareNo()%></td>
-				<td><%=app.getState()%></td>
-
-			</tr>
-
-			<%
-				
-			%>
 			
 		</tbody>
 	</table>
