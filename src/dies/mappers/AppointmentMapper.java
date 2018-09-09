@@ -52,80 +52,71 @@ public class AppointmentMapper extends DataMapper {
 		int app_id = 0;
 		LocalDateTime app_date = null;
 		Appointment.State app_state = null;
-
 		Appointment app = null;
 		Address patientAddress = null;
 		Patient patient = null;
 		Technician technician = null;
 		Machine machine = null;
 		List<Machine> machines = new ArrayList<Machine>();
-
 		ResultSet rs = statement.executeQuery();
 
-		while (rs.next()) {
-			try {
+		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
+		if (map.contains(id)) {
+			Appointment appointment = map.get(id);
+		} else {
+			while (rs.next()) {
+				try {
+					System.out.println(rs.getInt("ap_id") + " " + rs.getTimestamp("ap_date").toLocalDateTime() + " "
+							+ Appointment.State.valueOf(rs.getString("ap_state")) + " "
+							+ rs.getString("patient_first_name") + " " + rs.getString("patient_last_name") + " "
+							+ rs.getInt("patient_address_id") + rs.getInt("patient_unit_no")
+							+ rs.getInt("patient_street_no") + rs.getString("patient_street_name")
+							+ rs.getString("patient_city") + rs.getString("patient_state")
+							+ rs.getInt("patient_post_code") + rs.getString("patient_mobile")
+							+ rs.getString("patient_medicate_no") + rs.getInt("tech_id")
+							+ rs.getString("tech_first_name") + rs.getString("tech_last_name") + rs.getInt("MACHINE_id")
+							+ rs.getLong("SERIAL_CODE") + Machine.Type.valueOf(rs.getString("TYPE")));
 
-				System.out.println(rs.getInt("ap_id") + " " + rs.getTimestamp("ap_date").toLocalDateTime() + " "
-						+ Appointment.State.valueOf(rs.getString("ap_state")) + " " + rs.getString("patient_first_name")
-						+ " " + rs.getString("patient_last_name") + " " + rs.getInt("patient_address_id")
-						+ rs.getInt("patient_unit_no") + rs.getInt("patient_street_no")
-						+ rs.getString("patient_street_name") + rs.getString("patient_city")
-						+ rs.getString("patient_state") + rs.getInt("patient_post_code")
-						+ rs.getString("patient_mobile") + rs.getString("patient_medicate_no") + rs.getInt("tech_id")
-						+ rs.getString("tech_first_name") + rs.getString("tech_last_name") + rs.getInt("MACHINE_id")
-						+ rs.getLong("SERIAL_CODE") + Machine.Type.valueOf(rs.getString("TYPE")));
+					patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
+							rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
+							rs.getString("patient_city"), rs.getString("patient_state"),
+							rs.getInt("patient_post_code"));
 
-				patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
-						rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
-						rs.getString("patient_city"), rs.getString("patient_state"), rs.getInt("patient_post_code"));
+					patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
+							rs.getString("patient_last_name"), patientAddress, rs.getString("patient_mobile"),
+							rs.getString("patient_medicate_no"));
 
-				patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
-						rs.getString("patient_last_name"), patientAddress, rs.getString("patient_mobile"),
-						rs.getString("patient_medicate_no"));
+					technician = new Technician(rs.getInt("tech_id"), rs.getString("tech_username"),
+							rs.getString("tech_password"), rs.getString("tech_first_name"),
+							rs.getString("tech_last_name"));
+					machine = new Machine(rs.getInt("MACHINE_id"), rs.getLong("SERIAL_CODE"),
+							Machine.Type.valueOf(rs.getString("TYPE")));
+					machines.add(machine);
+					app_id = rs.getInt("ap_id");
+					app_date = rs.getTimestamp("ap_date").toLocalDateTime();
+					app_state = Appointment.State.valueOf(rs.getString("ap_state"));
 
-				technician = new Technician(rs.getInt("tech_id"), rs.getString("tech_username"),
-						rs.getString("tech_password"), rs.getString("tech_first_name"), rs.getString("tech_last_name"));
-				machine = new Machine(rs.getInt("MACHINE_id"), rs.getLong("SERIAL_CODE"),
-						Machine.Type.valueOf(rs.getString("TYPE")));
-				machines.add(machine);
-				app_id = rs.getInt("ap_id");
-				app_date = rs.getTimestamp("ap_date").toLocalDateTime();
-				app_state = Appointment.State.valueOf(rs.getString("ap_state"));
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
-
+			app = new Appointment(app_id, app_date, patient, technician, machines, app_state);
+			System.out.println("this is from the app mapper ");
+			System.out.println(app);
+			app.toString();
+			System.out.println("this is from the app mapper ");
+			System.out.println("this is from the app mapper ");
+			return app;
 		}
-		
-		app = new Appointment(app_id, app_date, patient, technician, machines, app_state);
-		System.out.println("this is from the app mapper ");
-		System.out.println(app);
-		app.toString();
-		System.out.println("this is from the app mapper ");
-		System.out.println("this is from the app mapper ");
-		return app;
-
-//		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
-//		if (map.contains(id)) {
-//			Appointment appointment = map.get(id);
-//		} else {
-//			
-//		}
-//		return null;
+		return null;
 	}
 
 	public ArrayList<Appointment> findAll() throws SQLException {
-		/*
-		 * if {IdentityMap.getInstance(User.class).contains(id)} { User user =
-		 * IdentityMap.getInstance(User.class).get(id); return user; } 1) move to data
-		 * mappers, then (2) try to access identity map every time find is called
-		 */
 		Connection con = db.getConnection();
 		PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
 		Appointment app = null;
 		ArrayList<Appointment> appList = new ArrayList<Appointment>();
-
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
@@ -137,21 +128,10 @@ public class AppointmentMapper extends DataMapper {
 						null, Appointment.State.valueOf(rs.getString("ap_state")));
 				appList.add(app);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-
 				e.printStackTrace();
 			}
-			//
 		}
 		return appList;
-
-//		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
-//		if (map.contains(id)) {
-//			Appointment appointment = map.get(id);
-//		} else {
-//			
-//		}
-//		return null;
 	}
 
 	public void insert(IDomainObject appointment) {

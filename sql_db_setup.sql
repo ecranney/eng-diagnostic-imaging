@@ -28,6 +28,29 @@
 --VALUES
 -- ('admin', 'admin', 'firsname1', 'lastname1');
 
+
+SELECT
+ t1.id,
+ t1.firstname,
+ t1.lastname
+ FROM
+ public.user t1
+INNER JOIN public.technician t2 ON t1.id = t2.id;
+
+
+
+
+
+
+
+
+
+
+
+
+
+select * from appointment
+
 SELECT username, password, firstname, lastname from public.user where username='admin' 
 
 drop table public.appointment;
@@ -43,7 +66,7 @@ CREATE TABLE public.appointment(
 
 INSERT INTO public.appointment(date, patient_id, technician_id, APPOINTMENT_MACHINE_ID, state)
 VALUES
- (current_timestamp, '1', '1', '1', 'FUTURE');
+ (current_timestamp, '1', '1', '1', 'MISSED');
 
  INSERT INTO public.appointment(date, patient_id, technician_id, APPOINTMENT_MACHINE_ID, state)
 VALUES
@@ -92,7 +115,7 @@ from public.APPOINTMENT_MACHINE t7
 FULL OUTER join public.MACHINE t8
 on t7.MACHINE_id = t8.id)
 t8join on t8join.APPOINTMENT_ID = t1.ID
-where t1.id = 1
+where t1.id = 4
 
 
 SELECT t1.id as ap_id, t1.date as ap_date, t1.state as ap_state,
