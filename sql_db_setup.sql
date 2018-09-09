@@ -28,21 +28,25 @@
 --VALUES
 -- ('admin', 'admin', 'firsname1', 'lastname1');
 
---drop table public.appointment;
---
---CREATE TABLE public.appointment(
--- ID	       	BIGSERIAL PRIMARY KEY,
--- DATE          	TEXT,
--- PATIENT_ID    	INT,
--- TECHNICIAN_ID 	INT,
--- APPOINTMENT_MACHINE_ID	INT,
--- STATE	       	TEXT 
---);
---
---INSERT INTO public.appointment(date, patient_id, technician_id, APPOINTMENT_MACHINE_ID, state)
---VALUES
--- ('2017', '1', '1', '1', 'COMPLETED');
---
+drop table public.appointment;
+
+CREATE TABLE public.appointment(
+ ID	       	BIGSERIAL PRIMARY KEY,
+ DATE          	TIMESTAMP,
+ PATIENT_ID    	INT,
+ TECHNICIAN_ID 	INT,
+ APPOINTMENT_MACHINE_ID	INT,
+ STATE	       	TEXT 
+);
+
+INSERT INTO public.appointment(date, patient_id, technician_id, APPOINTMENT_MACHINE_ID, state)
+VALUES
+ (current_timestamp, '1', '1', '1', 'FUTURE');
+
+ INSERT INTO public.appointment(date, patient_id, technician_id, APPOINTMENT_MACHINE_ID, state)
+VALUES
+ (current_timestamp, '1', '1', '1', 'FUTURE');
+
 --DROP TABLE public.MACHINE;
 --DROP TABLE public.APPOINTMENT_MACHINE;
 --
@@ -61,17 +65,19 @@
 --select * from public.user;
 
 SELECT t1.id as ap_id, t1.date as ap_date, t1.state as ap_state,
-t2.FIRST_NAME as patient_first_name, t2.last_name as patient_last_name, 
-t6.id, t6.unit_no, t6.street_no, t6.street_name, t6.city, t6.state, t6.post_code, 
+t1.patient_id as patient_id, t2.FIRST_NAME as patient_first_name, t2.last_name as patient_last_name, 
+t6.id as patient_address_id, t6.unit_no as patient_unit_no, t6.street_no as patient_street_no, 
+t6.street_name as patient_street_name, t6.city as patient_city, t6.state as patient_state, t6.post_code as patient_post_code, 
 t2.phone as patient_mobile, 
 t2.medicare_no as patient_medicate_no,
-t5join.id as tech_id, t5join.firstname as tech_first_name, t5join.lastname as tech_last_name,
+t5join.id as tech_id, t5join.username as tech_username, t5join.password as tech_password,
+t5join.firstname as tech_first_name, t5join.lastname as tech_last_name,
 t8join.MACHINE_id, t8join.SERIAL_CODE, t8join.TYPE
 from public.appointment t1
 inner join public.patient t2
 on t1.patient_id = t2.id
 FULL OUTER join 
-(SELECT t4.id, t4.firstname, t4.lastname
+(SELECT t4.id, t4.username, t4.password, t4.firstname, t4.lastname
 from public.user t4
 inner join public.TECHNICIAN t3
 on t4.id = t3.id
@@ -84,6 +90,24 @@ from public.APPOINTMENT_MACHINE t7
 FULL OUTER join public.MACHINE t8
 on t7.MACHINE_id = t8.id)
 t8join on t8join.APPOINTMENT_ID = t1.ID
+where t1.id = 1
+
+
+SELECT t1.id as ap_id, t1.date as ap_date, t1.state as ap_state,
+t2.FIRST_NAME as patient_first_name, t2.last_name as patient_last_name, 
+t2.medicare_no as patient_medicate_no
+from public.appointment t1
+inner join public.patient t2
+on t1.patient_id = t2.id
+INNER join 
+(SELECT t4.id, t4.firstname, t4.lastname
+from public.user t4
+inner join public.TECHNICIAN t3
+on t4.id = t3.id
+) t5join on t5join.id = t1.TECHNICIAN_ID
+inner join public.address t6
+on t6.id = t2.address_id
+
 
 
 
@@ -91,13 +115,20 @@ t8join on t8join.APPOINTMENT_ID = t1.ID
 --VALUES
 --('1','2');
 
---INSERT INTO public.MACHINE(SERIAL_CODE, TYPE)
---VALUES
--- ('2018-x32', 'PET');
- 
---INSERT INTO public.MACHINE(SERIAL_CODE, TYPE)
---VALUES
---('98-x32', 'XRAY');
+DROP Table public.machine;
+CREATE TABLE public.MACHINE(
+ ID	      	BIGSERIAL PRIMARY KEY,
+ SERIAL_CODE    INT,
+ TYPE     	TEXT
+);
+
+INSERT INTO public.MACHINE(SERIAL_CODE, TYPE)
+VALUES
+ ('122334', 'CAT');
+
+INSERT INTO public.MACHINE(SERIAL_CODE, TYPE)
+VALUES
+('999999', 'XRAY');
 
 --CREATE TABLE public.APPOINTMENT_MACHINE(
 -- ID	       	BIGSERIAL PRIMARY KEY,
@@ -113,21 +144,25 @@ t8join on t8join.APPOINTMENT_ID = t1.ID
 -- 
 
 
+-- 
+
 --
---INSERT INTO public.ADDRESS(date, patient_id, technician_id, APPOINTMENT_MACHINE_ID, state)
---VALUES
--- ('2017', '1', '1', '1', 'COMPLETED');
+
 --
---DROP TABLE public.ADDRESS;
---CREATE TABLE public.ADDRESS(
--- ID	      	BIGSERIAL PRIMARY KEY,
--- UNIT_NO      	INT,
--- STREET_NO    	INT,
--- STREET_NAME  	TEXT,
--- CITY	      	TEXT,
--- STATE        	TEXT,
--- POST_CODE    	INT
---);
+DROP TABLE public.ADDRESS;
+CREATE TABLE public.ADDRESS(
+ ID	      	BIGSERIAL PRIMARY KEY,
+ UNIT_NO      	INT,
+ STREET_NO    	INT,
+ STREET_NAME  	TEXT,
+ CITY	      	TEXT,
+ STATE        	TEXT,
+ POST_CODE    	INT
+);
+
+INSERT INTO public.ADDRESS(UNIT_NO, STREET_NO, STREET_NAME, CITY, STATE, POST_CODE)
+VALUES
+('0', '92', 'Station St', 'carlton', 'VIC', '3053');
 
 --drop table public.PATIENT;
 --CREATE TABLE public.PATIENT(
@@ -151,12 +186,6 @@ t8join on t8join.APPOINTMENT_ID = t1.ID
 -- MACHINE_ID 	INT
 --);
 --
---CREATE TABLE public.MACHINE(
--- ID	      	BIGSERIAL PRIMARY KEY,
--- SERIAL_CODE    TEXT,
--- TYPE     	TEXT
---);
--- 
 
 --
 
