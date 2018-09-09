@@ -32,7 +32,7 @@ public class AppointmentService {
 	public Appointment findAppointment(int id) {
 		Appointment appointment = appointmentMapper.find(id);
 		transaction.registerClean(appointment); // start EDIT transaction
-		return appointmentMapper.find(id);
+		return appointment;
 	}
 	
 	// returns a list of all available datetimes for a new appointment
