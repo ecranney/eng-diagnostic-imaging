@@ -52,10 +52,9 @@ public class LoginServlet extends HttpServlet {
 
         if (user != null) {
             HttpSession session = request.getSession(true);
-            session.setAttribute("username",user);   
+            session.setAttribute("username",username);   
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/booking.jsp");
             dispatcher.forward(request, response);
-            response.sendRedirect("booking.jsp");
         } else {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/invalidLogin.jsp");
             dispatcher.forward(request, response);

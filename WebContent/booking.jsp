@@ -16,12 +16,17 @@
 </head>
 <body>
 <div class="container">
+
+	<h4>Hello, <%= request.getSession().getAttribute("username") %><a href="/logout">  logout</a></h4>
+	
     <div>
-        <table class="table table-striped custab">
-            <thead>
-            <a href="create_booking.jsp"
+    <a href="create_booking.jsp"
                class="btn btn-primary btn-xs pull-right"><b>+</b>
                 Add new appointment</a>
+        <table class="table table-striped custab">
+        
+            <thead>
+            
             <tr>
                 <th>Date</th>
                 <th>Patient Name</th>

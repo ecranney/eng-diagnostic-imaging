@@ -4,7 +4,8 @@
  * for patients.
  *
  * @author ecranney
- * @since 2018-09-09
+ * @since September 2018
+ * 
  */
 package dies.models;
 

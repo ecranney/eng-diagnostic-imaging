@@ -3,7 +3,8 @@
  * the appointments-management interface, and is able to manage appointments.
  *
  * @author ecranney
- * @since 2018-09-09
+ * @since September 2018
+ * 
  */
 package dies.models;
 

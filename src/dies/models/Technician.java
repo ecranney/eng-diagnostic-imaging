@@ -9,7 +9,12 @@
  * is implemented.
  *
  * @author ecranney
+<<<<<<< HEAD
  * @since 2018-09-09
+=======
+ * @since September 2018
+ * 
+>>>>>>> 0c3a339f7d1f7170233cafb2e7f031649b86a1d6
  */
 package dies.models;
 

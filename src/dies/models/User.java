@@ -1,11 +1,12 @@
 /**
- * A User of the DIES system. This is the abstract parent of all other
- * user-types (Radiologist, Receptionist, Technician, Admin). It contains
- * the properties and methods common to all user-types, and permits for
- * polymorphic operations over sets of users.
- *
- * @author ecranney
- * @since 2018-09-09
+ *  A User of the DIES system. This is the abstract parent of all other
+ *  user-types (Radiologist, Receptionist, Technician, Admin). It contains
+ *  the properties and methods common to all user-types, and permits for
+ *  polymorphic operations over sets of users.
+ *  
+ *  @author ecranney
+ *  @since September 2018
+ *  
  */
 package dies.models;
 
