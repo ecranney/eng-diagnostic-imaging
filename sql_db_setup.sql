@@ -130,6 +130,34 @@ inner join public.address t6
 on t6.id = t2.address_id
 
 
+new query for appointments even for bunull technicans 
+
+"SELECT t1.id as ap_id, t1.date as ap_date, t1.state as ap_state,\r\n"
+			+ "t2.FIRST_NAME as patient_first_name, t2.last_name as patient_last_name, \r\n"
+			+ "t2.medicare_no as patient_medicate_no\r\n" + "from public.appointment t1\r\n"
+			+ "inner join public.patient t2\r\n" + "on t1.patient_id = t2.id\r\n" + "INNER join \r\n"
+			+ "(SELECT t4.id, t4.firstname, t4.lastname\r\n" + "from public.user t4\r\n"
+			+ "inner join public.TECHNICIAN t3\r\n" + "on t4.id = t3.id\r\n"
+			+ ") t5join on t5join.id = t1.TECHNICIAN_ID\r\n" + "inner join public.address t6\r\n"
+			+ "on t6.id = t2.address_id";
+			
+select t1.id as ap_id, t1.date as ap_date, t1.state as ap_state,
+t2.first_name as patient_first_name, t2.last_name as patient_last_name, 
+t2.medicare_no as patient_medicate_no,
+t5join.id, t5join.firstname, t5join.lastname
+from public.appointment t1
+left outer join
+(
+select t4.id, t4.firstname, t4.lastname
+from public.user t4
+inner join public.technician t3
+on t4.id = t3.id
+) t5join on t5join.id = t1.technician_id
+inner join public.patient t2
+on t1.patient_id = t2.id
+
+
+
 
 
 

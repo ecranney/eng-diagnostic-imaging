@@ -1,10 +1,12 @@
 package db;
 
+import dies.mappers.AppointmentMapper;
 import dies.mappers.UserMapper;
 import dies.models.Technician;
 import dies.services.AppointmentService;
 import dies.services.LoginService;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -20,8 +22,17 @@ public class DBConnectionTest {
 //        List<Technician> tList = appointmentService.findAvailableTechnicians(localDateTime);
     	
 //    	UserMapper um = new UserMapper();
-//    	um.find("admin", "admin");
-    	LoginService loginService = new LoginService();
-        loginService.login("admin", "admin");
+////    	um.find("admin", "admin");
+//    	LoginService loginService = new LoginService();
+//        loginService.login("admin", "admin");
+    	
+    	AppointmentMapper appointmentMapper = new AppointmentMapper();
+    	try {
+			appointmentMapper.findAll();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
     }
 }

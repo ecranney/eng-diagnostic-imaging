@@ -33,14 +33,13 @@ public class AppointmentMapper extends DataMapper {
 			+ "from public.APPOINTMENT_MACHINE t7\r\n" + "FULL OUTER join public.MACHINE t8\r\n"
 			+ "on t7.MACHINE_id = t8.id)\r\n" + "t8join on t8join.APPOINTMENT_ID = t1.ID\r\n" + "where t1.id = ?";
 
-	private String findAllAppointmentSQL = "SELECT t1.id as ap_id, t1.date as ap_date, t1.state as ap_state,\r\n"
-			+ "t2.FIRST_NAME as patient_first_name, t2.last_name as patient_last_name, \r\n"
-			+ "t2.medicare_no as patient_medicate_no\r\n" + "from public.appointment t1\r\n"
-			+ "inner join public.patient t2\r\n" + "on t1.patient_id = t2.id\r\n" + "INNER join \r\n"
-			+ "(SELECT t4.id, t4.firstname, t4.lastname\r\n" + "from public.user t4\r\n"
-			+ "inner join public.TECHNICIAN t3\r\n" + "on t4.id = t3.id\r\n"
-			+ ") t5join on t5join.id = t1.TECHNICIAN_ID\r\n" + "inner join public.address t6\r\n"
-			+ "on t6.id = t2.address_id";
+	private String findAllAppointmentSQL = "select t1.id as ap_id, t1.date as ap_date, t1.state as ap_state,\r\n"
+			+ "t2.first_name as patient_first_name, t2.last_name as patient_last_name, \r\n"
+			+ "t2.medicare_no as patient_medicate_no\r\n" + "from public.appointment t1\r\n" + "left outer join\r\n"
+			+ "(\r\n" + "select t4.id, t4.firstname, t4.lastname\r\n" + "from public.user t4\r\n"
+			+ "inner join public.technician t3\r\n" + "on t4.id = t3.id\r\n"
+			+ ") t5join on t5join.id = t1.technician_id\r\n" + "inner join public.patient t2\r\n"
+			+ "on t1.patient_id = t2.id";
 
 	private String insertSQL = "insert into id, date, patient_id, technician_id, state public.appointment values (?, ?, ?)";
 	private String updateSQL = "update public.appointment set into id=?, date=?, patient_id=?, technician_id=?, state=?";
@@ -123,7 +122,7 @@ public class AppointmentMapper extends DataMapper {
 		while (rs.next()) {
 			try {
 				Patient patient = new Patient(0, rs.getString("patient_first_name"), rs.getString("patient_last_name"),
-						null, "", "");
+						null, "", rs.getString("patient_medicate_no"));
 
 				app = new Appointment(rs.getInt("ap_id"), rs.getTimestamp("ap_date").toLocalDateTime(), patient, null,
 						null, Appointment.State.valueOf(rs.getString("ap_state")));
@@ -146,9 +145,9 @@ public class AppointmentMapper extends DataMapper {
 			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
 
 			statement.setInt(3, m.getPatient().getId());
-			
+
 			statement.setInt(4, m.getTechnician().getId());
-			
+
 			statement.setString(5, m.getState().name());
 
 			statement.executeUpdate();
@@ -170,9 +169,9 @@ public class AppointmentMapper extends DataMapper {
 			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
 
 			statement.setInt(3, m.getPatient().getId());
-			
+
 			statement.setInt(4, m.getTechnician().getId());
-			
+
 			statement.setString(5, m.getState().name());
 
 		} catch (SQLException e1) {
@@ -192,9 +191,9 @@ public class AppointmentMapper extends DataMapper {
 			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
 
 			statement.setInt(3, m.getPatient().getId());
-			
+
 			statement.setInt(4, m.getTechnician().getId());
-			
+
 			statement.setString(5, m.getState().name());
 
 		} catch (SQLException e1) {
