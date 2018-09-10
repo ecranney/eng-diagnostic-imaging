@@ -1,13 +1,15 @@
 package dies.mappers;
 
+import db.DBConnection;
+import dies.models.IDomainObject;
+import dies.models.Technician;
+import dies.models.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
-
-import db.DBConnection;
-import dies.models.*;
+import java.util.ArrayList;
 
 public class UserMapper extends DataMapper {
 
@@ -18,28 +20,28 @@ public class UserMapper extends DataMapper {
 			+ "INNER JOIN public.technician t2 ON t1.id = t2.id;";
 
 	public User find(String username, String password) {
-		Connection con;
+		Connection con = null;
+		ResultSet rs = null;
 		User user = null;
+
 		try {
 			con = db.getConnection();
-			PreparedStatement statement = con.prepareStatement(findUserSQL);
+			PreparedStatement statement = null;
+			statement = con.prepareStatement(findUserSQL);
 			statement.setString(1, username);
 			statement.setString(2, password);
 
-			ResultSet rs = statement.executeQuery();
-
+			rs = statement.executeQuery();
 			while (rs.next()) {
-				System.out.println(rs.getString("username") + " " + rs.getString("password") + " "
-						+ rs.getString("firstname") + " " + rs.getString("lastname"));
 				user = new User(0, rs.getString("username"), rs.getString("password"), rs.getString("firstname"),
 						rs.getString("lastname")) {
 				};
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("Log In failed: An Exception has occurred! " + e);
 		}
 
-		;
 		return user;
 	}
 
