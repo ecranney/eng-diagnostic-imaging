@@ -12,6 +12,7 @@
 package dies.data;
 
 import java.util.Map;
+
 import java.util.HashMap;
 
 public class IdentityMap<E> {
@@ -21,8 +22,8 @@ public class IdentityMap<E> {
 	 * from each (domain layer) class to its respective map.
 	 */
 	// map from each (domain layer) class to its respective identity map
-	private static Map<Class<?>, IdentityMap> maps = 
-			new HashMap<Class<?>, IdentityMap>();
+	private static Map<Class, IdentityMap> maps = 
+			new HashMap<Class, IdentityMap>();
 
 	// retrieve the map for a particular class; create one if it doesn't exist
 	public static <E> IdentityMap<E> getInstance(Class c) {
