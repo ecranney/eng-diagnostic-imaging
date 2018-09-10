@@ -75,7 +75,7 @@ public class AppointmentMapper extends DataMapper {
 			"t6.post_code\r\n" + 
 			"\r\n" + 
 			"from public.patient t2 \r\n" + 
-			"inner join public.address t6\r\n" + 
+			"left outer join public.address t6\r\n" + 
 			"on t2.address_id=t6.id\r\n" + 
 			") t2t6 on t2t6.id = patient_id\r\n" + 
 			"left outer join\r\n" + 
@@ -87,6 +87,8 @@ public class AppointmentMapper extends DataMapper {
 			"public.appointment_machine t8\r\n" + 
 			"on t8.machine_id = t7.id\r\n" + 
 			") t7t8 on t7t8.appointment_id = t1.id\r\n" + 
+			"\r\n" + 
+			"\r\n" + 
 			"";
 	private String findAppointmentSQL = findAllAppointmentSQL + " where t1.id = ?";
 	private String insertSQL = "insert into id, date, patient_id, technician_id, state public.appointment values (?, ?, ?)";
