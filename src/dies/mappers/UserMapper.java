@@ -2,6 +2,7 @@ package dies.mappers;
 
 import db.DBConnection;
 import dies.models.IDomainObject;
+import dies.models.Patient;
 import dies.models.Technician;
 import dies.models.User;
 
@@ -18,6 +19,9 @@ public class UserMapper extends DataMapper {
 	private String findTechnicianSQL = "SELECT\r\n" + " t1.id,\r\n" + " t1.username,\r\n" + " t1.password,\r\n"
 			+ " t1.firstname,\r\n" + " t1.lastname\r\n" + " FROM\r\n" + " public.user t1\r\n"
 			+ "INNER JOIN public.technician t2 ON t1.id = t2.id;";
+	private String inserSQL = "insert username, password, firstname, lastname values (?, ?, ?, ?)";
+	private String updateSQL = "update public.machines set username=?, password=?, firstname=?, lastname=?";
+	private String deleteSQL = "delete from public.machines where username=? and password=? and firstname=? and lastname=?";
 
 	public User find(String username, String password) {
 		Connection con = null;
@@ -69,17 +73,72 @@ public class UserMapper extends DataMapper {
 	}
 
 	public void insert(IDomainObject user) {
-		// STUB
-		// SQL goes here
+		try {
+			Connection con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(inserSQL);
+			User m = (User) user;
+
+			statement.setInt(1, m.getId());
+
+			statement.setString(2, m.getUsername());
+
+			statement.setString(3, m.getPassword());
+
+			statement.setString(4, m.getFirstName());
+
+			statement.setString(5, m.getLastName());
+
+			statement.executeUpdate();
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public void update(IDomainObject user) {
-		// STUB
-		// SQL goes here
+		try {
+			Connection con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(inserSQL);
+			User m = (User) user;
+
+			statement.setInt(1, m.getId());
+
+			statement.setString(2, m.getUsername());
+
+			statement.setString(3, m.getPassword());
+
+			statement.setString(4, m.getFirstName());
+
+			statement.setString(5, m.getLastName());
+
+			statement.executeUpdate();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public void delete(IDomainObject user) {
-		// STUB
-		// SQL goes here
+		try {
+			Connection con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(inserSQL);
+			User m = (User) user;
+
+			statement.setInt(1, m.getId());
+
+			statement.setString(2, m.getUsername());
+
+			statement.setString(3, m.getPassword());
+
+			statement.setString(4, m.getFirstName());
+
+			statement.setString(5, m.getLastName());
+
+			statement.executeUpdate();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }

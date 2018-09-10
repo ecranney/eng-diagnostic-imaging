@@ -54,7 +54,7 @@
 					<input type="datetime-local" class="form-control datepicker"
 						id="f6" name="appointmentDate" value=""
 						data-datepicker-format="DD, MM d, yyyy"
-						data-datepicker-startDate="0d" required /> <span
+						data-datepicker-startDate="0d" /> <span
 						class="input-group-addon right"><i
 						class="glyphicon glyphicon-th"></i> </span>
 				</div>
@@ -322,7 +322,6 @@
                 gaComplete($(this));
             });
         };
-
 
         $.fn.gaddress = function (method) {
             if ($.fn.gaddress[method]) {

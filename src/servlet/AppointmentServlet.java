@@ -91,13 +91,6 @@ public class AppointmentServlet extends HttpServlet {
 
 
         response.sendRedirect("booking.jsp");
-//	    LoginService lg = new LoginService();
-//		User x = lg.login(username, password);
-//		if (x!=null) {
-//			response.sendRedirect("booking.jsp");
-//		}else {
-//			response.sendRedirect("booking2.jsp");
-//		}
 
     }
 

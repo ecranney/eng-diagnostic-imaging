@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,10 @@ public class AppointmentMapper extends DataMapper {
 			+ "inner join public.TECHNICIAN t3\r\n" + "on t4.id = t3.id\r\n"
 			+ ") t5join on t5join.id = t1.TECHNICIAN_ID\r\n" + "inner join public.address t6\r\n"
 			+ "on t6.id = t2.address_id";
+
+	private String insertSQL = "insert into id, date, patient_id, technician_id, state public.appointment values (?, ?, ?)";
+	private String updateSQL = "update public.appointment set into id=?, date=?, patient_id=?, technician_id=?, state=?";
+	private String deleteSQL = "delete from public.appointment where id=? and date=? and patient_id=? and technician_id=? and state=?";
 
 	public Appointment find(int id) throws SQLException {
 		Connection con = db.getConnection();
@@ -131,18 +136,71 @@ public class AppointmentMapper extends DataMapper {
 	}
 
 	public void insert(IDomainObject appointment) {
-		// STUB
-		// SQL goes here
+		try {
+			Connection con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(insertSQL);
+			Appointment m = (Appointment) appointment;
+
+			statement.setInt(1, m.getId());
+
+			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
+
+			statement.setInt(3, m.getPatient().getId());
+			
+			statement.setInt(4, m.getTechnician().getId());
+			
+			statement.setString(5, m.getState().name());
+
+			statement.executeUpdate();
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public void update(IDomainObject appointment) {
-		// STUB
-		// SQL goes here
+		try {
+			Connection con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(updateSQL);
+			Appointment m = (Appointment) appointment;
+
+			statement.setInt(1, m.getId());
+
+			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
+
+			statement.setInt(3, m.getPatient().getId());
+			
+			statement.setInt(4, m.getTechnician().getId());
+			
+			statement.setString(5, m.getState().name());
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public void delete(IDomainObject appointment) {
-		// STUB
-		// SQL goes here
+		try {
+			Connection con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(deleteSQL);
+			Appointment m = (Appointment) appointment;
+
+			statement.setInt(1, m.getId());
+
+			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
+
+			statement.setInt(3, m.getPatient().getId());
+			
+			statement.setInt(4, m.getTechnician().getId());
+			
+			statement.setString(5, m.getState().name());
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 }
