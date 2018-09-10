@@ -1,25 +1,17 @@
 /**
+ * Class implementing the Identity Map pattern.
  * 
+ * This is accessed by the DataMappers to cache and retrieve domain objects
+ * prior to database access.
  * 
- * Whenever you call a "find(id)" or "findAll()" method in one of the Mappers,
- * you should check if the object already exists in the IdentityMap.
+ * @author ecranney
+ * @since September 2018
  * 
- * e.g. if findUser(id)
- * 
- * if {IdentityMap.getInstance(User.class).contains(id)} {
- * 		User user = IdentityMap.getInstance(User.class).get(id);
- * 		return user;
- * }
- * 1) move to data mappers, then
- * (2) try to access identity map every time find is called
  */
 
 package dies.data;
 
 import java.util.Map;
-
-import db.DBConnection;
-
 import java.util.HashMap;
 
 public class IdentityMap<E> {
