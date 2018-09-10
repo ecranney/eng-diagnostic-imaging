@@ -87,13 +87,6 @@ public class Appointment implements IDomainObject {
         this.machines.remove(machine);
     }
 
-    @Override
-    public String toString() {
-        return "Appointment [id=" + id + ", date=" + date + ", patient=" + patient.getFirstName() + ", technician=" + technician.getFirstName()
-                + ", machines=" + machines + ", state=" + state + ", getId()=" + getId() + ", getDate()=" + getDate() + ", getMachines()="
-                + getMachines().get(0).getSerialNo() + ", getState()=" + getState() + " ]";
-    }
-
     // the current state of an appointment
     public enum State {
         FUTURE, INVOICED, PAID, MISSED, CANCELLED
