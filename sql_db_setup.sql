@@ -261,9 +261,6 @@ values
 
 ----------------------------------
 
-
-
-
 select 
 t1.id as ap_id, 
 t1.date as ap_date, 
@@ -286,7 +283,11 @@ t2t6.post_code as patient_post_code,
 t3t4.id as technician_id, 
 t3t4.username as technician_username, 
 t3t4.firstname as technician_first_name, 
-t3t4.lastname as technician_last_name
+t3t4.lastname as technician_last_name,
+
+t7t8.id as appointment_machine_id,
+t7t8.serial_code as machine_serial_code,
+t7t8.type as machine_type
 
 from public.appointment t1
 left outer join
@@ -317,6 +318,33 @@ from public.patient t2
 inner join public.address t6
 on t2.address_id=t6.id
 ) t2t6 on t2t6.id = patient_id
+left outer join
+(
+select t7.id, t7.serial_code, t7.type,t8.appointment_id
 
+from public.machine t7
+right outer join 
+public.appointment_machine t8
+on t8.machine_id = t7.id
+) t7t8 on t7t8.appointment_id = t1.id
+
+where t1.id=1
+
+update appointment_machine where machine
+
+UPDATE 
+SET type = "CAT"
+WHERE
+ last_update IS NULL;
+
+select * from public.appointment_machine
+
+INSERT INTO public.appointment_machine(id,appointment_id,machine_id)
+values ('7','5','1'), ('8','6','1'),('9','4','1');
+
+
+
+
+--------------------
 
 

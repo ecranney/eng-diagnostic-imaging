@@ -7,11 +7,16 @@ import dies.models.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class AppointmentMapper extends DataMapper {
 
@@ -38,7 +43,11 @@ public class AppointmentMapper extends DataMapper {
 			"t3t4.id as technician_id, \r\n" + 
 			"t3t4.username as technician_username, \r\n" + 
 			"t3t4.firstname as technician_first_name, \r\n" + 
-			"t3t4.lastname as technician_last_name\r\n" + 
+			"t3t4.lastname as technician_last_name,\r\n" + 
+			"\r\n" + 
+			"t7t8.id as appointment_machine_id,\r\n" + 
+			"t7t8.serial_code as machine_serial_code,\r\n" + 
+			"t7t8.type as machine_type\r\n" + 
 			"\r\n" + 
 			"from public.appointment t1\r\n" + 
 			"left outer join\r\n" + 
@@ -66,9 +75,18 @@ public class AppointmentMapper extends DataMapper {
 			"t6.post_code\r\n" + 
 			"\r\n" + 
 			"from public.patient t2 \r\n" + 
-			"full outer join public.address t6\r\n" + 
+			"inner join public.address t6\r\n" + 
 			"on t2.address_id=t6.id\r\n" + 
 			") t2t6 on t2t6.id = patient_id\r\n" + 
+			"left outer join\r\n" + 
+			"(\r\n" + 
+			"select t7.id, t7.serial_code, t7.type,t8.appointment_id\r\n" + 
+			"\r\n" + 
+			"from public.machine t7\r\n" + 
+			"right outer join \r\n" + 
+			"public.appointment_machine t8\r\n" + 
+			"on t8.machine_id = t7.id\r\n" + 
+			") t7t8 on t7t8.appointment_id = t1.id\r\n" + 
 			"";
 	private String findAppointmentSQL = findAllAppointmentSQL + " where t1.id = ?";
 	private String insertSQL = "insert into id, date, patient_id, technician_id, state public.appointment values (?, ?, ?)";
@@ -107,12 +125,9 @@ public class AppointmentMapper extends DataMapper {
 					
 					patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"), rs.getString("patient_last_name"),
 							patientAddress, rs.getString("patient_address_id"), rs.getString("patient_medicate_no"));
-
-//					machine = new Machine(rs.getInt("machine_id"), rs.getLong("machine_serial_code"),
-//							Machine.Type.valueOf(rs.getString("machine_type")));
-					
-					machines.add(machine);
-					
+					machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
+							Machine.Type.valueOf(rs.getString("machine_type")));
+					machines.add(machine);					
 					
 					app_id = rs.getInt("ap_id");
 					app_date = rs.getTimestamp("ap_date").toLocalDateTime();
@@ -132,16 +147,19 @@ public class AppointmentMapper extends DataMapper {
 	public ArrayList<Appointment> findAll() throws SQLException {
 		Connection con = db.getConnection();
 		PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
+
 		Appointment app = null;
 		ArrayList<Appointment> appList = new ArrayList<Appointment>();
 		Address patientAddress = null;
 		Technician technician = null;
 		Patient patient = null;
+		Machine machine = null;
+		List<Machine> machines = new ArrayList<Machine>();
 		ResultSet rs = statement.executeQuery();
-
+		
 		while (rs.next()) {
+			
 			try {
-				
 				patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
 						rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
 						rs.getString("patient_city"), rs.getString("patient_state"),
@@ -153,12 +171,19 @@ public class AppointmentMapper extends DataMapper {
 				
 				patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"), rs.getString("patient_last_name"),
 						patientAddress, rs.getString("patient_address_id"), rs.getString("patient_medicate_no"));
-
+				machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
+						Machine.Type.valueOf(rs.getString("machine_type")));
+				machines.add(machine);
 				app = new Appointment(rs.getInt("ap_id"), rs.getTimestamp("ap_date").toLocalDateTime(), patient, technician,
 						null, Appointment.State.valueOf(rs.getString("ap_state")));
-				appList.add(app);
+				
+				appList.add(app);				
+				System.out.println(appList.contains(app));
+				
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
+				
 			}
 		}
 		return appList;
