@@ -67,14 +67,17 @@ public class UserMapper extends DataMapper {
 	}
 
 	public void insert(IDomainObject user) {
-		// SQL
+		// STUB
+		// SQL goes here
 	}
 
 	public void update(IDomainObject user) {
-		// SQL
+		// STUB
+		// SQL goes here
 	}
 
 	public void delete(IDomainObject user) {
-		// SQL
+		// STUB
+		// SQL goes here
 	}
 }

@@ -3,20 +3,36 @@ import dies.models.*;
 
 public class PatientMapper extends DataMapper {
 	
+	public Patient find(String medicareNo) {
+		// STUB
+		// SQL goes here
+		return null;
+	}
+	
+	public Patient find(int id) {
+		// STUB
+		// SQL goes here
+		return null;
+	}
+	
+	public Patient findAll() {
+		// STUB
+		// SQL goes here
+		return null;
+	}
+	
 	public void insert(IDomainObject patient) {
-		
+		// STUB
+		// SQL goes here
 	}
 	
 	public void update(IDomainObject patient) {
-		
+		// STUB
+		// SQL goes here
 	}
 	
 	public void delete(IDomainObject patient) {
-		
-	}
-
-	public Patient find(String medicareNo) {
-		// TODO Auto-generated method stub
-		return null;
+		// STUB
+		// SQL goes here
 	}
 }

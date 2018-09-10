@@ -1,3 +1,10 @@
+/**
+ * Class for providing Appointment-management services.
+ * 
+ * @author ecranney, sweerakoon
+ * @since September 2018
+ * 
+ */
 package dies.services;
 
 import dies.models.*;
@@ -11,19 +18,20 @@ import java.time.temporal.ChronoUnit;
 
 public class AppointmentService {
 
-	// data mappers required for service
+	// mappers for accessing necessary tables
 	private AppointmentMapper appointmentMapper;
 	private UserMapper userMapper;
-
 	private PatientMapper patientMapper;
+	private MachineMapper machineMapper;
 	
-	// transaction object for create / edit appointments
+	// transaction object for creating/editing appointments
 	private UnitOfWork transaction;
 	
 	public AppointmentService() {
 		appointmentMapper = new AppointmentMapper();
 		userMapper = new UserMapper();
 		patientMapper = new PatientMapper();
+		machineMapper = new MachineMapper();
 		transaction = new UnitOfWork();
 	}
 	
@@ -42,8 +50,8 @@ public class AppointmentService {
 	
 	// returns a list of all available datetimes for a new appointment
 	public List<LocalDateTime> findAvailableDatetimes() {
+		
 		// STUB: currently returns every hour from now to one week ahead
-
 		LocalDateTime start = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS);
 		LocalDateTime end = start.plusWeeks(2);
 		List<LocalDateTime> dates = new ArrayList<LocalDateTime>();
@@ -54,8 +62,15 @@ public class AppointmentService {
 
 	// returns a list of all available technicians at the given datetime
 	public List<Technician> findAvailableTechnicians(LocalDateTime datetime) {
+		
 		// STUB: currently just returns ALL technicians
 		return userMapper.findAllTechnicians();
+	}
+	
+	public List<Machine> findAvailableMachines(LocalDateTime datetime) {
+		
+		// STUB: currently just returns all machines
+		return machineMapper.findAll();
 	}
 	
 	// attempts to locate a patient by medicare number, returns null if unable

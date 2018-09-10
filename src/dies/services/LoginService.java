@@ -1,27 +1,34 @@
-
+/**
+ * Class for providing Login services to the presentation layer - this mainly
+ * consists of checking that username corresponds to an actual user in
+ * the database, and that the username-password matches.
+ * 
+ * @author ecranney
+ * @since September 2018
+ * 
+ */
 package dies.services;
 
 import dies.models.*;
-
-import java.sql.SQLException;
-
 import dies.mappers.*;
 
 public class LoginService {
 	
-	// data mapper required for login service
+	// data mapper to access users tables
 	private UserMapper userMapper;
 	
 	public LoginService() {
 		userMapper = new UserMapper();
 	}
 
-	// attempt a user login using a given username and password
+	// login attempt using a given username and password, returns
+	// null or a user object
 	public User login(String username, String password) {
-		User user = null;
-		user = userMapper.find(username, password);
 		
-		// check that we have actually retrieved a user, and password matches
+		// fetch the user (or null) from the database
+		User user = userMapper.find(username, password);
+		
+		// check that password matches
 		if (user != null && !user.getPassword().equalsIgnoreCase(password)) {
 			System.out.println(user.getUsername());
 			return null;

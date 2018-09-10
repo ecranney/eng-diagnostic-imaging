@@ -135,15 +135,18 @@ public class AppointmentMapper extends DataMapper {
 	}
 
 	public void insert(IDomainObject appointment) {
-		// SQL
+		// STUB
+		// SQL goes here
 	}
 
 	public void update(IDomainObject appointment) {
-		// SQL
+		// STUB
+		// SQL goes here
 	}
 
 	public void delete(IDomainObject appointment) {
-		// SQL
+		// STUB
+		// SQL goes here
 	}
 
 }
