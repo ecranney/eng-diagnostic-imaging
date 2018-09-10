@@ -3,7 +3,7 @@
  * used to support polymorphic operations over homogenous sets of classes.
  * 
  * @author ecranney
- * @since 2018-09-09
+ * @since September 2018
  * 
  */
 
