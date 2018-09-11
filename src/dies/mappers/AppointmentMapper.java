@@ -221,7 +221,6 @@ public class AppointmentMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(updateSQL);
 			Appointment m = (Appointment) appointment;
-
 			statement.setInt(1, m.getId());
 
 			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
@@ -243,8 +242,9 @@ public class AppointmentMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(deleteSQL);
 			Appointment m = (Appointment) appointment;
-			System.out.println(m.getId() + " deletion for appointment id");
+			System.out.println(m.getId() + " is the appointment id for deletion");
 			statement.setInt(1, m.getId());
+			statement.executeQuery();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

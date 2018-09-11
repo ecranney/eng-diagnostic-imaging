@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="form-heading">DIES</h1>
+    <h1 class="form-heading">Diagnostic Imaging Enterprise System</h1>
     <div class="login-form">
         <div class="main-div">
             <div class="panel">

@@ -55,12 +55,14 @@
                                value=<%=app.getId()%>> 
                         <input type="submit" class="btn btn-primary" name="view" value="View">
                         <input type="submit" name = "delete" class="btn btn-primary" value="Delete">
-                    </form>
+                        <input type="submit" name = "edit" class="btn btn-primary" value="Edit">
+                    
                 </td>
             </tr>
             <%
                 }
             %>
+            </form>
         </table>
     </div>
 </div>

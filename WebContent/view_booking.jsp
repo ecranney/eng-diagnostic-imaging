@@ -72,12 +72,10 @@
 				<tr>
 					<td>Phone Number</td>
 					<td><%=app.getPatient().getPhone()%></td>
-
 				</tr>
 				<tr>
 					<td>Issuer</td>
 					<td><%=app.getTechnician().getFirstName() +" " + app.getTechnician().getLastName()%></td>
-
 				</tr>
 			</table>
 		</div>
