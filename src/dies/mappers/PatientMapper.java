@@ -26,7 +26,8 @@ public class PatientMapper extends DataMapper {
 	private String findByMedicareSQL = "select t1.id, t1.first_name, t1.last_name, \r\n" + 
 			"t2.id as patient_address_id, t2.unit_no as patient_unit_no, t2.street_no as patient_street_no, t2.street_name as patient_street_name, t2.city as patient_city, t2.state as patient_state, t2.post_code as patient_post_code,\r\n" + 
 			" t1.phone, t1.medicare_no from public.patient t1 inner join public.address t2 on t1.address_id= t2.id where medicare_no=?";
-	private String inserSQL = "insert id, first_name, last_name, address_id, phone, medicare_no public.patient values (?, ?, ?, ?, ?, ?)";
+	private String inserSQL = 
+			"insert id, first_name, last_name, address_id, phone, medicare_no public.patient values (?, ?, ?, ?, ?, ?)";
 	private String updateSQL = "update public.patient \r\n" + 
 			"set first_name=?, \r\n" + 
 			"last_name=?, \r\n" + 

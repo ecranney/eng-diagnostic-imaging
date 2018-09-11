@@ -36,12 +36,12 @@
 			<form action="appointment" method="post">
 				<table class="table table-striped custab">
 					<tr>
-						<td>Appointment Date</td>
-						<td><input size="16" type="text" value=" " name="appId"
+						<td>Appointment Date and Time</td>
+						<td><input size="16" type="text" value=" " name="appointmentDateTime"
 							readonly class="form-control form_datetime">
 					<tr>
 						<td>Appointment Status</td>
-						<td><select name="appStatus" class="form-control">
+						<td><select name="appointmentStatus" class="form-control">
 
 								<%
 									for (State state : State.values()) {
@@ -81,7 +81,7 @@
 						<td>Patient Address</td>
 						<td>
 							<div class="form-group gaddress f12 " data-fid="f12">
-								<input type="text" class="form-control" name="patienUnitNo"
+								<input type="text" class="form-control" name="patientUnitNo"
 									placeholder="Unit no"> <input type="text"
 									class="form-control gaddress-autocomplete"
 									data-gaddress-types="street_number route"
@@ -115,10 +115,6 @@
 						<td>Patient Phone Number</td>
 						<td><input type="text" class="form-control"
 							name="patientMobile"></td>
-					</tr>
-					<tr>
-						<td>Issuer</td>
-						<td></td>
 					</tr>
 					<tr>
 						<td></td>

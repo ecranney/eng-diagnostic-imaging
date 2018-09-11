@@ -54,6 +54,7 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
             HttpSession session = request.getSession(true);
             session.setAttribute("username", user.getFirstName() + " " + user.getLastName());   
+            session.setAttribute("userid", user.getId());   
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/booking.jsp");
             dispatcher.forward(request, response);
         } else {
