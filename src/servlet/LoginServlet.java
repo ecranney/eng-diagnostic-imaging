@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/loginconfirm")
+@WebServlet("/home")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -50,13 +50,14 @@ public class LoginServlet extends HttpServlet {
         LoginService loginService = new LoginService();
         User user = loginService.login(username, password);
 
+        
         if (user != null) {
             HttpSession session = request.getSession(true);
-            session.setAttribute("username",username);   
+            session.setAttribute("username", user.getFirstName() + " " + user.getLastName());   
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/booking.jsp");
             dispatcher.forward(request, response);
         } else {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/invalidLogin.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/invalid_login.jsp");
             dispatcher.forward(request, response);
         }
     }

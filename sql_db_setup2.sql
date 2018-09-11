@@ -17,6 +17,10 @@ CREATE TABLE public.appointment (
     state text
 );
 
+alter table public.appointment
+alter column date 
+set default date_trunc('minute', now());
+
 
 CREATE TABLE public.appointment_machine (
     id bigint NOT NULL,

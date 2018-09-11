@@ -159,6 +159,8 @@ public class AppointmentMapper extends DataMapper {
 		List<Machine> machines = new ArrayList<Machine>();
 		ResultSet rs = statement.executeQuery();
 		
+		Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
+		
 		while (rs.next()) {
 			
 			try {
@@ -179,16 +181,13 @@ public class AppointmentMapper extends DataMapper {
 				app = new Appointment(rs.getInt("ap_id"), rs.getTimestamp("ap_date").toLocalDateTime(), patient, technician,
 						null, Appointment.State.valueOf(rs.getString("ap_state")));
 				
-				
-				appList.add(app);				
-				System.out.println(appList.contains(app));
-				
-				
+				appointmentMap.put(rs.getInt("ap_id"), app);						
 			} catch (SQLException e) {
 				e.printStackTrace();
 				
 			}
 		}
+		appList.addAll(appointmentMap.values());
 		return appList;
 	}
 

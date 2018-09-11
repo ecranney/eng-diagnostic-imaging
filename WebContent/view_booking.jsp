@@ -22,6 +22,12 @@
 	%>
 	<div class="container">
 		<div>
+			<form action="appointment" method="POST">
+				<h4>
+					<input type="submit" name="back"
+						class="btn btn-primary btn-sm btn-outline-dark" value="Back">
+				</h4>
+			</form>
 			<table class="table table-striped custab">
 				<tr>
 					<td>Appointment Date</td>
@@ -75,7 +81,7 @@
 				</tr>
 				<tr>
 					<td>Issuer</td>
-					<td><%=app.getTechnician().getFirstName() +" " + app.getTechnician().getLastName()%></td>
+					<td><%=app.getTechnician().getFirstName() + " " + app.getTechnician().getLastName()%></td>
 				</tr>
 			</table>
 		</div>

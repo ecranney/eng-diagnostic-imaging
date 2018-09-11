@@ -70,7 +70,6 @@ public class AppointmentServlet extends HttpServlet {
             String patientMobile = request.getParameter("patientMobile");
             String patientMedicareNo = request.getParameter("patientMedicareNo");
 
-            //String patientUnitNo = request.getParameter("patientUnitNo");
             Integer patientUnitNo = Integer.valueOf(request.getParameter("patienUnitNo"));
             Integer patientStreetNo = Integer.valueOf(request.getParameter("patientStreetNo"));
             String patientStreetName = request.getParameter("patientStreetName");
@@ -85,50 +84,52 @@ public class AppointmentServlet extends HttpServlet {
             as.finishUpdatePatient(patient);
 
             response.sendRedirect("view_booking.jsp?appointmentid=" + request.getParameter("appointmentid"));
+            
+        } else if (request.getParameter("create") != null) {
+          //String appointmentDate = request.getParameter("appointmentDate");
+          //String appointmentTime = request.getParameter("appointmentTime");
+  
+          //String patientId = request.getParameter("patientId");
+          String patientFirstName = request.getParameter("patientFirstName");
+          String patientLastName = request.getParameter("patientLastName");
+          String patientMobile = request.getParameter("patientMobile");
+          String patientMedicareNo = request.getParameter("patientMedicareNo");
+  
+          //String patientUnitNo = request.getParameter("patientUnitNo");
+          Integer patientUnitNo = Integer.parseInt(request.getParameter("patienUnitNo"));
+          Integer patientStreetNo = Integer.parseInt(request.getParameter("patientStreetNo"));
+          String patientStreetName = request.getParameter("patientStreetName");
+          String patientCity = request.getParameter("patientCity");
+          String patientState = request.getParameter("patientState");
+          Integer patientPostCode = Integer.parseInt(request.getParameter("patientPostalCode"));
+  
+          String appointmentType = request.getParameter("appointmentType");
+  
+          int technicianId = Integer.parseInt(request.getParameter("technician"));
+  
+          LocalDateTime date = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS);
+  
+          LocalDateTime app_date = date;
+          Appointment.State app_state = Appointment.State.FUTURE;
+  
+          Address patientAddress = new Address(0, 0, patientStreetNo, patientStreetName, patientCity, patientState, patientPostCode);
+          Patient patient = new Patient(0, patientFirstName, patientLastName, patientAddress, patientMobile, patientMedicareNo);
+  
+          Technician technician = new Technician(technicianId, "", "", "", "");
+          Machine machine = new Machine(1, 0, Type.CAT);
+          List<Machine> machines = new ArrayList<Machine>();
+          machines.add(machine);
+          AppointmentService as = new AppointmentService();
+  
+          Appointment appointment = new Appointment(0, date, patient, technician, machines, app_state);
+          as.finishCreatePatient(patient);
+          as.finishCreateAppointment(appointment);
+  
+  
+          response.sendRedirect("booking.jsp");
+        } else if (request.getParameter("back") != null) {
+        	response.sendRedirect("booking.jsp");
         }
-
-//        //String appointmentDate = request.getParameter("appointmentDate");
-//        //String appointmentTime = request.getParameter("appointmentTime");
-//
-//        //String patientId = request.getParameter("patientId");
-//        String patientFirstName = request.getParameter("patientFirstName");
-//        String patientLastName = request.getParameter("patientLastName");
-//        String patientMobile = request.getParameter("patientMobile");
-//        String patientMedicareNo = request.getParameter("patientMedicareNo");
-//
-//        //String patientUnitNo = request.getParameter("patientUnitNo");
-//        Integer patientUnitNo = Integer.parseInt(request.getParameter("patienUnitNo"));
-//        Integer patientStreetNo = Integer.parseInt(request.getParameter("patientStreetNo"));
-//        String patientStreetName = request.getParameter("patientStreetName");
-//        String patientCity = request.getParameter("patientCity");
-//        String patientState = request.getParameter("patientState");
-//        Integer patientPostCode = Integer.parseInt(request.getParameter("patientPostalCode"));
-//
-//        String appointmentType = request.getParameter("appointmentType");
-//
-//        int technicianId = Integer.parseInt(request.getParameter("technician"));
-//
-//        LocalDateTime date = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS);
-//
-//        LocalDateTime app_date = date;
-//        Appointment.State app_state = Appointment.State.FUTURE;
-//
-//        Address patientAddress = new Address(0, 0, patientStreetNo, patientStreetName, patientCity, patientState, patientPostCode);
-//        Patient patient = new Patient(0, patientFirstName, patientLastName, patientAddress, patientMobile, patientMedicareNo);
-//
-//        Technician technician = new Technician(technicianId, "", "", "", "");
-//        Machine machine = new Machine(1, 0, Type.CAT);
-//        List<Machine> machines = new ArrayList<Machine>();
-//        machines.add(machine);
-//        AppointmentService as = new AppointmentService();
-//
-//        Appointment appointment = new Appointment(0, date, patient, technician, machines, app_state);
-//        as.finishCreatePatient(patient);
-//        as.finishCreateAppointment(appointment);
-//
-//
-//        response.sendRedirect("booking.jsp");
-
     }
 
 }

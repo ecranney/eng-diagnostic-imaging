@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+w<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html>
 <html>
@@ -18,7 +18,7 @@
             <div class="panel">
                 <h2>Login</h2>, <p>Please enter your username and password</p>
             </div>
-            <form action="loginconfirm" method="post">
+            <form action="home" method="post">
                 <div class="form-group">
                     <input type="text" class="form-control" id="inputEmail"
                            placeholder="Username" name="username">
