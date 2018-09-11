@@ -20,7 +20,7 @@
 		<form action="logout" method="GET">
 			<h4>
 				Hola!,
-				<%=request.getSession().getAttribute("username")%>
+				<%=request.getSession().getAttribute("firstname")%>
 
 				<input type="submit" name="logout" class="btn btn-primary btn-sm btn-outline-dark"
 					value="Logout">

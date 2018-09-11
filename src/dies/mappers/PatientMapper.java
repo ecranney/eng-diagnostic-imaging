@@ -24,10 +24,25 @@ public class PatientMapper extends DataMapper {
 			"t2.id as patient_address_id, t2.unit_no as patient_unit_no, t2.street_no as patient_street_no, t2.street_name as patient_street_name, t2.city as patient_city, t2.state as patient_state, t2.post_code as patient_post_code,\r\n" + 
 			" t1.phone, t1.medicare_no from public.patient t1 inner join public.address t2 on t1.address_id= t2.id where t1.id=?";
 	private String findByMedicareSQL = "select t1.id, t1.first_name, t1.last_name, \r\n" + 
-			"t2.id as patient_address_id, t2.unit_no as patient_unit_no, t2.street_no as patient_street_no, t2.street_name as patient_street_name, t2.city as patient_city, t2.state as patient_state, t2.post_code as patient_post_code,\r\n" + 
-			" t1.phone, t1.medicare_no from public.patient t1 inner join public.address t2 on t1.address_id= t2.id where medicare_no=?";
+			"t2.id as patient_address_id, \r\n" + 
+			"t2.unit_no as patient_unit_no, \r\n" + 
+			"t2.street_no as patient_street_no, \r\n" + 
+			"t2.street_name as patient_street_name, \r\n" + 
+			"t2.city as patient_city, \r\n" + 
+			"t2.state as patient_state, \r\n" + 
+			"t2.post_code as patient_post_code,\r\n" + 
+			"t1.phone, t1.medicare_no from public.patient t1 \r\n" + 
+			"left outer join public.address t2 on t1.address_id= t2.id where medicare_no=?";
 	private String inserSQL = 
-			"insert id, first_name, last_name, address_id, phone, medicare_no public.patient values (?, ?, ?, ?, ?, ?)";
+			"with rows as ( \r\n" + 
+			"insert into public.address (unit_no, street_no, street_name, city, state, post_code) \r\n" + 
+			"values (?, ?, ?, ?,?,?) returning id \r\n" + 
+			") \r\n" + 
+			"insert into public.patient (first_name,last_name,address_id, phone, medicare_no)\r\n" + 
+			"select ?, ?, id, ?, ? from rows \r\n" + 
+			"";
+	
+	
 	private String updateSQL = "update public.patient \r\n" + 
 			"set first_name=?, \r\n" + 
 			"last_name=?, \r\n" + 
@@ -136,19 +151,21 @@ public class PatientMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(inserSQL);
 			Patient m = (Patient) patient;
+			
+			statement.setInt(1, m.getAddress().getUnitNo());
+			statement.setInt(2, m.getAddress().getStreetNo());
+			statement.setString(3, m.getAddress().getStreetName());
+			statement.setString(4, m.getAddress().getCity());
+			statement.setString(5, m.getAddress().getState());
+			statement.setInt(6, m.getAddress().getPostCode());
+			
+			statement.setString(7, m.getFirstName());
+			statement.setString(8, m.getLastName());
+			statement.setString(9, m.getPhone());
+			statement.setString(10, m.getMedicareNo());
 
-			statement.setInt(1, m.getId());
-
-			statement.setString(2, m.getFirstName());
-
-			statement.setString(3, m.getLastName());
-
-			statement.setInt(4, m.getAddress().getId());
-
-			statement.setString(5, m.getPhone());
-
-			statement.setString(6, m.getMedicareNo());
-
+			System.out.println(statement + " printing statement to check the errors");
+			
 			statement.executeUpdate();
 
 		} catch (SQLException e1) {

@@ -91,7 +91,9 @@ public class AppointmentMapper extends DataMapper {
 			"\r\n" + 
 			"";
 	private String findAppointmentSQL = findAllAppointmentSQL + " where t1.id = ?";
-	private String insertSQL = "insert into id, date, patient_id, technician_id, state public.appointment values (?, ?, ?)";
+	private String insertSQL = ""
+			+ "insert into public.appointment (date, patient_id, technician_id, state) "
+			+ "values (?, ?, ?, ?)";
 	private String updateSQL = "update public.appointment set into id=?, date=?, patient_id=?, technician_id=?, state=?";
 	private String deleteSQL = "delete from public.appointment where id=?";
 

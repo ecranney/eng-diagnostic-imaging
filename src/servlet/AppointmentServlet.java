@@ -119,7 +119,10 @@ public class AppointmentServlet extends HttpServlet {
 			Machine.Type machineCastType = Machine.Type.valueOf(machineType);
 
 			int technicianId = (int) request.getSession().getAttribute("userid");
-
+			String technicianUsername = (String) request.getSession().getAttribute("username");
+			String technicianFirstname = (String) request.getSession().getAttribute("firstname");
+			String technicianLastName = (String) request.getSession().getAttribute("lastname");
+			
 			String patientFirstName = request.getParameter("patientFirstName");
 			String patientLastName = request.getParameter("patientLastName");
 			String patientMobile = request.getParameter("patientMobile");
@@ -137,11 +140,11 @@ public class AppointmentServlet extends HttpServlet {
 			Patient patient = new Patient(0, patientFirstName, patientLastName, patientAddress, patientMobile,
 					patientMedicareNo);
 
-			Technician technician = new Technician(technicianId, "", "", "", "");
-
+			Technician technician = new Technician(technicianId, technicianUsername, "", technicianFirstname, technicianLastName);
+			
 			// Updating the data in the server
 			AppointmentService as = new AppointmentService();
-			
+
 			Machine machine = new Machine(0, 0, machineCastType);
 			List<Machine> machines = new ArrayList<Machine>();
 			machines.add(machine);

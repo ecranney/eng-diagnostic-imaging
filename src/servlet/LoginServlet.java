@@ -52,9 +52,11 @@ public class LoginServlet extends HttpServlet {
 
         
         if (user != null) {
-            HttpSession session = request.getSession(true);
-            session.setAttribute("username", user.getFirstName() + " " + user.getLastName());   
+            HttpSession session = request.getSession(true);   
             session.setAttribute("userid", user.getId());   
+            session.setAttribute("username", user.getUsername());   
+            session.setAttribute("firstname", user.getFirstName());  
+            session.setAttribute("lastname", user.getLastName());  
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/booking.jsp");
             dispatcher.forward(request, response);
         } else {
