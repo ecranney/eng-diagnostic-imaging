@@ -199,15 +199,13 @@ public class AppointmentMapper extends DataMapper {
 			PreparedStatement statement = con.prepareStatement(insertSQL);
 			Appointment m = (Appointment) appointment;
 
-			statement.setInt(1, m.getId());
+			statement.setTimestamp(1, Timestamp.valueOf(m.getDate()));
 
-			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
+			statement.setInt(2, m.getPatient().getId());
 
-			statement.setInt(3, m.getPatient().getId());
+			statement.setInt(3, m.getTechnician().getId());
 
-			statement.setInt(4, m.getTechnician().getId());
-
-			statement.setString(5, m.getState().name());
+			statement.setString(4, m.getState().name());
 
 			statement.executeUpdate();
 
