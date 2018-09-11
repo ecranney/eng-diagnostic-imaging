@@ -105,4 +105,10 @@ public class AppointmentService {
 		transaction.registerUpdated(appointment);
 		transaction.commit();
 	}
+	
+	// finish Delete appointment
+	public void finishDeleteAppointment(Appointment appointment) {
+		transaction.registerDeleted(appointment);
+		transaction.commit();
+	}
 }

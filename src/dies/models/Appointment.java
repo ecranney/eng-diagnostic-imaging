@@ -36,7 +36,6 @@ public class Appointment implements IDomainObject {
         this.technician = technician;
         this.machines = machines;
         this.state = state;
-        System.out.println("this is the constrcutor of appointment " + this.state.toString());
     }
 
     public int getId() {

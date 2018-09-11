@@ -2,6 +2,7 @@ package db;
 
 import dies.mappers.AppointmentMapper;
 import dies.mappers.UserMapper;
+import dies.models.Appointment;
 import dies.models.Technician;
 import dies.services.AppointmentService;
 import dies.services.LoginService;
@@ -27,12 +28,9 @@ public class DBConnectionTest {
 //        loginService.login("admin", "admin");
     	
     	AppointmentMapper appointmentMapper = new AppointmentMapper();
-    	try {
-			appointmentMapper.findAll();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	Appointment appointment = new Appointment(5, null, null, null, null, null);
+		
+		appointmentMapper.delete(appointment);
         
     }
 }

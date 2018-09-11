@@ -4,11 +4,14 @@ import dies.models.*;
 import dies.models.Machine.Type;
 import dies.services.AppointmentService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -36,7 +39,17 @@ public class AppointmentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         //response.getWriter().append("Served at: ").append(request.getContextPath());
-        response.getWriter().append("Served at: ").append(request.getContextPath());
+    	
+    	if (request.getParameter("view") != null) {
+    		response.sendRedirect("view_booking.jsp?appointmentid="+ request.getParameter("appointmentid"));
+
+        } else if (request.getParameter("delete") != null) {
+        	Appointment appointment = new Appointment(Integer.valueOf(request.getParameter("appointmentid")), null, null, null, null, null);
+        	
+        	AppointmentService as = new AppointmentService();
+        	as.finishDeleteAppointment(appointment);
+        	response.sendRedirect("booking.jsp");
+        }
     }
 
     /**

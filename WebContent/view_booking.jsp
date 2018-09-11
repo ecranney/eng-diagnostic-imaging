@@ -1,83 +1,86 @@
-<%@page import="dies.models.Appointment" %>
-<%@page import="dies.services.AppointmentService" %>
+<%@page import="dies.models.Appointment"%>
+<%@page import="dies.services.AppointmentService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1" %>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Booking View</title>
-    <link href="resources/styles/bootstrap.min.css"
-          rel="stylesheet" id="bootstrap-css">
-    <script src="resources/js/bootstrap.min.js"></script>
-    <script src="resources/js/jquery.min.js"></script>
+<meta charset="ISO-8859-1">
+<title>Booking View</title>
+<link href="resources/styles/bootstrap.min.css" rel="stylesheet"
+	id="bootstrap-css">
+<script src="resources/js/bootstrap.min.js"></script>
+<script src="resources/js/jquery.min.js"></script>
 </head>
 </head>
 <body>
-<%
-    AppointmentService appointmentService = new AppointmentService();
-    int app_id = Integer.parseInt(request.getParameter("appointmentid"));
+	<%
+		AppointmentService appointmentService = new AppointmentService();
+		int app_id = Integer.parseInt(request.getParameter("appointmentid"));
 
-    Appointment app = appointmentService.findAppointment(app_id);
-%>
-<div class="container">
-    <div>
-        <table class="table table-striped custab">
-            <tr>
-                <td>Appointment Date</td>
-                <td><%=app.getDate()%>
-                </td>
+		Appointment app = appointmentService.findAppointment(app_id);
+	%>
+	<div class="container">
+		<div>
+			<table class="table table-striped custab">
+				<tr>
+					<td>Appointment Date</td>
+					<td><%=app.getDate()%></td>
 
-            </tr>
-            <tr>
-                <td>Appointment Reference</td>
-                <td class="info-highlight bottom-border"><%=app.getId()%>
-                </td>
-            </tr>
+				</tr>
+				<tr>
+					<td>Appointment Reference</td>
+					<td class="info-highlight bottom-border"><%=app.getId()%></td>
+				</tr>
 
+				<tr>
+					<td>Appointment Status</td>
+					<td class="info-highlight bottom-border"><%=app.getState()%></td>
+				</tr>
+				<tr>
+					<td>Patient First Name</td>
+					<td><%=app.getPatient().getFirstName()%></td>
 
-            <tr>
-                <td>First Name</td>
-                <td><%=app.getPatient().getFirstName()%>
-                </td>
+				</tr>
+				<tr>
+					<td>Patient Last Name</td>
+					<td><%=app.getPatient().getLastName()%></td>
 
-            </tr>
-            <tr>
-                <td>Last Name</td>
-                <td><%=app.getPatient().getLastName()%>
-                </td>
+				</tr>
+				<tr>
+					<td>Address</td>
 
-            </tr>
-            <tr>
-                <td>Address</td>
-                <td><%=app.getPatient().getAddress().getUnitNo()%>
-                    , <%=app.getPatient().getAddress().getStreetNo()%>,
-                    <%=app.getPatient().getAddress().getStreetName()%>
-                    , <%=app.getPatient().getAddress().getCity()%>,
-                    <%=app.getPatient().getAddress().getState()%> <%=app.getPatient().getAddress().getPostCode()%>
-                </td>
+					<td><c:choose>
+							<c:when <%=app.getPatient().getAddress()%> !=null}">
 
-            </tr>
-            <tr>
-                <td>Medicare No</td>
-                <td><%=app.getPatient().getMedicareNo()%>
-                </td>
+							</c:when>
+							<c:otherwise>
+								<%=app.getPatient().getAddress().getUnitNo()%>,
+                    			<%=app.getPatient().getAddress().getStreetNo()%>,
+                    			<%=app.getPatient().getAddress().getStreetName()%>,
+                    			<%=app.getPatient().getAddress().getCity()%>,
+                    			<%=app.getPatient().getAddress().getState()%>,
+								<%=app.getPatient().getAddress().getPostCode()%>
+							</c:otherwise>
+						</c:choose>
+				</tr>
+				<tr>
+					<td>Medicare No</td>
+					<td><%=app.getPatient().getMedicareNo()%></td>
 
-            </tr>
-            <tr>
-                <td>Phone Number</td>
-                <td><%=app.getPatient().getPhone()%>
-                </td>
+				</tr>
+				<tr>
+					<td>Phone Number</td>
+					<td><%=app.getPatient().getPhone()%></td>
 
-            </tr>
-            <tr>
-                <td>Issuer</td>
-                <td><%=app.getTechnician().getFirstName()%>
-                </td>
+				</tr>
+				<tr>
+					<td>Issuer</td>
+					<td><%=app.getTechnician().getFirstName() +" " + app.getTechnician().getLastName()%></td>
 
-            </tr>
-        </table>
-    </div>
-</div>
+				</tr>
+			</table>
+		</div>
+	</div>
 </body>
 </html>

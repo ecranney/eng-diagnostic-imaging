@@ -93,7 +93,7 @@ public class AppointmentMapper extends DataMapper {
 	private String findAppointmentSQL = findAllAppointmentSQL + " where t1.id = ?";
 	private String insertSQL = "insert into id, date, patient_id, technician_id, state public.appointment values (?, ?, ?)";
 	private String updateSQL = "update public.appointment set into id=?, date=?, patient_id=?, technician_id=?, state=?";
-	private String deleteSQL = "delete from public.appointment where id=? and date=? and patient_id=? and technician_id=? and state=?";
+	private String deleteSQL = "delete from public.appointment where id=?";
 
 	public Appointment find(int id) throws SQLException {
 		Connection con = db.getConnection();
@@ -179,6 +179,7 @@ public class AppointmentMapper extends DataMapper {
 				app = new Appointment(rs.getInt("ap_id"), rs.getTimestamp("ap_date").toLocalDateTime(), patient, technician,
 						null, Appointment.State.valueOf(rs.getString("ap_state")));
 				
+				
 				appList.add(app);				
 				System.out.println(appList.contains(app));
 				
@@ -242,17 +243,8 @@ public class AppointmentMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(deleteSQL);
 			Appointment m = (Appointment) appointment;
-
+			System.out.println(m.getId() + " deletion for appointment id");
 			statement.setInt(1, m.getId());
-
-			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
-
-			statement.setInt(3, m.getPatient().getId());
-
-			statement.setInt(4, m.getTechnician().getId());
-
-			statement.setString(5, m.getState().name());
-
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

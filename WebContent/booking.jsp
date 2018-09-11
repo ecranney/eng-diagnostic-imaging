@@ -1,3 +1,4 @@
+<%@page import="dies.services.LoginService"%>
 <%@page import="dies.models.Appointment" %>
 <%@page import="dies.services.AppointmentService" %>
 <%@page import="java.util.List" %>
@@ -49,11 +50,11 @@
                 <td><%=app.getState()%>
                 </td>
                 <td class="text-center">
-                    <form action="view_booking.jsp" method="GET">
+                    <form action="appointment" method="GET">
                         <input type="hidden" id="app_id" name="appointmentid"
-                               value=<%=app.getId()%>> <input type="submit"
-                                                              class="btn btn-primary"
-                                                              value="Open">
+                               value=<%=app.getId()%>> 
+                        <input type="submit" class="btn btn-primary" name="view" value="View">
+                        <input type="submit" name = "delete" class="btn btn-primary" value="Delete">
                     </form>
                 </td>
             </tr>
