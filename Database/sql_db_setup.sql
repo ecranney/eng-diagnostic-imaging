@@ -404,4 +404,18 @@ values
 
 --------------------
 
+TO kill connections
+
+SELECT *
+FROM   pg_stat_activity
+WHERE  usename = 'akasvjtcdtwoly';
+
+SELECT pg_cancel_backend(pid)     -- (SIGINT)
+    -- pg_terminate_backend(pid)  -- the less patient alternative (SIGTERM)
+FROM   pg_stat_activity
+WHERE  usename = 'akasvjtcdtwoly'
+AND    pid <> pg_backend_pid();
+
+
+
 

@@ -89,7 +89,6 @@ public class AppointmentServlet extends HttpServlet {
           //String appointmentDate = request.getParameter("appointmentDate");
           //String appointmentTime = request.getParameter("appointmentTime");
   
-          //String patientId = request.getParameter("patientId");
           String patientFirstName = request.getParameter("patientFirstName");
           String patientLastName = request.getParameter("patientLastName");
           String patientMobile = request.getParameter("patientMobile");

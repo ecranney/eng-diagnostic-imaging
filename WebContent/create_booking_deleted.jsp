@@ -16,6 +16,8 @@
 <meta name="generator" content="jqueryform.com">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
 <link href="resources/styles/bootstrap.min.css" rel="stylesheet"
 	id="bootstrap-css">
 <script src="resources/js/bootstrap.min.js"></script>
@@ -102,51 +104,56 @@
 					type="text" class="form-control" id="f10" name="patientMedicareNo"
 					value="" />
 			</div>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			<div class="form-group gaddress f12 " data-fid="f12">
-				<label class="control-label">Address</label>
-
-				<div class="form-group addressLine1">
-					<label class="control-label sr-only" for="f12_addressLine1">Unit
-						No</label> <input type="text" class="form-control gaddress-autocomplete"
+				
+<input type="text" class="form-control gaddress-autocomplete"
 						data-gaddress-types="street_number route"
 						data-gaddress-name="long_name" id="f12_addressLine1"
 						name="patientStreetNo" value=""
 						aria-describedby="f12_addressLine1-help-block"
 						placeholder="1234 Main St." />
-					<p id="f12_addressLine1-help-block" class="description sr-only">
-						Street address, P.O. box, company name, c/o</p>
-				</div>
-				<div class="form-group city">
-					<label class="control-label sr-only" for="f12_city">City</label> <input
+						
+						<input
 						type="text" class="form-control" data-gaddress-types="locality"
 						data-gaddress-name="long_name" id="f12_city" name="patientCity"
 						value="" aria-describedby="f12_city-help-block" placeholder="City" />
-					<p id="f12_city-help-block" class="description sr-only">City</p>
-				</div>
-
-				<div class="form-group state">
-					<label class="control-label sr-only" for="f12_state">State
-						/ Province / Region</label> <input type="text" class="form-control"
+				
+				<input type="text" class="form-control"
 						data-gaddress-types="administrative_area_level_1"
 						data-gaddress-name="long_name" id="f12_state" name="patientState"
 						value="" aria-describedby="f12_state-help-block"
 						placeholder="State / Province / Region" />
-					<p id="f12_state-help-block" class="description sr-only">State
-						/ Province / Region</p>
-				</div>
-				<div class="form-group postalCode">
-					<label class="control-label sr-only" for="f12_postalCode">Postal
-						/ Zip Code</label> <input type="text" class="form-control"
+
+				
+				<input type="text" class="form-control"
 						data-gaddress-types="postal_code"
 						data-gaddress-name="patientUPostalCode" id="f12_postalCode"
 						name="patientPostalCode" value=""
 						aria-describedby="f12_postalCode-help-block"
 						placeholder="Postal / Zip Code" />
-					<p id="f12_postalCode-help-block" class="description sr-only">
-						Postal / Zip Code</p>
-				</div>
-
-			</div>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 			<div class="form-group f14 " data-fid="f14">
 				<label class="control-label" for="f14">Scan Type</label> <select
 					class="form-control" id="f14" name="appointmentType">
