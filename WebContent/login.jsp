@@ -16,7 +16,7 @@
     <div class="login-form">
         <div class="main-div">
             <div class="panel">
-                <h2>Login</h2>, <p>Please enter your username and password</p>
+                <h2>Login</h2> <p>Please enter your username and password</p>
             </div>
             <form action="home" method="post">
                 <div class="form-group">

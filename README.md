@@ -63,7 +63,9 @@ This project supports PostgreSQL database. Currently the settings for the databa
 ##### Database Setup
 Run the following SQL files to create a new database setup
 
- 1. {TODO} We are planning to do this during submission for Part 3
+ - Run following scripts to setup the database 
+ `create_database.sql`
+ `mock_database.sql`
  
  
 # Project Structure
