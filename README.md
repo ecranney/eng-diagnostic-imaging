@@ -54,7 +54,11 @@ Following external libraries are in 'lib' folder under 'WEB-INF' folder
 # Database
 This project supports PostgreSQL database. Currently the settings for the database in DBConnection.java file 
 `TODO: Move DBConnections configurations to a properties file`
-> We recommend using https://teamsql.io/ or DataGrip from Jetbrains (Which is free for students) than PGAdmin4 because of the flexibility  in UI Client
+> We recommend using https://teamsql.io/ or DataGrip from Jetbrains (Which is free for students) than PGAdmin4 (Web version) or 3 (Desktop version) because of the flexibility  in UI Client
+> Please note that if you want to connect to Heroku Dynos for PSQL, the teamsql does not have any support with stable version. 
+> Also you need to follow this guide for DataGrip support > http://andyfiedler.com/2016/02/getting-jetbrains-datagrip-to-work-with-heroku-postgres
+> JDBC URL will be jdbc:postgresql://{host}/{dbname} and it will give you the options to do the rest
+
 
 ##### Database Setup
 Run the following SQL files to create a new database setup
