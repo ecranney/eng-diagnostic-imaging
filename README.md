@@ -66,15 +66,15 @@ Run the following SQL files to create a new database setup
 
 ```
 .
-├── database                # Database dump files 
+├── db                      # Database dump files 
 ├── docs                    # Documentation files 
 │   ├── draw.io             # {TODO} Project architechture files for modification draw.io
 │   ├── unimelb             # {TODO} Assignment details
 ├── src                     # Source files 
 ├── WebContent              # Dynamic resources such as JSP files and associated metadata
 ├── pom.xml                 # Maven build file
-├── LICENSE					# {TODO}
-├── system.properties		# Heroku support file 
+├── LICENSE					   # {TODO}
+├── system.properties		   # Heroku support file 
 ├── .gitignore              # To ignore all kind of IDE, build related files from git  
 └── README.md
 
