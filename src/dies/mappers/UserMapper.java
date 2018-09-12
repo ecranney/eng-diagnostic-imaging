@@ -2,7 +2,6 @@ package dies.mappers;
 
 import db.DBConnection;
 import dies.models.IDomainObject;
-import dies.models.Patient;
 import dies.models.Technician;
 import dies.models.User;
 
@@ -99,7 +98,7 @@ public class UserMapper extends DataMapper {
 	public void update(IDomainObject user) {
 		try {
 			Connection con = db.getConnection();
-			PreparedStatement statement = con.prepareStatement(inserSQL);
+			PreparedStatement statement = con.prepareStatement(updateSQL);
 			User m = (User) user;
 
 			statement.setInt(1, m.getId());
@@ -122,7 +121,7 @@ public class UserMapper extends DataMapper {
 	public void delete(IDomainObject user) {
 		try {
 			Connection con = db.getConnection();
-			PreparedStatement statement = con.prepareStatement(inserSQL);
+			PreparedStatement statement = con.prepareStatement(deleteSQL);
 			User m = (User) user;
 
 			statement.setInt(1, m.getId());

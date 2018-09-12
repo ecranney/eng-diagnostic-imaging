@@ -7,7 +7,6 @@ import dies.models.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class AppointmentMapper extends DataMapper {
 
@@ -114,7 +111,6 @@ public class AppointmentMapper extends DataMapper {
 
 		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
 		if (map.contains(id)) {
-			Appointment appointment = map.get(id);
 		} else {
 			while (rs.next()) {
 				try {

@@ -1,19 +1,8 @@
 package db;
 
-import dies.mappers.AppointmentMapper;
-import dies.mappers.PatientMapper;
-import dies.mappers.UserMapper;
 import dies.models.Address;
-import dies.models.Appointment;
 import dies.models.Patient;
-import dies.models.Technician;
 import dies.services.AppointmentService;
-import dies.services.LoginService;
-
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class DBConnectionTest {
 
@@ -34,8 +23,8 @@ public class DBConnectionTest {
 //    	Appointment appointment = new Appointment(5, null, null, null, null, null);
 //		
 //		appointmentMapper.delete(appointment);
-    	
-    	PatientMapper patientMapper = new PatientMapper();
+//    	
+//    	PatientMapper patientMapper = new PatientMapper();
     	Address address =  new Address(0, 22, 223, "Station Street", "CBD", "NSW", 2324);
     	Patient patient = new Patient(0, "Brown", "Hills", address, "24323423", "MEDI323333");
 //    	patientMapper.insert(patient);

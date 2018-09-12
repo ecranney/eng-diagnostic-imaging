@@ -36,7 +36,7 @@
                 </button>
             </form>
         </div>
-        <p class="botto-text">Designed by Evan Cranney & Shalitha Weerakoon
+        <p class="botto-text">Designed by Evan Cranney and Shalitha Weerakoon
             Karunatilleke</p>
     </div>
 </div>

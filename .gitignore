@@ -18,6 +18,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+catalina.out
 
 # External tool builders
 .externalToolBuilders/
@@ -30,3 +31,4 @@ local.properties
 out/
 .idea_modules/
 /build/
+*.iml

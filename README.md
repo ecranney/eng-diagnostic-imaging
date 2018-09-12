@@ -46,6 +46,8 @@ postgresql-42.2.5.jar: Contains the java client for the database and java. (Not 
 
 * https://diags.herokuapp.com/login.jsp
 
+Default Login: admin (password:admin)
+
 ## Versioning
 
 This project has three remote git repositaies for Heroku, Bitbucket and Github
@@ -57,3 +59,28 @@ This project has three remote git repositaies for Heroku, Bitbucket and Github
 ## Documentation
 
 Documentation are in project root
+
+## Heroku Troubleshoot
+Deploy locally
+
+```
+mvn clean install
+java -jar target/dependency/webapp-runner.jar target/*.war
+```
+
+more information https://devcenter.heroku.com/articles/java-webapp-runner
+
+Deploy in server
+
+```
+mvn clearn install or mvn package
+
+heroku plugins:install heroku-cli-deploy
+heroku war:deploy target/dies-1.2.war --app diags
+```
+
+Heroku server restart
+
+```
+heroku restart --app diag
+```

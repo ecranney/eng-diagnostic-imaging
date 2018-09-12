@@ -75,7 +75,13 @@ CREATE TABLE public."user" (
 );
 
 
-
+CREATE TABLE public.appointment (
+    id bigint NOT NULL,
+    date timestamp without time zone,
+    patient_id integer,
+    technician_id integer,
+    state text
+);
 
 insert into public.appointment (id, date, patient_id, technician_id, state) 
 values
@@ -96,6 +102,8 @@ insert into public.machine (id, serial_code, type) values
 (2,	1,	'XRAY'),
 (1,	2,	'CAT'),
 (3,	3,	'MRI');
+
+
 
 insert into public.patient (id, first_name, last_name, address_id, phone, medicare_no) values
 (1,	'Shalitha', 'Weearakoon',	1,	04791242428,	'MEDI0943'),

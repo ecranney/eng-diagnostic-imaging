@@ -418,4 +418,215 @@ AND    pid <> pg_backend_pid();
 
 
 
+select to_char(date, 'YYYY-MM-DD HH24:MI:SS')
+from public.appointment;
+
+
+
+
+select
+t1.id as ap_id,
+to_char(t1.date, 'YYYY-MM-DD HH:MI')  as ap_date,
+t1.state as ap_state,
+
+t1.patient_id as patient_id,
+t2t6.first_name as patient_first_name,
+t2t6.last_name as patient_last_name,
+t2t6.medicare_no as patient_medicate_no,
+t2t6.phone as patient_mobile_no,
+
+t2t6.patient_address_id as patient_address_id,
+t2t6.unit_no as patient_unit_no,
+t2t6.street_no as patient_street_no,
+t2t6.street_name as patient_street_name,
+t2t6.city as patient_city,
+t2t6.state as patient_state,
+t2t6.post_code as patient_post_code,
+
+t3t4.id as technician_id,
+t3t4.username as technician_username,
+t3t4.firstname as technician_first_name,
+t3t4.lastname as technician_last_name,
+
+t7t8.id as appointment_machine_id,
+t7t8.serial_code as machine_serial_code,
+t7t8.type as machine_type
+
+from public.appointment t1
+left outer join
+(
+select t4.id, t4.username, t4.firstname, t4.lastname
+from public.user t4
+inner join public.technician t3
+on t4.id = t3.id
+) t3t4 on t3t4.id = t1.technician_id
+
+inner join
+(select
+t2.id ,
+t2.first_name,
+t2.last_name,
+t2.medicare_no,
+t2.phone,
+
+t6.id as patient_address_id,
+t6.unit_no,
+t6.street_no,
+t6.street_name,
+t6.city,
+t6.state,
+t6.post_code
+
+from public.patient t2
+left outer join public.address t6
+on t2.address_id=t6.id
+) t2t6 on t2t6.id = patient_id
+left outer join
+(
+select t7.id, t7.serial_code, t7.type,t8.appointment_id
+
+from public.machine t7
+right outer join
+public.appointment_machine t8
+on t8.machine_id = t7.id
+) t7t8 on t7t8.appointment_id = t1.id
+
+\d public.addres
+
+ALTER TABLE public.address ALTER COLUMN id TYPE bigserial
+
+select * from public.address
+select * from public.appointment
+
+select * from public.patient
+
+insert into public.patient (id) values
+(1), (2)
+(1,	'', '',	'',	'',	'')
+
+
+with rows as (
+insert into public.address (unit_no, street_no, street_name, city, state, post_code)
+values ('2', '2', 'Station Street','Canberra','City','2034') returning id
+)
+insert into public.patient (first_name,last_name,address_id, phone, medicare_no)
+select 'Shalitha Weerakoon', 'Weearakoon', id, '123', 'MEDI093333343' from rows
+
+
+with rows as (
+insert into public.address (unit_no, street_no, street_name, city, state, post_code)
+values (?, ?, ?, ?,?,?) returning id
+)
+insert into public.patient (first_name,last_name,address_id, phone, medicare_no)
+select ?, ?, id, ?, ? from rows
+
+with rows as (
+insert into public.address (unit_no, street_no, street_name, city, state, post_code)
+values (33, 0, '2095 3rd Avenue', 'New York','New York',10029) returning id
+)
+insert into public.patient (first_name,last_name,address_id, phone, medicare_no)
+select 'Yellow', 'Hills', id, '2222222', '393MEDI' from rows
+
+select * from public.patient
+
+select t1.id, t1.first_name, t1.last_name,
+t2.id as patient_address_id, t2.unit_no as patient_unit_no,
+t2.street_no as patient_street_no, t2.street_name as patient_street_name,
+t2.city as patient_city, t2.state as patient_state, t2.post_code as patient_post_code,
+t1.phone, t1.medicare_no from public.patient t1
+inner join public.address t2 on t1.address_id= t2.id where t1.id=10
+
+
+ phone, medicare_no
+id, first_name,last_name,
+,
+
+select * from public.address
+insert into public.patient (val) SELECT id FROM rows
+
+update public.patient
+set first_name='Shalitha Weerakoon',
+last_name='Weearakoon',
+address_id='1', phone='123', medicare_no='MEDI0943'
+where id=1;
+update public.address
+set unit_no='2',
+street_no='93',
+street_name='Station Street',
+city='Fairfiled',
+state='VIC',
+post_code='2056'
+where id=1;
+
+update public.patient
+set first_name=?,
+last_name=?,
+address_id=?, phone=?, medicare_no=?
+where id=1;
+update public.address
+set unit_no=?,
+street_no=?,
+street_name=?,
+city=?,
+state=?,
+post_code=?
+where id=1;
+
+
+alter table public.appointment
+alter column date
+set default date_trunc('minute', now());
+
+
+select * from public.address
+select * from public.patient
+select * from public.patient
+
+select * from public.appointment
+
+select * from public.patient
+
+select t1.id, t1.first_name, t1.last_name,
+t2.id as patient_address_id,
+t2.unit_no as patient_unit_no,
+t2.street_no as patient_street_no,
+t2.street_name as patient_street_name,
+t2.city as patient_city,
+t2.state as patient_state,
+t2.post_code as patient_post_code,
+t1.phone, t1.medicare_no from public.patient t1
+left outer join public.address t2 on t1.address_id= t2.id where medicare_no='MEDI0921'
+
+
+
+drop public.appointment
+delete from public.patient where id>3
+
+where t1.id=1
+
+update appointment_machine where machine
+
+UPDATE
+SET type = "CAT"
+WHERE
+ last_update IS NULL;
+
+select * from public.appointment_machine
+
+INSERT INTO public.appointment_machine(id,appointment_id,machine_id)
+values ('7','5','1'), ('8','6','1'),('9','4','1');
+
+select * from public.address
+
+
+select * from public.appointment
+
+insert into public.appointment (id, date, patient_id, technician_id, state)
+values
+('1',	'2018-09-09 19:24:36.3159',	'1',	'1',	'FUTURE'),
+('2',	'2018-09-09 19:24:36.3159',	'1',	'1',	'MISSED'),
+('4',	'2018-09-09 21:56:24.661651',	'1',	'1',	'MISSED'),
+('3',	'2018-09-09 21:55:02.671553',	'3',	'1',	'FUTURE');
+
+
 

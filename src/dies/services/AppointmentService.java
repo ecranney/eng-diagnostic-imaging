@@ -12,7 +12,6 @@ import dies.mappers.AppointmentMapper;
 import dies.mappers.MachineMapper;
 import dies.mappers.PatientMapper;
 import dies.mappers.UserMapper;
-import dies.models.Address;
 import dies.models.Appointment;
 import dies.models.Machine;
 import dies.models.Patient;

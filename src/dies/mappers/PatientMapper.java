@@ -4,15 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import db.DBConnection;
 import dies.models.Address;
 import dies.models.IDomainObject;
-import dies.models.Machine;
 import dies.models.Patient;
-import dies.models.Technician;
-import dies.models.User;
 
 public class PatientMapper extends DataMapper {
 
@@ -122,7 +118,7 @@ public class PatientMapper extends DataMapper {
 
 	public Patient findAll() {
 		Connection con;
-		ArrayList<Patient> technicians = new ArrayList<Patient>();
+//		ArrayList<Patient> technicians = new ArrayList<Patient>();
 		Patient user = null;
 		Address patientAddress = null;
 		try {

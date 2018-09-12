@@ -2,7 +2,6 @@ package servlet;
 
 import dies.models.*;
 import dies.models.Appointment.State;
-import dies.models.Machine.Type;
 import dies.services.AppointmentService;
 
 import javax.servlet.ServletException;
@@ -15,7 +14,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,9 +53,6 @@ public class AppointmentServlet extends HttpServlet {
 			as.finishDeleteAppointment(appointment);
 			response.sendRedirect("booking.jsp");
 		} else if (request.getParameter("edit") != null) {
-			Appointment appointment = new Appointment(Integer.valueOf(request.getParameter("appointmentid")), null,
-					null, null, null, null);
-			AppointmentService as = new AppointmentService();
 			response.sendRedirect(
 					"edit_booking.jsp?appointmentid=" + Integer.valueOf(request.getParameter("appointmentid")));
 		}
@@ -73,7 +68,7 @@ public class AppointmentServlet extends HttpServlet {
 
 		if (request.getParameter("update") != null) {
 
-			Integer appointmentId = Integer.valueOf(request.getParameter("appointmentid"));
+			//Integer appointmentId = Integer.valueOf(request.getParameter("appointmentid"));
 			Integer patientAddressidId = Integer.valueOf(request.getParameter("patientaddressid"));
 
 			Integer patientId = Integer.valueOf(request.getParameter("patientid"));

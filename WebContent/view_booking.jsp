@@ -56,19 +56,9 @@
 				<tr>
 					<td>Address</td>
 
-					<td><c:choose>
-							<c:when <%=app.getPatient().getAddress()%> !=null}">
-
-							</c:when>
-							<c:otherwise>
-								<%=app.getPatient().getAddress().getUnitNo()%>,
-                    			<%=app.getPatient().getAddress().getStreetNo()%>,
-                    			<%=app.getPatient().getAddress().getStreetName()%>,
-                    			<%=app.getPatient().getAddress().getCity()%>,
-                    			<%=app.getPatient().getAddress().getState()%>,
-								<%=app.getPatient().getAddress().getPostCode()%>
-							</c:otherwise>
-						</c:choose>
+					<td><%=app.getPatient().getAddress().getUnitNo()%>, <%=app.getPatient().getAddress().getStreetNo()%>,
+						<%=app.getPatient().getAddress().getStreetName()%>, <%=app.getPatient().getAddress().getCity()%>,
+						<%=app.getPatient().getAddress().getState()%>, <%=app.getPatient().getAddress().getPostCode()%>
 				</tr>
 				<tr>
 					<td>Medicare No</td>
