@@ -45,3 +45,12 @@ INSERT INTO public.appointment (id, date, patient_id, technician_id, state) VALU
 INSERT INTO public.appointment (id, date, patient_id, technician_id, state) VALUES (6, '2018-09-09 21:56:00.000000', 7, 1, 'MISSED');
 INSERT INTO public.appointment (id, date, patient_id, technician_id, state) VALUES (5, '2018-09-12 08:40:00.000000', 4, 2, 'FUTURE');
 
+
+INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (2, 'Tom', 'Hanks', 8, '0478134368', 'MEDI002');
+INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (5, 'Shalitha Weerakoon', 'Karunatilleke', 3, '0478134368', 'MEDI005');
+INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (6, 'Denzel', 'Washington', 2, '0478134368', 'MEDI006');
+INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (8, 'Evan', 'Cranney', 7, '0478134368', 'MEDI008');
+INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (7, 'Shalitha Weerakoon', 'Karunatilleke', 6, '0478134368', 'MEDI007');
+INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (3, 'Evan', 'Cranney', 5, '0478134368', 'MEDI003');
+INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (4, 'Rajitha', 'Karunatilleke', 1, '0478134368', 'MEDI004');
+INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (1, 'Robert De', 'Nero', 4, '0478134368', 'MEDI001');
