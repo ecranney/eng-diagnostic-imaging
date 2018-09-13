@@ -47,7 +47,18 @@ public class AppointmentServlet extends HttpServlet {
 		
 		if (request.getParameter("view") != null) {
 			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
-			response.sendRedirect("view_booking.jsp?appointmentid=" + request.getParameter("appointmentid"));
+			
+			AppointmentService appointmentService = new AppointmentService();
+			int app_id = Integer.parseInt(request.getParameter("appointmentid"));
+			Appointment appointment = appointmentService.findAppointment(app_id);
+			
+			System.out.println(app_id + " opened id");
+			System.out.println(appointment.getDate() + " opened id date");
+			System.out.println(appointment.getPatient().getFirstName() + " opened id date");
+			
+			request.setAttribute("appointment", appointment);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view_booking.jsp?appointmentid=" + Integer.valueOf(request.getParameter("appointmentid")));
+            dispatcher.forward(request, response);
 
 		} else if (request.getParameter("delete") != null) {
 			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
