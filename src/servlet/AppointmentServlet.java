@@ -40,12 +40,16 @@ public class AppointmentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
-
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		//System.out.println(request.getContextPath() + " context path");
+		System.out.println(request.getParameter("appointmentid") + " id during laoding");
+		
 		if (request.getParameter("view") != null) {
+			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
 			response.sendRedirect("view_booking.jsp?appointmentid=" + request.getParameter("appointmentid"));
 
 		} else if (request.getParameter("delete") != null) {
+			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
 			Appointment appointment = new Appointment(Integer.valueOf(request.getParameter("appointmentid")), null,
 					null, null, null, null);
 
@@ -53,6 +57,7 @@ public class AppointmentServlet extends HttpServlet {
 			as.finishDeleteAppointment(appointment);
 			response.sendRedirect("booking.jsp");
 		} else if (request.getParameter("edit") != null) {
+			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
 			response.sendRedirect(
 					"edit_booking.jsp?appointmentid=" + Integer.valueOf(request.getParameter("appointmentid")));
 		}

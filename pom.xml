@@ -67,6 +67,27 @@
 			<version>2.11.1</version>
 		</dependency>
 
+		<!-- JSTL tag library -->
+
+		<dependency>
+			<groupId>javax.servlet.jsp.jstl</groupId>
+			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>javax.servlet.jsp.jstl</artifactId>
+			<version>1.2.5</version>
+			<exclusions>
+				<!-- jstl-api was adding selvlet-api 2.5 and jsp-api 
+				More Information: http://www.murraywilliams.com/2011/11/running-jstl-1-2-on-tomcat-7-using-maven/
+				-->				
+				<exclusion>
+					<artifactId>jstl-api</artifactId>
+					<groupId>javax.servlet.jsp.jstl</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>

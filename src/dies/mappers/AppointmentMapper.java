@@ -95,6 +95,7 @@ public class AppointmentMapper extends DataMapper {
 	private String deleteSQL = "delete from public.appointment where id=?";
 
 	public Appointment find(int id) throws SQLException {
+		System.out.println(id + " checking mapper has the right id ");
 		Connection con = db.getConnection();
 		PreparedStatement statement = con.prepareStatement(findAppointmentSQL);
 		statement.setInt(1, id);
@@ -144,49 +145,55 @@ public class AppointmentMapper extends DataMapper {
 		return null;
 	}
 
-	public ArrayList<Appointment> findAll() throws SQLException {
-		Connection con = db.getConnection();
-		PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
+	public ArrayList<Appointment> findAll() {
+		try {
+			Connection con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
 
-		Appointment app = null;
-		ArrayList<Appointment> appList = new ArrayList<Appointment>();
-		Address patientAddress = null;
-		Technician technician = null;
-		Patient patient = null;
-		Machine machine = null;
-		List<Machine> machines = new ArrayList<Machine>();
-		ResultSet rs = statement.executeQuery();
-		
-		Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
-		
-		while (rs.next()) {
-			
-			try {
-				patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
-						rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
-						rs.getString("patient_city"), rs.getString("patient_state"),
-						rs.getInt("patient_post_code"));
+			Appointment app = null;
+			ArrayList<Appointment> appList = new ArrayList<Appointment>();
+			Address patientAddress = null;
+			Technician technician = null;
+			Patient patient = null;
+			Machine machine = null;
+			List<Machine> machines = new ArrayList<Machine>();
+			ResultSet rs = statement.executeQuery();
 
-				technician = new Technician(rs.getInt("technician_id"), rs.getString("technician_username"),
-						null, rs.getString("technician_first_name"),
-						rs.getString("technician_last_name"));
-				
-				patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"), rs.getString("patient_last_name"),
-						patientAddress, rs.getString("patient_address_id"), rs.getString("patient_medicate_no"));
-				machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
-						Machine.Type.valueOf(rs.getString("machine_type")));
-				machines.add(machine);
-				app = new Appointment(rs.getInt("ap_id"), rs.getTimestamp("ap_date").toLocalDateTime(), patient, technician,
-						null, Appointment.State.valueOf(rs.getString("ap_state")));
-				
-				appointmentMap.put(rs.getInt("ap_id"), app);						
-			} catch (SQLException e) {
-				e.printStackTrace();
-				
+			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
+
+			while (rs.next()) {
+
+				try {
+					patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
+							rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
+							rs.getString("patient_city"), rs.getString("patient_state"),
+							rs.getInt("patient_post_code"));
+
+					technician = new Technician(rs.getInt("technician_id"), rs.getString("technician_username"), null,
+							rs.getString("technician_first_name"), rs.getString("technician_last_name"));
+
+					patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
+							rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
+							rs.getString("patient_medicate_no"));
+					machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
+							Machine.Type.valueOf(rs.getString("machine_type")));
+					machines.add(machine);
+					app = new Appointment(rs.getInt("ap_id"), rs.getTimestamp("ap_date").toLocalDateTime(), patient,
+							technician, null, Appointment.State.valueOf(rs.getString("ap_state")));
+
+					appointmentMap.put(rs.getInt("ap_id"), app);
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
 			}
+			appList.addAll(appointmentMap.values());
+			return appList;
+		} catch (SQLException e1) {
+
+			e1.printStackTrace();
+			return null;
 		}
-		appList.addAll(appointmentMap.values());
-		return appList;
 	}
 
 	public void insert(IDomainObject appointment) {

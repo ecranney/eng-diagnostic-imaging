@@ -1,6 +1,8 @@
 package servlet;
 
+import dies.models.Appointment;
 import dies.models.User;
+import dies.services.AppointmentService;
 import dies.services.LoginService;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet implementation class Login
@@ -57,6 +60,10 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("username", user.getUsername());   
             session.setAttribute("firstname", user.getFirstName());  
             session.setAttribute("lastname", user.getLastName());  
+            
+            AppointmentService appointmentService = new AppointmentService();
+			List<Appointment> appointmentList = appointmentService.findAllAppointments();
+			request.setAttribute("appointmentList", appointmentList);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/booking.jsp");
             dispatcher.forward(request, response);
         } else {

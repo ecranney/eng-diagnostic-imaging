@@ -43,14 +43,14 @@ public class AppointmentService {
 	}
 
 	// load all appointment objects
-	public List<Appointment> findAllAppointments() throws SQLException {
+	public List<Appointment> findAllAppointments() {
 		return appointmentMapper.findAll();
 	}
 
 	// load an appointment object by id
 	public Appointment findAppointment(int id) throws SQLException {
 		Appointment appointment = appointmentMapper.find(id);
-		System.out.println(appointment.toString());
+		System.out.println(id + " checking this one has the right id ");
 		transaction.registerClean(appointment); // start EDIT transaction
 		return appointment;
 	}
