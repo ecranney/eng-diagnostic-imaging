@@ -4,6 +4,7 @@ import dies.models.*;
 import dies.models.Appointment.State;
 import dies.services.AppointmentService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,7 +56,8 @@ public class AppointmentServlet extends HttpServlet {
 
 			AppointmentService as = new AppointmentService();
 			as.finishDeleteAppointment(appointment);
-			response.sendRedirect("booking.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
+            dispatcher.forward(request, response);
 		} else if (request.getParameter("edit") != null) {
 			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
 			response.sendRedirect(
@@ -155,9 +157,11 @@ public class AppointmentServlet extends HttpServlet {
 			Appointment appointment = new Appointment(0, ldt, createdPatient, technician, null, appointmentStatusCastType);			
 			as.finishCreateAppointment(appointment);
 
-			response.sendRedirect("booking.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
+            dispatcher.forward(request, response);
 		} else if (request.getParameter("back") != null) {
-			response.sendRedirect("booking.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
+            dispatcher.forward(request, response);
 		}
 	}
 

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/home")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -61,10 +61,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("firstname", user.getFirstName());  
             session.setAttribute("lastname", user.getLastName());  
             
-            AppointmentService appointmentService = new AppointmentService();
-			List<Appointment> appointmentList = appointmentService.findAllAppointments();
-			request.setAttribute("appointmentList", appointmentList);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/booking.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
             dispatcher.forward(request, response);
         } else {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/invalid_login.jsp");

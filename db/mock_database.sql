@@ -1,11 +1,11 @@
-INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (4, 'Rajitha', 'Karunatilleke', 27, '0478134368', 'MEDI004');
-INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (6, 'Denzel', 'Washington', 29, '0478134368', 'MEDI006');
-INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (5, 'Shalitha Weerakoon', 'Karunatilleke', 28, '0478134368', 'MEDI005');
-INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (1, 'Robert De', 'Nero', 1, '0478134368', 'MEDI001');
-INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (3, 'Evan', 'Cranney', 26, '0478134368', 'MEDI003');
-INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (7, 'Shalitha Weerakoon', 'Karunatilleke', 30, '0478134368', 'MEDI007');
-INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (8, 'Evan', 'Cranney', 32, '0478134368', 'MEDI008');
-INSERT INTO public.patient (id, first_name, last_name, address_id, phone, medicare_no) VALUES (2, 'Tom', 'Hanks', 25, '0478134368', 'MEDI002');
+INSERT INTO public.address (id, unit_no, street_no, street_name, city, state, post_code) VALUES (8, 333, 92, '333 Ballarat Road', 'Braybrook', 'Victoria', 3019);
+INSERT INTO public.address (id, unit_no, street_no, street_name, city, state, post_code) VALUES (1, 2, 92, '338 Boylston Street', 'Boston', 'Massachusetts', 2116);
+INSERT INTO public.address (id, unit_no, street_no, street_name, city, state, post_code) VALUES (7, 33, 92, '353 Greenwich Street', 'New York', 'New York', 10013);
+INSERT INTO public.address (id, unit_no, street_no, street_name, city, state, post_code) VALUES (6, 23, 92, '2095 3rd Avenue', 'New York', 'New York', 10029);
+INSERT INTO public.address (id, unit_no, street_no, street_name, city, state, post_code) VALUES (5, 23, 92, '2226 Massachusetts Avenue', 'Cambridge', 'Massachusetts', 2140);
+INSERT INTO public.address (id, unit_no, street_no, street_name, city, state, post_code) VALUES (3, 44, 92, '2095 3rd Avenue', 'New York', 'New York', 10029);
+INSERT INTO public.address (id, unit_no, street_no, street_name, city, state, post_code) VALUES (2, 33, 92, '353 Greenwich Street', 'New York', 'New York', 10013);
+INSERT INTO public.address (id, unit_no, street_no, street_name, city, state, post_code) VALUES (4, 33, 92, '353 Greenwich Street', 'New York', 'New York', 10013);
 
 INSERT INTO public.machine (id, serial_code, type) VALUES (2, 1, 'XRAY');
 INSERT INTO public.machine (id, serial_code, type) VALUES (1, 2, 'CAT');
