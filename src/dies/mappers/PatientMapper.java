@@ -191,7 +191,7 @@ public class PatientMapper extends DataMapper {
 			statement.setInt(12, m.getAddress().getPostCode());
 			statement.setInt(13, m.getAddress().getId());
 
-			statement.executeQuery();
+			statement.executeUpdate();
 
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
