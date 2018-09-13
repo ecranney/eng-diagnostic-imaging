@@ -37,11 +37,12 @@
 				<table class="table table-striped custab">
 					<tr>
 						<td>Appointment Date and Time</td>
-						<td><input size="16" type="text" value=" " name="appointmentDateTime"
-							readonly class="form-control form_datetime">
+						<td><input size="16" type="text" value=" "
+							name="appointmentDateTime" readonly
+							class="form-control form_datetime" required>
 					<tr>
 						<td>Appointment Status</td>
-						<td><select name="appointmentStatus" class="form-control">
+						<td><select name="appointmentStatus" class="form-control" required>
 
 								<%
 									for (State state : State.values()) {
@@ -56,7 +57,7 @@
 
 					<tr>
 						<td>Examination Type</td>
-						<td><select name="machineType" class="form-control">
+						<td><select name="machineType" class="form-control" required>
 								<%
 									for (Machine.Type machine : Machine.Type.values()) {
 								%>
@@ -68,53 +69,55 @@
 					</tr>
 					<tr>
 						<td>Patient First Name</td>
-						<td><input type="text" class="form-control"
-							name="patientFirstName"></td>
+						<td><input id="patientFirstName" type="text"
+							class="form-control" name="patientFirstName" required></td>
 					</tr>
 					<tr>
 						<td>Patient Last Name</td>
-						<td><input type="text" class="form-control"
-							name="patientLastName"></td>
+						<td><input id="patientLastName" type="text"
+							class="form-control" name="patientLastName" required></td>
 					</tr>
 
 					<tr>
 						<td>Patient Address</td>
 						<td>
 							<div class="form-group gaddress f12 " data-fid="f12">
-								<input type="text" class="form-control" name="patientUnitNo"
-									placeholder="Unit no"> <input type="text"
-									class="form-control gaddress-autocomplete"
+								<input type="number" class="form-control" name="patientUnitNo"
+									placeholder="Unit no" data-bind="value:replyNumber" required>
+								<input type="text" class="form-control gaddress-autocomplete"
 									data-gaddress-types="street_number route"
 									data-gaddress-name="long_name" id="f12_addressLine1"
 									name="patientStreet" value=""
 									aria-describedby="f12_addressLine1-help-block"
-									placeholder="1234 Main St." /> <input type="text"
+									placeholder="1234 Main St." required /> <input type="text"
 									class="form-control" data-gaddress-types="locality"
 									data-gaddress-name="long_name" id="f12_city" name="patientCity"
 									value="" aria-describedby="f12_city-help-block"
-									placeholder="City" /> <input type="text" class="form-control"
+									placeholder="City" required /> <input type="text"
+									class="form-control"
 									data-gaddress-types="administrative_area_level_1"
 									data-gaddress-name="long_name" id="f12_state"
 									name="patientState" value=""
 									aria-describedby="f12_state-help-block"
-									placeholder="State / Province / Region" /> <input type="text"
-									class="form-control" data-gaddress-types="postal_code"
+									placeholder="State / Province / Region" required /> <input
+									type="number" class="form-control"
+									data-gaddress-types="postal_code"
 									data-gaddress-name="patientUPostalCode" id="f12_postalCode"
 									name="patientPostalCode" value=""
 									aria-describedby="f12_postalCode-help-block"
-									placeholder="Postal / Zip Code" />
+									placeholder="Postal / Zip Code" data-bind="value:replyNumber" required />
 							</div>
 						</td>
 					<tr>
 					<tr>
 						<td>Patient Medicare No</td>
 						<td><input type="text" class="form-control"
-							name="patientMedicareNo"></td>
+							name="patientMedicareNo" required></td>
 					</tr>
 					<tr>
 						<td>Patient Phone Number</td>
-						<td><input type="text" class="form-control"
-							name="patientMobile"></td>
+						<td><input type="number" class="form-control"
+							name="patientMobile" data-bind="value:replyNumber" required></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -130,11 +133,11 @@
 			format : 'yyyy-mm-dd hh:ii'
 		});
 	</script>
-	<script
-		src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+	<script src="resources/js/jquery.validate.min.js"
+		type="text/javascript"></script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtXpn6gUreNd7lbpKUKPEgt6oXmVl5BSo&libraries=places"></script>
 	<script src="resources/js/address.js" type="text/javascript"></script>
-	s
+	<script src="resources/js/validator.min.js" type="text/javascript"></script>
 </body>
 </html>

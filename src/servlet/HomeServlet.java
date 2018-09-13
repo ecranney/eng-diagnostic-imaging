@@ -47,6 +47,7 @@ public class HomeServlet extends HttpServlet {
 		List<Appointment> appointmentList = appointmentService.findAllAppointments();
 		request.setAttribute("appointmentList", appointmentList);
 		
+		System.out.println(request.getSession(false).getAttribute("firstname") + " session is active");
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/booking.jsp");
         dispatcher.forward(request, response);
 	}

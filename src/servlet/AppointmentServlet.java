@@ -60,8 +60,18 @@ public class AppointmentServlet extends HttpServlet {
             dispatcher.forward(request, response);
 		} else if (request.getParameter("edit") != null) {
 			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
-			response.sendRedirect(
-					"edit_booking.jsp?appointmentid=" + Integer.valueOf(request.getParameter("appointmentid")));
+			
+			AppointmentService appointmentService = new AppointmentService();
+			int app_id = Integer.parseInt(request.getParameter("appointmentid"));
+			Appointment appointment = appointmentService.findAppointment(app_id);
+			
+			System.out.println(app_id + " opened id");
+			System.out.println(appointment.getDate() + " opened id date");
+			System.out.println(appointment.getPatient().getFirstName() + " opened id date");
+			
+			request.setAttribute("appointment", appointment);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/edit_booking.jsp?appointmentid=" + Integer.valueOf(request.getParameter("appointmentid")));
+            dispatcher.forward(request, response);
 		}
 
 	}
@@ -83,10 +93,11 @@ public class AppointmentServlet extends HttpServlet {
 			String patientLastName = request.getParameter("patientLastName");
 			String patientMobile = request.getParameter("patientMobile");
 			String patientMedicareNo = request.getParameter("patientMedicareNo");
-
-			Integer patientUnitNo = Integer.valueOf(request.getParameter("patienUnitNo"));
-			Integer patientStreetNo = Integer.valueOf(request.getParameter("patientStreetNo"));
-			String patientStreetName = request.getParameter("patientStreetName");
+				
+			System.out.println("printing out the error in unit no " + request.getParameter("patientUnitNo"));
+			Integer patientUnitNo = Integer.valueOf(request.getParameter("patientUnitNo"));
+			Integer patientStreetNo = 0;
+			String patientStreetName = request.getParameter("patientStreet");
 			String patientCity = request.getParameter("patientCity");
 			String patientState = request.getParameter("patientState");
 			Integer patientPostCode = Integer.valueOf(request.getParameter("patientPostalCode"));

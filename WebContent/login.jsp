@@ -18,7 +18,7 @@
             <div class="panel">
                 <h2>Login</h2> <p>Please enter your username and password</p>
             </div>
-            <form action="home" method="post">
+            <form action="login" method="post">
                 <div class="form-group">
                     <input type="text" class="form-control" id="inputEmail"
                            placeholder="Username" name="username">

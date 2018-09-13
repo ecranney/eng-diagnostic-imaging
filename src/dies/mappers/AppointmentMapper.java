@@ -94,55 +94,61 @@ public class AppointmentMapper extends DataMapper {
 	private String updateSQL = "update public.appointment set into id=?, date=?, patient_id=?, technician_id=?, state=?";
 	private String deleteSQL = "delete from public.appointment where id=?";
 
-	public Appointment find(int id) throws SQLException {
-		System.out.println(id + " checking mapper has the right id ");
-		Connection con = db.getConnection();
-		PreparedStatement statement = con.prepareStatement(findAppointmentSQL);
-		statement.setInt(1, id);
-		int app_id = 0;
-		LocalDateTime app_date = null;
-		Appointment.State app_state = null;
-		Appointment app = null;
-		Address patientAddress = null;
-		Patient patient = null;
-		Technician technician = null;
-		Machine machine = null;
-		List<Machine> machines = new ArrayList<Machine>();
-		ResultSet rs = statement.executeQuery();
+	public Appointment find(int id) {
+		try {
+			System.out.println(id + " checking mapper has the right id ");
+			Connection con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(findAppointmentSQL);
+			statement.setInt(1, id);
+			int app_id = 0;
+			LocalDateTime app_date = null;
+			Appointment.State app_state = null;
+			Appointment app = null;
+			Address patientAddress = null;
+			Patient patient = null;
+			Technician technician = null;
+			Machine machine = null;
+			List<Machine> machines = new ArrayList<Machine>();
+			ResultSet rs = statement.executeQuery();
 
-		IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
-		if (map.contains(id)) {
-		} else {
-			while (rs.next()) {
-				try {
-					patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
-							rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
-							rs.getString("patient_city"), rs.getString("patient_state"),
-							rs.getInt("patient_post_code"));
+			IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
+			if (map.contains(id)) {
+			} else {
+				while (rs.next()) {
+					try {
+						patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
+								rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
+								rs.getString("patient_city"), rs.getString("patient_state"),
+								rs.getInt("patient_post_code"));
 
-					technician = new Technician(rs.getInt("technician_id"), rs.getString("technician_username"),
-							null, rs.getString("technician_first_name"),
-							rs.getString("technician_last_name"));
-					
-					patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"), rs.getString("patient_last_name"),
-							patientAddress, rs.getString("patient_address_id"), rs.getString("patient_medicate_no"));
-					machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
-							Machine.Type.valueOf(rs.getString("machine_type")));
-					machines.add(machine);					
-					
-					app_id = rs.getInt("ap_id");
-					app_date = rs.getTimestamp("ap_date").toLocalDateTime();
-					app_state = Appointment.State.valueOf(rs.getString("ap_state"));
+						technician = new Technician(rs.getInt("technician_id"), rs.getString("technician_username"),
+								null, rs.getString("technician_first_name"), rs.getString("technician_last_name"));
 
-				} catch (SQLException e) {
-					e.printStackTrace();
+						patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
+								rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
+								rs.getString("patient_medicate_no"));
+						machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
+								Machine.Type.valueOf(rs.getString("machine_type")));
+						machines.add(machine);
+
+						app_id = rs.getInt("ap_id");
+						app_date = rs.getTimestamp("ap_date").toLocalDateTime();
+						app_state = Appointment.State.valueOf(rs.getString("ap_state"));
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+
 				}
-
+				app = new Appointment(app_id, app_date, patient, technician, null, app_state);
+				return app;
 			}
-			app = new Appointment(app_id, app_date, patient, technician, null, app_state);
-			return app;
+			return null;
+		} catch (SQLException e1) {
+
+			e1.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 
 	public ArrayList<Appointment> findAll() {

@@ -21,17 +21,17 @@
 		<form action="logout" method="GET">
 			<h4>
 				Hola!
-				<%=request.getSession().getAttribute("firstname")%>
+				<%=request.getSession(false).getAttribute("firstname")%>
 
 				<input type="submit" name="logout"
 					class="btn btn-primary btn-sm btn-outline-dark" value="Logout">
 			</h4>
 		</form>
-		
-			<div>
-				<a href="create_booking.jsp"
-					class="btn btn-primary btn-xs pull-right"><b>+</b> Add new
-					appointment</a>
+
+		<div>
+			<a href="create_booking.jsp"
+				class="btn btn-primary btn-xs pull-right"><b>+</b> Add new
+				appointment</a>
 
 			<table class="table table-striped custab">
 				<thead>

@@ -1,7 +1,11 @@
+<%@page import="dies.models.Machine"%>
+<%@page import="dies.models.Appointment.State"%>
+<%@page import="java.util.List"%>
 <%@page import="dies.models.Appointment"%>
 <%@page import="dies.services.AppointmentService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,15 +15,17 @@
 	id="bootstrap-css">
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="resources/js/jquery.min.js"></script>
+
+<script type="text/javascript"
+	src="resources/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+<link href="resources/styles/bootstrap-datetimepicker.min.css"
+	rel="stylesheet" media="screen">
+
 </head>
 </head>
+
 <body>
-	<%
-		AppointmentService appointmentService = new AppointmentService();
-		int app_id = Integer.parseInt(request.getParameter("appointmentid"));
-		Appointment app = appointmentService.findAppointment(app_id);
-	%>
-	<div class="container">
+	<div class="container ">
 		<div>
 			<form action="appointment" method="POST">
 				<h4>
@@ -27,111 +33,135 @@
 						class="btn btn-primary btn-sm btn-outline-dark" value="Back">
 				</h4>
 			</form>
+
 			<form action="appointment" method="post">
 				<table class="table table-striped custab">
-
 					<tr>
-						<td>Appointment Date</td>
-						<td><%=app.getDate()%></td>
-
-					</tr>
-					<tr>
-						<td>Appointment Reference</td>
-						<td class="info-highlight bottom-border"><%=app.getId()%></td>
-					</tr>
-
+						<td>Appointment Date and Time</td>
+						<td><input size="16" type="text"
+							value="<c:out value="${appointment.getDate()}"/>"
+							name="appointmentDateTime" readonly
+							class="form-control form_datetime" required>
 					<tr>
 						<td>Appointment Status</td>
-						<td class="info-highlight bottom-border"><%=app.getState()%></td>
+						<td><select name="appointmentStatus" class="form-control"
+							required>
+
+								<%
+									for (State state : State.values()) {
+								%>
+
+								<option value=<%=state.name()%>><%=state.name()%></option>
+								<%
+									}
+								%>
+						</select>
+					</tr>
+
+					<tr>
+						<td>Examination Type</td>
+						<td><select name="machineType" class="form-control" required>
+								<%
+									for (Machine.Type machine : Machine.Type.values()) {
+								%>
+								<option value=<%=machine.name()%>><%=machine.name()%></option>
+								<%
+									}
+								%>
+						</select>
 					</tr>
 					<tr>
 						<td>Patient First Name</td>
-						<td><input type="text" class="form-control"
-							name="patientFirstName"
-							value=<%=app.getPatient().getFirstName()%>></td>
+						<td><input id="patientFirstName" type="text"
+							class="form-control" name="patientFirstName"
+							value="<c:out value="${appointment.getPatient().getFirstName()}"/>"
+							required></td>
 					</tr>
+
 					<tr>
 						<td>Patient Last Name</td>
-						<td><input type="text" class="form-control"
-							name="patientLastName" value=<%=app.getPatient().getLastName()%>></td>
-					</tr>
-					<tr>
-						<td>Patient unit no</td>
-
-						<td><input type="text" class="form-control"
-							name="patienUnitNo"
-							value=<%=app.getPatient().getAddress().getUnitNo()%>></td>
+						<td><input id="patientLastName" type="text"
+							value="<c:out value="${appointment.getPatient().getLastName()}"/>"
+							class="form-control" name="patientLastName" required></td>
 					</tr>
 
 					<tr>
-						<td>Patient street no</td>
-						<td><input type="text" class="form-control"
-							name="patientStreetNo"
-							value=<%=app.getPatient().getAddress().getStreetNo()%>>
-					</tr>
-
+						<td>Patient Address</td>
+						<td>
+							<div class="form-group gaddress f12 " data-fid="f12">
+								<input type="number" class="form-control" name="patientUnitNo"
+									placeholder="Unit no" data-bind="value:replyNumber"
+									value="<c:out value="${appointment.getPatient().getAddress().getUnitNo()}"/>"
+									required> <input type="text"
+									class="form-control gaddress-autocomplete"
+									data-gaddress-types="street_number route"
+									data-gaddress-name="long_name" id="f12_addressLine1"
+									name="patientStreet"
+									aria-describedby="f12_addressLine1-help-block"
+									placeholder="1234 Main St."
+									value="<c:out value="${appointment.getPatient().getAddress().getStreetName()}"/>"
+									required /> <input type="text" class="form-control"
+									data-gaddress-types="locality" data-gaddress-name="long_name"
+									id="f12_city" name="patientCity" 
+									aria-describedby="f12_city-help-block" placeholder="City"
+									value="<c:out value="${appointment.getPatient().getAddress().getCity()}"/>"
+									required /> <input type="text" class="form-control"
+									data-gaddress-types="administrative_area_level_1"
+									data-gaddress-name="long_name" id="f12_state"
+									name="patientState" 
+									aria-describedby="f12_state-help-block"
+									placeholder="State / Province / Region"
+									value="<c:out value="${appointment.getPatient().getAddress().getState()}"/>"
+									required /> <input type="number" class="form-control"
+									data-gaddress-types="postal_code"
+									data-gaddress-name="patientUPostalCode" id="f12_postalCode"
+									name="patientPostalCode" 
+									aria-describedby="f12_postalCode-help-block"
+									placeholder="Postal / Zip Code" data-bind="value:replyNumber"
+									value="<c:out value="${appointment.getPatient().getAddress().getPostCode()}"/>"
+									required />
+							</div>
+						</td>
 					<tr>
-						<td>Patient Street name</td>
-
-						<td><input type="text" class="form-control"
-							name="patientStreetName"
-							value=<%=app.getPatient().getAddress().getStreetName()%>>
-					</tr>
-
 					<tr>
-						<td>Patient city</td>
+						<td>Patient Medicare No</td>
 						<td><input type="text" class="form-control"
-							name="patientCity"
-							value=<%=app.getPatient().getAddress().getCity()%>>
-					</tr>
-
-					<tr>
-						<td>Patient state</td>
-						<td><input type="text" class="form-control"
-							name="patientState"
-							value=<%=app.getPatient().getAddress().getState()%>>
-					</tr>
-
-					<tr>
-						<td>Patient post code</td>
-						<td><input type="text" class="form-control"
-							name="patientPostalCode"
-							value=<%=app.getPatient().getAddress().getPostCode()%>>
-					</tr>
-
-					<tr>
-						<td>Patient medicare No</td>
-						<td><input type="text" class="form-control"
-							name="patientMedicareNo"
-							value=<%=app.getPatient().getMedicareNo()%>></td>
-					</tr>
-					<tr>
-						<td>Patient phone Number</td>
-						<td><input type="text" class="form-control"
-							name="patientMobile" value=<%=app.getPatient().getPhone()%>></td>
-
+							value="<c:out value="${appointment.getPatient().getMedicareNo()}"/>"
+							name="patientMedicareNo" required></td>
 					</tr>
 					<tr>
-						<td>Issuer</td>
-						<td><%=app.getTechnician().getFirstName() + " " + app.getTechnician().getLastName()%></td>
-
+						<td>Patient Phone Number</td>
+						<td><input type="number" class="form-control"
+							value="<c:out value="${appointment.getPatient().getPhone()}"/>"
+							name="patientMobile" data-bind="value:replyNumber" required></td>
 					</tr>
-
 					<tr>
 						<td><input type="hidden" id="app_id" name="appointmentid"
-							value=<%=app.getId()%>> <input type="hidden"
+							value="<c:out value="${appointment.getId()}"/>"> <input type="hidden"
 							id="patient_id" name="patientid"
-							value=<%=app.getPatient().getId()%>> <input type="hidden"
+							value="<c:out value="${appointment.getPatient().getId()}"/>"> 
+							<input type="hidden"
 							id="patient_address_id" name="patientaddressid"
-							value=<%=app.getPatient().getId()%>></td>
+							value="<c:out value="${appointment.getPatient().getAddress().getId()}"/>"></td>
 						<td><input type="submit" name="update"
 							class="btn btn-primary" value="Update"></td>
 
 					</tr>
-
 				</table>
 			</form>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(".form_datetime").datetimepicker({
+			format : 'yyyy-mm-dd hh:ii'
+		});
+	</script>
+	<script src="resources/js/jquery.validate.min.js"
+		type="text/javascript"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtXpn6gUreNd7lbpKUKPEgt6oXmVl5BSo&libraries=places"></script>
+	<script src="resources/js/address.js" type="text/javascript"></script>
+	<script src="resources/js/validator.min.js" type="text/javascript"></script>
+
 </body>
 </html>
