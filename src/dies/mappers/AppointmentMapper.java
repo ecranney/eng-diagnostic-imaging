@@ -70,6 +70,7 @@ public class AppointmentMapper extends DataMapper {
 			+ "values (?, ?, ?, ?)";
 	private String updateSQL = "update public.appointment set into id=?, date=?, patient_id=?, technician_id=?, state=?";
 	private String deleteSQL = "delete from public.appointment where id=?";
+	private String countSQL = "select count(*) from public.appointment";
 
 	public Appointment find(int id) {
 		try {
@@ -267,7 +268,7 @@ public class AppointmentMapper extends DataMapper {
 			statement.setInt(4, m.getTechnician().getId());
 
 			statement.setString(5, m.getState().name());
-
+			statement.executeUpdate();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -281,10 +282,32 @@ public class AppointmentMapper extends DataMapper {
 			Appointment m = (Appointment) appointment;
 			System.out.println(m.getId() + " is the appointment id for deletion");
 			statement.setInt(1, m.getId());
-			statement.executeQuery();
+			statement.executeUpdate();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+
+	public int countAll() {
+		try {
+			Connection con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(countSQL);
+			
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				int numberOfRows = rs.getInt(1);
+				System.out.println("numberOfRows= " + numberOfRows);
+				return numberOfRows;
+			} else {
+				System.out.println("error: could not get the record counts");
+				return 0;
+			}
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return 0;		}
+		
 	}
 }

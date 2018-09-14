@@ -102,8 +102,8 @@
 												</div>
 												<button type="submit"
 													class="table100-form-btn table100-form-edit-btn"
-													name="edit" value="View">
-													<i class="fa fa-edit fa-fw"></i>Edit
+													name="mode" value="view">
+													<i class="fa fa-edit fa-fw"></i>View
 												</button>
 											</div>
 										</form>
@@ -127,25 +127,26 @@
 									</td>
 								</tr>
 							</c:forEach>
-							<tr>
-								<td><c:if test="${currentPage != 1}">
-										<a href="home?page=${currentPage - 1}">Previous</a>
-									</c:if> <c:forEach begin="1" end="${noOfPages}" var="i">
-										<c:choose>
-											<c:when test="${currentPage eq i}">
-											${i}
-										</c:when>
-											<c:otherwise>
-												<a href="home?page=${i}">${i}</a>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach> <c:if test="${currentPage lt noOfPages}">
-										<a href="home?page=${currentPage + 1}">Next</a>
-									</c:if></td>
-							</tr>
 						</tbody>
 					</table>
-
+					<div class="pagination">
+						<c:if test="${currentPage != 1}">
+							<a href="home?page=${currentPage - 1}">Previous</a>
+						</c:if>
+						<c:forEach begin="1" end="${noOfPages}" var="i">
+							<c:choose>
+								<c:when test="${currentPage eq i}">
+											<a class="pcurrunt-pagination-number"> ${i} </a>
+										</c:when>
+								<c:otherwise>
+									<a class="pagination-numbers" href="home?page=${i}">${i}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${currentPage lt noOfPages}">
+							<a href="home?page=${currentPage + 1}">Next</a>
+						</c:if>
+					</div>
 				</div>
 			</div>
 		</div>

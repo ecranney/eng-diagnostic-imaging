@@ -22,8 +22,8 @@ public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppointmentService appointmentService = new AppointmentService();
 	private int page = 1;
-	private static final int RECORDS_PER_PAGE = 4;
-	
+	private static final int RECORDS_PER_PAGE = 2;
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -37,33 +37,7 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-
-		if (request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
-			System.out.println(page + " priting current page number");
-		}
-
-		if (session != null && session.getAttribute("userid") != null) {
-			List<Appointment> appointmentList = appointmentService.findAllAppointments(RECORDS_PER_PAGE,
-					(page - 1) * RECORDS_PER_PAGE);
-			List<Appointment> allappointmentList = appointmentService.findAllAppointments();
-
-			int noOfRecords = allappointmentList.size();
-			int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
-
-			request.setAttribute("appointmentList", appointmentList);
-			request.setAttribute("noOfPages", noOfPages);
-			request.setAttribute("currentPage", page);
-			System.out.println("noOfPages" + noOfPages);
-			System.out.println("currentPage" + page);
-
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/appointments.jsp");
-			dispatcher.forward(request, response);
-		} else {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login");
-			dispatcher.forward(request, response);
-		}
+		pagePagination(request, response);
 	}
 
 	/**
@@ -72,20 +46,23 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		pagePagination(request, response);
+	}
+	
+	private void pagePagination(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		
+
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 			System.out.println(page + " priting current page number");
 		}
 
 		if (session != null && session.getAttribute("userid") != null) {
-			List<Appointment> allappointmentList = appointmentService.findAllAppointments();
-			List<Appointment> appointmentList = appointmentService.findAllAppointments(RECORDS_PER_PAGE,
+			List<Appointment> appointmentList = appointmentService.findAllAppointments(RECORDS_PER_PAGE + 1,
 					(page - 1) * RECORDS_PER_PAGE);
-			
-			int noOfRecords = allappointmentList.size();
-			int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
+
+			int noOfRecords = appointmentService.countAllAppointments();
+			int noOfPages = (int) Math.ceil((noOfRecords - 1) * 1.0 / RECORDS_PER_PAGE);
 
 			request.setAttribute("appointmentList", appointmentList);
 			request.setAttribute("noOfPages", noOfPages);
@@ -99,7 +76,6 @@ public class HomeServlet extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login");
 			dispatcher.forward(request, response);
 		}
-
 	}
 
 }

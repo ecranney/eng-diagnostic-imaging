@@ -1,3 +1,15 @@
+
+
+/*//////////////////////////////////////////////////////////////////
+[ FONT ]*/
+
+@font-face {
+  font-family: Montserrat-Bold;
+  src: url('../fonts/montserrat/Montserrat-Bold.ttf'); 
+}
+
+
+
 .header100-header-btn {
   font-size: 13px;
   font-family: Montserrat-Bold;

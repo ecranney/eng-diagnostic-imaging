@@ -16,8 +16,6 @@ import dies.models.Appointment;
 import dies.models.Machine;
 import dies.models.Patient;
 import dies.models.Technician;
-
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -43,14 +41,19 @@ public class AppointmentService {
 	}
 
 	// load all appointment objects
+	public int countAllAppointments() {
+		return appointmentMapper.countAll();
+	}
+		
+	// load all appointment objects
 	public List<Appointment> findAllAppointments() {
 		return appointmentMapper.findAll();
 	}
 	
 	// load limited appointment set objects
-		public List<Appointment> findAllAppointments(int limit, int offset) {
-			return appointmentMapper.findAll(limit, offset);
-		}
+	public List<Appointment> findAllAppointments(int limit, int offset) {
+		return appointmentMapper.findAll(limit, offset);
+	}
 
 	// load an appointment object by id
 	public Appointment findAppointment(int id) {

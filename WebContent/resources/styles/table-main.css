@@ -381,3 +381,31 @@ tbody tr:hover {
 .hidden-item {
 	display: none;
 }
+
+
+.pagination {
+	float: right;
+	padding-top: 20px;
+	padding-right: 10px;
+	font-size: 20px;
+	font-family: Montserrat-Bold;
+	line-height: 1.5;
+	color: #fff;
+}
+
+.pagination-numbers {
+	
+	padding-left: 5px;
+    padding-right: 5px;	
+}
+
+
+.currunt-pagination-number {
+	
+	padding-left: 5px;
+    padding-right: 5px;	
+}
+
+a{
+	color: #57b846;
+}

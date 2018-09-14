@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Servlet implementation class AppointmentServlet
  */
-@WebServlet(urlPatterns ="/appointment")
+@WebServlet(urlPatterns = "/appointment")
 public class AppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppointmentService appointmentService = new AppointmentService();
@@ -41,39 +41,26 @@ public class AppointmentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println(request.getParameter("appointmentid") + " id during laoding");
-		
-		if (request.getParameter("view") != null) {			
-			int app_id = Integer.parseInt(request.getParameter("appointmentid"));
-			Appointment appointment = appointmentService.findAppointment(app_id);
-			
-			request.setAttribute("appointment", appointment);
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view_booking.jsp?appointmentid=" + Integer.valueOf(request.getParameter("appointmentid")));
-            dispatcher.forward(request, response);
 
-		} else if (request.getParameter("delete") != null) {
-			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
-			Appointment appointment = new Appointment(Integer.valueOf(request.getParameter("appointmentid")), null,
-					null, null, null, null);
-
-			AppointmentService as = new AppointmentService();
-			as.finishDeleteAppointment(appointment);
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
-            dispatcher.forward(request, response);
-            
-		} else if (request.getParameter("edit") != null) {
+		if (request.getParameter("mode").equalsIgnoreCase("view")
+				|| request.getParameter("mode").equalsIgnoreCase("edit")) {
 			AppointmentService appointmentService = new AppointmentService();
 			int app_id = Integer.parseInt(request.getParameter("appointmentid"));
 			Appointment appointment = appointmentService.findAppointment(app_id);
-			
-			System.out.println(app_id + " opened id");
-			System.out.println(appointment.getDate() + " opened id date");
-			System.out.println(appointment.getPatient().getFirstName() + " opened id date");
-			
 			request.setAttribute("appointment", appointment);
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/edit_booking.jsp?appointmentid=" + Integer.valueOf(request.getParameter("appointmentid")));
-            dispatcher.forward(request, response);
+			request.setAttribute("mode", request.getParameter("mode"));
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
+					"/appointment.jsp?appointmentid=" + Integer.valueOf(request.getParameter("appointmentid")));
+			dispatcher.forward(request, response);
+		} else if (request.getParameter("mode").equalsIgnoreCase("delete")) {
+			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
+			Appointment appointment = new Appointment(Integer.valueOf(request.getParameter("appointmentid")), null,
+					null, null, null, null);
+			AppointmentService as = new AppointmentService();
+			as.finishDeleteAppointment(appointment);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
+			dispatcher.forward(request, response);
 		}
-
 	}
 
 	/**
@@ -82,40 +69,18 @@ public class AppointmentServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		if (request.getParameter("update") != null) {
-
-			//Integer appointmentId = Integer.valueOf(request.getParameter("appointmentid"));
-			Integer patientAddressidId = Integer.valueOf(request.getParameter("patientaddressid"));
-
-			Integer patientId = Integer.valueOf(request.getParameter("patientid"));
-			String patientFirstName = request.getParameter("patientFirstName");
-			String patientLastName = request.getParameter("patientLastName");
-			String patientMobile = request.getParameter("patientMobile");
-			String patientMedicareNo = request.getParameter("patientMedicareNo");
-				
-			System.out.println("printing out the error in unit no " + request.getParameter("patientUnitNo"));
-			Integer patientUnitNo = Integer.valueOf(request.getParameter("patientUnitNo"));
-			Integer patientStreetNo = 0;
-			String patientStreetName = request.getParameter("patientStreet");
-			String patientCity = request.getParameter("patientCity");
-			String patientState = request.getParameter("patientState");
-			Integer patientPostCode = Integer.valueOf(request.getParameter("patientPostalCode"));
-
-			Address patientAddress = new Address(patientAddressidId, patientUnitNo, patientStreetNo, patientStreetName,
-					patientCity, patientState, patientPostCode);
-			Patient patient = new Patient(patientId, patientFirstName, patientLastName, patientAddress, patientMobile,
-					patientMedicareNo);
-
+		if (request.getParameter("mode").equalsIgnoreCase("update")) {
+			Address patientAddress = getAddressDetails(request);
+			Patient patient = getPatientDetails(request, patientAddress);
 			AppointmentService as = new AppointmentService();
 			as.finishUpdatePatient(patient);
 
-			response.sendRedirect("view_booking.jsp?appointmentid=" + request.getParameter("appointmentid"));
+			response.sendRedirect(
+					"appointment?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
 
-		} else if (request.getParameter("create") != null) {
+		} else if (request.getParameter("mode").equalsIgnoreCase("create")) {
 
 			Date date = new Date();
-
 			String appointmentDateTime = request.getParameter("appointmentDateTime");
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 			try {
@@ -135,7 +100,7 @@ public class AppointmentServlet extends HttpServlet {
 			String technicianUsername = (String) request.getSession().getAttribute("username");
 			String technicianFirstname = (String) request.getSession().getAttribute("firstname");
 			String technicianLastName = (String) request.getSession().getAttribute("lastname");
-			
+
 			String patientFirstName = request.getParameter("patientFirstName");
 			String patientLastName = request.getParameter("patientLastName");
 			String patientMobile = request.getParameter("patientMobile");
@@ -153,27 +118,53 @@ public class AppointmentServlet extends HttpServlet {
 			Patient patient = new Patient(0, patientFirstName, patientLastName, patientAddress, patientMobile,
 					patientMedicareNo);
 
-			Technician technician = new Technician(technicianId, technicianUsername, "", technicianFirstname, technicianLastName);
-			
+			Technician technician = new Technician(technicianId, technicianUsername, "", technicianFirstname,
+					technicianLastName);
+
 			// Updating the data in the server
 			AppointmentService as = new AppointmentService();
 
 			Machine machine = new Machine(0, 0, machineCastType);
 			List<Machine> machines = new ArrayList<Machine>();
 			machines.add(machine);
-			
+
 			as.finishCreatePatient(patient);
-			Patient createdPatient = as.findPatient(patientMedicareNo);	
+			Patient createdPatient = as.findPatient(patientMedicareNo);
 			System.out.println("Patient created successfully");
-			Appointment appointment = new Appointment(0, ldt, createdPatient, technician, null, appointmentStatusCastType);			
+			Appointment appointment = new Appointment(0, ldt, createdPatient, technician, null,
+					appointmentStatusCastType);
 			as.finishCreateAppointment(appointment);
 
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
-            dispatcher.forward(request, response);
+			dispatcher.forward(request, response);
 		} else if (request.getParameter("back") != null) {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
-            dispatcher.forward(request, response);
+			dispatcher.forward(request, response);
 		}
+	}
+
+	private Patient getPatientDetails(HttpServletRequest request, Address patientAddress) {
+		Integer patientId = Integer.valueOf(request.getParameter("patientid"));
+		String patientFirstName = request.getParameter("patientFirstName");
+		String patientLastName = request.getParameter("patientLastName");
+		String patientMobile = request.getParameter("patientMobile");
+		String patientMedicareNo = request.getParameter("patientMedicareNo");
+
+		return new Patient(patientId, patientFirstName, patientLastName, patientAddress, patientMobile,
+				patientMedicareNo);
+	}
+
+	private Address getAddressDetails(HttpServletRequest request) {
+		Integer patientAddressidId = Integer.valueOf(request.getParameter("patientaddressid"));
+		Integer patientUnitNo = Integer.valueOf(request.getParameter("patientUnitNo"));
+		Integer patientStreetNo = 0;
+		String patientStreetName = request.getParameter("patientStreet");
+		String patientCity = request.getParameter("patientCity");
+		String patientState = request.getParameter("patientState");
+		Integer patientPostCode = Integer.valueOf(request.getParameter("patientPostalCode"));
+
+		return new Address(patientAddressidId, patientUnitNo, patientStreetNo, patientStreetName, patientCity,
+				patientState, patientPostCode);
 	}
 
 }
