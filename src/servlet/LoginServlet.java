@@ -18,7 +18,8 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    LoginService loginService = new LoginService();
+    private User user = null;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -31,11 +32,19 @@ public class LoginServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        response.getWriter().append("Served at: ").append(request.getContextPath());
-        //request.getRequestDispatcher("/login.jsp").forward(request,response);
+    	HttpSession session = request.getSession(true);   
+    	
+        if (session != null || session.getAttribute("userid") != null) {
+            request.getSession(true);               
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
+            dispatcher.forward(request, response);
+        } else {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/invalid_login.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     /**
@@ -47,18 +56,11 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        LoginService loginService = new LoginService();
-        User user = loginService.login(username, password);
+        user = loginService.login(username, password);
         
         if (user != null) {
-            HttpSession session = request.getSession(true);   
-            session.setAttribute("userid", user.getId());   
-            session.setAttribute("username", user.getUsername());   
-            session.setAttribute("firstname", user.getFirstName());  
-            session.setAttribute("lastname", user.getLastName());  
-            
-            System.out.println(session.getAttribute("firstname") + " session get attribute ");
+        	HttpSession session = request.getSession(true);   
+            sessionDetails(request, user, session);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
             dispatcher.forward(request, response);
         } else {
@@ -67,6 +69,12 @@ public class LoginServlet extends HttpServlet {
         }
     }
     
-    
+    private HttpSession sessionDetails(HttpServletRequest request, User user, HttpSession session) {
+        session.setAttribute("userid", user.getId());   
+        session.setAttribute("username", user.getUsername());   
+        session.setAttribute("firstname", user.getFirstName());  
+        session.setAttribute("lastname", user.getLastName());
+		return session;  
+    }
 
 }

@@ -102,20 +102,19 @@
 									value="<c:out value="${appointment.getPatient().getAddress().getStreetName()}"/>"
 									required /> <input type="text" class="form-control"
 									data-gaddress-types="locality" data-gaddress-name="long_name"
-									id="f12_city" name="patientCity" 
+									id="f12_city" name="patientCity"
 									aria-describedby="f12_city-help-block" placeholder="City"
 									value="<c:out value="${appointment.getPatient().getAddress().getCity()}"/>"
 									required /> <input type="text" class="form-control"
 									data-gaddress-types="administrative_area_level_1"
 									data-gaddress-name="long_name" id="f12_state"
-									name="patientState" 
-									aria-describedby="f12_state-help-block"
+									name="patientState" aria-describedby="f12_state-help-block"
 									placeholder="State / Province / Region"
 									value="<c:out value="${appointment.getPatient().getAddress().getState()}"/>"
 									required /> <input type="number" class="form-control"
 									data-gaddress-types="postal_code"
 									data-gaddress-name="patientUPostalCode" id="f12_postalCode"
-									name="patientPostalCode" 
+									name="patientPostalCode"
 									aria-describedby="f12_postalCode-help-block"
 									placeholder="Postal / Zip Code" data-bind="value:replyNumber"
 									value="<c:out value="${appointment.getPatient().getAddress().getPostCode()}"/>"
@@ -137,11 +136,11 @@
 					</tr>
 					<tr>
 						<td><input type="hidden" id="app_id" name="appointmentid"
-							value="<c:out value="${appointment.getId()}"/>"> <input type="hidden"
-							id="patient_id" name="patientid"
-							value="<c:out value="${appointment.getPatient().getId()}"/>"> 
-							<input type="hidden"
-							id="patient_address_id" name="patientaddressid"
+							value="<c:out value="${appointment.getId()}"/>"> <input
+							type="hidden" id="patient_id" name="patientid"
+							value="<c:out value="${appointment.getPatient().getId()}"/>">
+							<input type="hidden" id="patient_address_id"
+							name="patientaddressid"
 							value="<c:out value="${appointment.getPatient().getAddress().getId()}"/>"></td>
 						<td><input type="submit" name="update"
 							class="btn btn-primary" value="Update"></td>
