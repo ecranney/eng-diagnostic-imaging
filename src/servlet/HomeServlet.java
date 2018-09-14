@@ -36,7 +36,7 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(false);
 		request.setAttribute("appointmentList", appointmentList);
 		
 		if (session != null && session.getAttribute("userid") != null) {
@@ -44,7 +44,7 @@ public class HomeServlet extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/appointments.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/invalid_login.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login");
 			dispatcher.forward(request, response);
 		}
 	}
@@ -55,7 +55,7 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(false);
 		request.setAttribute("appointmentList", appointmentList);
 		
 		if (session != null && session.getAttribute("userid") != null) {
@@ -63,7 +63,7 @@ public class HomeServlet extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/appointments.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/invalid_login.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login");
 			dispatcher.forward(request, response);
 		}
 		

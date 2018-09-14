@@ -40,8 +40,10 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		session.invalidate();
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }
