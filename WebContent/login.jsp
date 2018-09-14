@@ -24,6 +24,9 @@
 	href="resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+	<c:if test="${not empty sessionScope.userid}">
+		<c:redirect url="/home" />
+	</c:if>	
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">

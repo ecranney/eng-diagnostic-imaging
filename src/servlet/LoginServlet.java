@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
     	HttpSession session = request.getSession(false);  
     	
         if (session != null && session.getAttribute("userid") != null) {
-            request.getSession(true);               
+            request.getSession(false);              
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
             dispatcher.forward(request, response);
         } else {
@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
         
         if (user != null) {
         	HttpSession session = request.getSession(true);   
-        	setSessionDetails(request, user, session);
+        	session = setSessionDetails(request, user, session);   
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
             dispatcher.forward(request, response);
         } else {

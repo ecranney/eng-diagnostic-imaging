@@ -342,7 +342,6 @@ tbody tr:hover {
   font-family: Montserrat-Bold;
   line-height: 1.5;
   color: #fff;
-  width: 100%;
   height: 35px;
   margin-top: 3px;
   margin-bottom: 3px;
@@ -364,10 +363,14 @@ tbody tr:hover {
 
 .table100-form-edit-btn {
   background: #57b846;
+  width: 89px;
+  margin-right: -32px;
 }
+
 
 .table100-form-delete-btn {
   background: #8ba586;
+  width: 35px;
 }
 
 
@@ -375,3 +378,6 @@ tbody tr:hover {
   background: #333333;
 }
 
+.hidden-item {
+	display: none;
+}

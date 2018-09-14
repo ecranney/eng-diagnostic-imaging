@@ -46,6 +46,11 @@ public class AppointmentService {
 	public List<Appointment> findAllAppointments() {
 		return appointmentMapper.findAll();
 	}
+	
+	// load limited appointment set objects
+		public List<Appointment> findAllAppointments(int limit, int offset) {
+			return appointmentMapper.findAll(limit, offset);
+		}
 
 	// load an appointment object by id
 	public Appointment findAppointment(int id) {

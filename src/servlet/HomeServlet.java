@@ -21,8 +21,9 @@ import dies.services.AppointmentService;
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppointmentService appointmentService = new AppointmentService();
-	List<Appointment> appointmentList = appointmentService.findAllAppointments();
-
+	private int page = 1;
+	private static final int RECORDS_PER_PAGE = 4;
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -37,10 +38,26 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		request.setAttribute("appointmentList", appointmentList);
-		
+
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+			System.out.println(page + " priting current page number");
+		}
+
 		if (session != null && session.getAttribute("userid") != null) {
-			request.getSession(true);
+			List<Appointment> appointmentList = appointmentService.findAllAppointments(RECORDS_PER_PAGE,
+					(page - 1) * RECORDS_PER_PAGE);
+			List<Appointment> allappointmentList = appointmentService.findAllAppointments();
+
+			int noOfRecords = allappointmentList.size();
+			int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
+
+			request.setAttribute("appointmentList", appointmentList);
+			request.setAttribute("noOfPages", noOfPages);
+			request.setAttribute("currentPage", page);
+			System.out.println("noOfPages" + noOfPages);
+			System.out.println("currentPage" + page);
+
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/appointments.jsp");
 			dispatcher.forward(request, response);
 		} else {
@@ -56,17 +73,33 @@ public class HomeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		request.setAttribute("appointmentList", appointmentList);
 		
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+			System.out.println(page + " priting current page number");
+		}
+
 		if (session != null && session.getAttribute("userid") != null) {
-			request.getSession(true);
+			List<Appointment> allappointmentList = appointmentService.findAllAppointments();
+			List<Appointment> appointmentList = appointmentService.findAllAppointments(RECORDS_PER_PAGE,
+					(page - 1) * RECORDS_PER_PAGE);
+			
+			int noOfRecords = allappointmentList.size();
+			int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
+
+			request.setAttribute("appointmentList", appointmentList);
+			request.setAttribute("noOfPages", noOfPages);
+			request.setAttribute("currentPage", page);
+			System.out.println("noOfPages do post" + noOfPages);
+			System.out.println("currentPage do post" + page);
+
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/appointments.jsp");
 			dispatcher.forward(request, response);
 		} else {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login");
 			dispatcher.forward(request, response);
 		}
-		
+
 	}
 
 }

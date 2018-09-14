@@ -20,6 +20,8 @@
 <link rel="stylesheet" type="text/css"
 	href="resources/styles/table-main.css">
 <link rel="stylesheet" type="text/css"
+	href="resources/styles/header-main.css">
+<link rel="stylesheet" type="text/css"
 	href="resources/styles/select2/select2.min.css">
 <link rel="stylesheet" type="text/css"
 	href="resources/styles/perfect-scrollbar/perfect-scrollbar.css">
@@ -30,61 +32,42 @@
 <link rel="stylesheet" href="resources/styles/basic-header.css">
 </head>
 <body>
+	<c:if test="${empty appointmentList}">
+		<c:redirect url="/home" />
+	</c:if>
 	<div>
 		<nav class="navbar navbar-default navigation-clean-button">
 			<div class="container">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="#">Diagnostic Imaging Enterprise
-						System</a>
+					<a class="navbar-brand title-of-header" href="#">Diagnostic
+						Imaging Enterprise System</a>
 					<button class="navbar-toggle collapsed" data-toggle="collapse"
 						data-target="#navcol-1">
 						<span class="sr-only">Toggle navigation</span><span
 							class="icon-bar"></span><span class="icon-bar"></span><span
 							class="icon-bar"></span>
 					</button>
-					<a href="create_booking.jsp"
-						class="btn btn-primary btn-xs pull-right"><b>+</b> Add new
-						appointment</a>
-				</div>
 
-				<form action="logout" method="post">
-					<h4>
+					<div class="welcome-message">
 						Hola!
 						<%=request.getSession(false).getAttribute("firstname")%>
-
-						<input type="submit" name="logout"
-							class="btn btn-primary btn-sm btn-outline-dark" value="logout">
-					</h4>
-				</form>
-
-				<div class="collapse navbar-collapse" id="navcol-1">
-					<ul class="nav navbar-nav">
-						<li class="active" role="presentation"><a href="#">First
-								Item</a></li>
-						<li role="presentation"><a href="#">Second Item</a></li>
-						<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" aria-expanded="false" href="#">Dropdown
-								<span class="caret"></span>
-						</a>
-							<ul class="dropdown-menu" role="menu">
-								<li role="presentation"><a href="#">First Item</a></li>
-								<li role="presentation"><a href="#">Second Item</a></li>
-								<li role="presentation"><a href="#">Third Item</a></li>
-							</ul></li>
-					</ul>
-					<p class="navbar-text navbar-right actions">
-						<a class="navbar-link login" href="#">Log In</a> <a
-							class="btn btn-default action-button" role="button" href="#">Sign
-							Up</a>
-					</p>
+						<a href="create_booking.jsp"
+							class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
+							Add new appointment</a>
+					</div>
 				</div>
+				<form action="logout" method="post">
+					<button type="submit" name="logout"
+						class="header100-header-btn header100-form-logout-btn"
+						value="logout">
+						<i class="fa fa-sign-out"></i> Logout
+					</button>
+				</form>
 			</div>
 		</nav>
 	</div>
 	<div class="limiter">
-
 		<div class="container-table100">
-
 			<div class="wrap-table100">
 				<div class="table100">
 					<table>
@@ -111,10 +94,12 @@
 											value="${appointmentList.getState()}" /></td>
 									<td class="column5">
 										<form action="appointment" method="GET">
-
 											<div class="container-login100-form-btn">
-												<input type="hidden" name="appointmentid"
-													value=<c:out value="${appointmentList.getId()}" />>
+												<div class="hidden-item">
+													<input type="hidden" class="hidden-item"
+														name="appointmentid"
+														value=<c:out value="${appointmentList.getId()}" />>
+												</div>
 												<button type="submit"
 													class="table100-form-btn table100-form-edit-btn"
 													name="edit" value="View">
@@ -126,25 +111,46 @@
 									<td class="column6">
 										<form action="appointment" method="GET">
 											<div class="container-login100-form-btn">
-												<input type="hidden" name="appointmentid"
-													value=<c:out value="${appointmentList.getId()}" />>
+												<div class="hidden-item">
+													<input type="hidden" class="hidden-item"
+														name="appointmentid"
+														value=<c:out value="${appointmentList.getId()}" />>
+												</div>
 												<button type="submit"
-													class="table100-form-btn table100-form-delete-btn"
-													name="delete" value="Delete">
+													class="table100-form-btn table100-form-delete-btn alert alert-danger"
+													name="delete" value="Delete"
+													onclick="return confirm('Are you sure you want to delete?')">
 													<i class="fa fa-trash"></i>
 												</button>
 											</div>
 										</form>
 									</td>
-
 								</tr>
 							</c:forEach>
+							<tr>
+								<td><c:if test="${currentPage != 1}">
+										<a href="home?page=${currentPage - 1}">Previous</a>
+									</c:if> <c:forEach begin="1" end="${noOfPages}" var="i">
+										<c:choose>
+											<c:when test="${currentPage eq i}">
+											${i}
+										</c:when>
+											<c:otherwise>
+												<a href="home?page=${i}">${i}</a>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach> <c:if test="${currentPage lt noOfPages}">
+										<a href="home?page=${currentPage + 1}">Next</a>
+									</c:if></td>
+							</tr>
 						</tbody>
 					</table>
+
 				</div>
 			</div>
 		</div>
 	</div>
+
 	<script src="resources/js/jquery.min.js"></script>
 	<script src="resources/js/popper.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>

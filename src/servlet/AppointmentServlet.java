@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Servlet implementation class AppointmentServlet
  */
-@WebServlet("/appointment")
+@WebServlet(urlPatterns ="/appointment")
 public class AppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppointmentService appointmentService = new AppointmentService();
