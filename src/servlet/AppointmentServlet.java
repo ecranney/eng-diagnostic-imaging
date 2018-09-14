@@ -25,13 +25,13 @@ import java.util.List;
 @WebServlet("/appointment")
 public class AppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private AppointmentService appointmentService = new AppointmentService();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public AppointmentServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -40,21 +40,11 @@ public class AppointmentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		//System.out.println(request.getContextPath() + " context path");
 		System.out.println(request.getParameter("appointmentid") + " id during laoding");
 		
-		if (request.getParameter("view") != null) {
-			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
-			
-			AppointmentService appointmentService = new AppointmentService();
+		if (request.getParameter("view") != null) {			
 			int app_id = Integer.parseInt(request.getParameter("appointmentid"));
 			Appointment appointment = appointmentService.findAppointment(app_id);
-			
-			System.out.println(app_id + " opened id");
-			System.out.println(appointment.getDate() + " opened id date");
-			System.out.println(appointment.getPatient().getFirstName() + " opened id date");
 			
 			request.setAttribute("appointment", appointment);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view_booking.jsp?appointmentid=" + Integer.valueOf(request.getParameter("appointmentid")));
@@ -69,9 +59,8 @@ public class AppointmentServlet extends HttpServlet {
 			as.finishDeleteAppointment(appointment);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
             dispatcher.forward(request, response);
+            
 		} else if (request.getParameter("edit") != null) {
-			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
-			
 			AppointmentService appointmentService = new AppointmentService();
 			int app_id = Integer.parseInt(request.getParameter("appointmentid"));
 			Appointment appointment = appointmentService.findAppointment(app_id);

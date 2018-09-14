@@ -35,9 +35,9 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	HttpSession session = request.getSession(true);   
+    	HttpSession session = request.getSession(true);  
     	
-        if (session != null || session.getAttribute("userid") != null) {
+        if (session != null && session.getAttribute("userid") != null) {
             request.getSession(true);               
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
             dispatcher.forward(request, response);
@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
         
         if (user != null) {
         	HttpSession session = request.getSession(true);   
-            sessionDetails(request, user, session);
+        	setSessionDetails(request, user, session);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
             dispatcher.forward(request, response);
         } else {
@@ -69,7 +69,7 @@ public class LoginServlet extends HttpServlet {
         }
     }
     
-    private HttpSession sessionDetails(HttpServletRequest request, User user, HttpSession session) {
+    private HttpSession setSessionDetails(HttpServletRequest request, User user, HttpSession session) {
         session.setAttribute("userid", user.getId());   
         session.setAttribute("username", user.getUsername());   
         session.setAttribute("firstname", user.getFirstName());  

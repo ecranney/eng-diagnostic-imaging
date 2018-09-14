@@ -17,7 +17,7 @@
 				<div class="col-md-12 text-center">
 					<span class="display-1 d-block">Holla!!!</span>
 					<div class="mb-4 lead">You need to check your login details</div>
-					<a href="#" class="btn btn-link">Back to Home</a>
+					<a href="/home" class="btn btn-link">Back to Home</a>
 				</div>
 			</div>
 		</div>

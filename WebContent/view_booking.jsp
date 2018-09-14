@@ -27,9 +27,9 @@
 <body>
 	<div class="container ">
 		<div>
-			<form action="appointment" method="POST">
+			<form action="appointment" method="post">
 				<h4>
-					<input type="submit" name="back"
+					<input type="home" name="get"
 						class="btn btn-primary btn-sm btn-outline-dark" value="Back">
 				</h4>
 			</form>
