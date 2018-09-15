@@ -51,7 +51,7 @@
 					<div class="welcome-message">
 						Hola!
 						<%=request.getSession(false).getAttribute("firstname")%>
-						<a href="create_booking.jsp"
+						<a href="appointment.jsp?mode=create"
 							class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
 							Add new appointment</a>
 					</div>

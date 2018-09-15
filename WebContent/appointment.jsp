@@ -252,9 +252,17 @@
 									</span>
 								</button>
 							</c:when>
-							<c:otherwise>
+							<c:when test="${mode == 'update'}">
 								<button type="submit" name="mode" class="contact100-form-btn"
 									value="update">
+									<span> Submit <i class="fa fa-long-arrow-right m-l-7"
+										aria-hidden="true"></i>
+									</span>
+								</button>
+							</c:when>
+							<c:otherwise>
+								<button type="submit" name="mode" class="contact100-form-btn"
+									value="create">
 									<span> Submit <i class="fa fa-long-arrow-right m-l-7"
 										aria-hidden="true"></i>
 									</span>

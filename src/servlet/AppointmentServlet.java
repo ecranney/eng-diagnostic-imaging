@@ -25,7 +25,6 @@ import java.util.List;
 @WebServlet(urlPatterns = "/appointment")
 public class AppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AppointmentService appointmentService = new AppointmentService();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -52,6 +51,7 @@ public class AppointmentServlet extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
 					"/appointment.jsp?appointmentid=" + Integer.valueOf(request.getParameter("appointmentid")));
 			dispatcher.forward(request, response);
+
 		} else if (request.getParameter("mode").equalsIgnoreCase("delete")) {
 			System.out.println(request.getParameter("appointmentid") + " requested appointment id");
 			Appointment appointment = new Appointment(Integer.valueOf(request.getParameter("appointmentid")), null,
@@ -70,16 +70,13 @@ public class AppointmentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (request.getParameter("mode").equalsIgnoreCase("update")) {
-			Address patientAddress = getAddressDetails(request);
-			Patient patient = getPatientDetails(request, patientAddress);
+			Address patientAddress = getAddressDetails(request, "update");
+			Patient patient = getPatientDetails(request, patientAddress, "update");
 			AppointmentService as = new AppointmentService();
 			as.finishUpdatePatient(patient);
-
-			response.sendRedirect(
-					"appointment?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
+			response.sendRedirect("appointment?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
 
 		} else if (request.getParameter("mode").equalsIgnoreCase("create")) {
-
 			Date date = new Date();
 			String appointmentDateTime = request.getParameter("appointmentDateTime");
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
@@ -89,37 +86,18 @@ public class AppointmentServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			LocalDateTime ldt = LocalDateTime.ofInstant(date.toInstant(), ZoneOffset.UTC);
-
+			
+			// Creating each objects from form data
+			Address patientAddress = getAddressDetails(request, "create");
+			Patient patient = getPatientDetails(request, patientAddress, "create");
+			Technician technician = getTechnicianDetails(request, "create");
+			
 			String appointmentStatus = request.getParameter("appointmentStatus");
 			State appointmentStatusCastType = State.valueOf(appointmentStatus);
-
+			
 			String machineType = request.getParameter("machineType");
 			Machine.Type machineCastType = Machine.Type.valueOf(machineType);
-
-			int technicianId = (int) request.getSession().getAttribute("userid");
-			String technicianUsername = (String) request.getSession().getAttribute("username");
-			String technicianFirstname = (String) request.getSession().getAttribute("firstname");
-			String technicianLastName = (String) request.getSession().getAttribute("lastname");
-
-			String patientFirstName = request.getParameter("patientFirstName");
-			String patientLastName = request.getParameter("patientLastName");
-			String patientMobile = request.getParameter("patientMobile");
-			String patientMedicareNo = request.getParameter("patientMedicareNo");
-
-			Integer patientUnitNo = Integer.parseInt(request.getParameter("patientUnitNo"));
-			String patientStreet = request.getParameter("patientStreet");
-			String patientCity = request.getParameter("patientCity");
-			String patientState = request.getParameter("patientState");
-			Integer patientPostCode = Integer.parseInt(request.getParameter("patientPostalCode"));
-
-			// Creating each objects from form data
-			Address patientAddress = new Address(0, patientUnitNo, 0, patientStreet, patientCity, patientState,
-					patientPostCode);
-			Patient patient = new Patient(0, patientFirstName, patientLastName, patientAddress, patientMobile,
-					patientMedicareNo);
-
-			Technician technician = new Technician(technicianId, technicianUsername, "", technicianFirstname,
-					technicianLastName);
+			
 
 			// Updating the data in the server
 			AppointmentService as = new AppointmentService();
@@ -129,7 +107,7 @@ public class AppointmentServlet extends HttpServlet {
 			machines.add(machine);
 
 			as.finishCreatePatient(patient);
-			Patient createdPatient = as.findPatient(patientMedicareNo);
+			Patient createdPatient = as.findPatient(patient.getMedicareNo());
 			System.out.println("Patient created successfully");
 			Appointment appointment = new Appointment(0, ldt, createdPatient, technician, null,
 					appointmentStatusCastType);
@@ -137,34 +115,52 @@ public class AppointmentServlet extends HttpServlet {
 
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
 			dispatcher.forward(request, response);
+			
 		} else if (request.getParameter("back") != null) {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
 			dispatcher.forward(request, response);
+			
 		}
 	}
 
-	private Patient getPatientDetails(HttpServletRequest request, Address patientAddress) {
-		Integer patientId = Integer.valueOf(request.getParameter("patientid"));
+	private Patient getPatientDetails(HttpServletRequest request, Address patientAddress, String mode) {
 		String patientFirstName = request.getParameter("patientFirstName");
 		String patientLastName = request.getParameter("patientLastName");
 		String patientMobile = request.getParameter("patientMobile");
 		String patientMedicareNo = request.getParameter("patientMedicareNo");
+		Integer patientId = 0;
 
+		if (mode == "update") {
+			patientId = Integer.valueOf(request.getParameter("patientid"));
+		}
 		return new Patient(patientId, patientFirstName, patientLastName, patientAddress, patientMobile,
 				patientMedicareNo);
 	}
 
-	private Address getAddressDetails(HttpServletRequest request) {
-		Integer patientAddressidId = Integer.valueOf(request.getParameter("patientaddressid"));
+	private Address getAddressDetails(HttpServletRequest request, String mode) {
 		Integer patientUnitNo = Integer.valueOf(request.getParameter("patientUnitNo"));
 		Integer patientStreetNo = 0;
 		String patientStreetName = request.getParameter("patientStreet");
 		String patientCity = request.getParameter("patientCity");
 		String patientState = request.getParameter("patientState");
 		Integer patientPostCode = Integer.valueOf(request.getParameter("patientPostalCode"));
+		Integer patientAddressidId = 0;
 
+		if (mode == "update") {
+			patientAddressidId = Integer.valueOf(request.getParameter("patientaddressid"));
+		}
 		return new Address(patientAddressidId, patientUnitNo, patientStreetNo, patientStreetName, patientCity,
 				patientState, patientPostCode);
+	}
+	
+	private Technician getTechnicianDetails(HttpServletRequest request, String mode) {
+		int technicianId = (int) request.getSession().getAttribute("userid");
+		String technicianUsername = (String) request.getSession().getAttribute("username");
+		String technicianFirstname = (String) request.getSession().getAttribute("firstname");
+		String technicianLastName = (String) request.getSession().getAttribute("lastname");
+		
+		return new Technician(technicianId, technicianUsername, "", technicianFirstname,
+				technicianLastName);
 	}
 
 }
