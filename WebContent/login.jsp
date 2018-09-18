@@ -58,8 +58,10 @@
                     <a href="#" data-toggle="tooltip"
                        title="username: admin, password: admin"> <i
                             class="fa fa-question-circle" aria-hidden="true"
-                            aria-hidden="true"></i></a>
+                            aria-hidden="true"></i>  info</a>
+                           
                 </div>
+                 <br>
                 <div class="wrap-input100 validate-input"
                      data-validate="Valid email is required: ex@abc.xyz">
                     <input class="input100" type="text" name="username"
