@@ -294,6 +294,7 @@ textarea.input100 {
   border-radius: 25px;
   overflow: hidden;
   margin: 0 auto;
+  
 }
 
 .contact100-form-bgbtn {
@@ -329,6 +330,7 @@ textarea.input100 {
 
   font-family: Poppins-Medium;
   font-size: 16px;
+  background: #70bf74;
   color: #fff;
   line-height: 1.2;
 }
@@ -561,7 +563,55 @@ textarea.input100 {
   line-height: 1.2;
 }
 
+/* These are the CSS for the tab format in form page */
 
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none; 
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+/* Mark the active step: */
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #4CAF50;
+}
+
+
+.stepbysteptab100-btn {
+  font-size: 13px;
+  font-family: Montserrat-Bold;
+  line-height: 1.5;
+  color: #fff;
+  width: 100%;
+  height: 50px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  border-radius: 25px;
+  justify-content: center;
+  align-items: center;
+  padding: 0 3px;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
 
 
 
