@@ -103,10 +103,10 @@
 					<span class="contact100-form-title"> Patient Information </span>
 
 					<div class="wrap-input100 validate-input"
-						data-validate="Name is required">
+						data-validate="Value is required">
 						<span class="label-input100">Search</span> <input
 							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
-							class="input100" type="text" name="patientFirstName"
+							class="input100" type="text" id="searchValue" name="searchValue"
 							placeholder="Enter patien's info to search"
 							value="<c:out value="${appointment.getPatient().getFirstName()}"/>"
 							required> <span class="focus-input100"></span>
@@ -307,8 +307,10 @@
 				</div>
 				<div style="overflow: auto;">
 					<div style="float: center;">
-						<button type="button" class="stepbysteptab100-btn" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-						<button type="button" class="stepbysteptab100-btn" id="nextBtn" onclick="nextPrev(1)">Next</button>
+						<button type="button" class="stepbysteptab100-btn" id="prevBtn"
+							onclick="nextPrev(-1)">Previous</button>
+						<button type="button" class="stepbysteptab100-btn" id="nextBtn"
+							onclick="nextPrev(1)">Next</button>
 					</div>
 				</div>
 
@@ -321,9 +323,6 @@
 		</div>
 
 	</div>
-
-
-
 
 	<div id="dropDownSelect1"></div>
 
@@ -365,6 +364,21 @@
 		gtag('js', new Date());
 
 		gtag('config', 'UA-23581568-13');
+	</script>
+	<script type="text/javascript">
+		var searchValue = document.getElementById("searchValue");
+		document
+				.getElementById("searchValue")
+				.addEventListener(
+						'input',
+						function(evt) {
+							if (searchValue && searchValue.value) {
+								document.getElementById("nextBtn").style.color = "#70bf74";
+							} else if (searchValue.value == '') {
+								document.getElementById("nextBtn").style.color = "#fff";
+							}
+
+						});
 	</script>
 	<%--	
 	<script src="resources/js/daterangepicker/moment.min.js"></script>
