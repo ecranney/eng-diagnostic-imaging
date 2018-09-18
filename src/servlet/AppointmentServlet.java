@@ -128,13 +128,14 @@ public class AppointmentServlet extends HttpServlet {
 		String patientLastName = request.getParameter("patientLastName");
 		String patientMobile = request.getParameter("patientMobile");
 		String patientMedicareNo = request.getParameter("patientMedicareNo");
+		String patientEmail = request.getParameter("patientEmail");
 		Integer patientId = 0;
 
 		if (mode == "update") {
 			patientId = Integer.valueOf(request.getParameter("patientid"));
 		}
 		return new Patient(patientId, patientFirstName, patientLastName, patientAddress, patientMobile,
-				patientMedicareNo);
+				patientMedicareNo, patientEmail);
 	}
 
 	private Address getAddressDetails(HttpServletRequest request, String mode) {

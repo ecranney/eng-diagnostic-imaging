@@ -23,9 +23,10 @@ public class Patient implements IDomainObject {
     private Address address;
     private String phone;
     private String medicareNo;
+    private String email;
 
     public Patient(int id, String firstName, String lastName, Address address,
-                   String phone, String medicareNo) {
+                   String phone, String medicareNo, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -76,6 +77,14 @@ public class Patient implements IDomainObject {
 
     public void setMedicareNo(String medicareNo) {
         this.medicareNo = medicareNo;
+    }
+    
+    public String getEmail() {
+        return medicareNo;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     public String getValue() {

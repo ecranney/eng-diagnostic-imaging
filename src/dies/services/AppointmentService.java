@@ -44,12 +44,12 @@ public class AppointmentService {
 	public int countAllAppointments() {
 		return appointmentMapper.countAll();
 	}
-		
+
 	// load all appointment objects
 	public List<Appointment> findAllAppointments() {
 		return appointmentMapper.findAll();
 	}
-	
+
 	// load limited appointment set objects
 	public List<Appointment> findAllAppointments(int limit, int offset) {
 		return appointmentMapper.findAll(limit, offset);
@@ -89,9 +89,15 @@ public class AppointmentService {
 	}
 
 	// attempts to locate a patient by medicare number, returns null if unable
-	public ArrayList<Patient> findPatient(String medicareNo) {
-		ArrayList<Patient> patients = patientMapper.find(medicareNo);
+	public ArrayList<Patient> findPatient(String medicareNo, boolean autocomplate) {
+		ArrayList<Patient> patients = patientMapper.find(medicareNo, autocomplate);
 		return patients;
+	}
+
+	// attempts to locate a patient by medicare number, returns null if unable
+	public boolean findPatient(String medicareNo) {
+		boolean medicareNoExist = patientMapper.find(medicareNo);
+		return medicareNoExist;
 	}
 
 	// finish CREATE patient sub-transaction

@@ -388,7 +388,7 @@
 		$(document).ready(
 				function() {
 					$("#searchValue").autocomplete({
-						source : "patients?mode=autocomplete",
+						source : "patient?mode=autocomplete",
 						select : function(event, ui) {
 							$("#searchValue").val(ui.item.value);							
 						}

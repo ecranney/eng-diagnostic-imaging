@@ -21,7 +21,7 @@
 	href="resources/images/favicon/favicon-16x16.png">
 <link rel="manifest" href="resources/images/favicon/site.webmanifest">
 <link rel="mask-icon"
-	href="resources/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+	href="resources/images/favicon/safari-pinned-tab.svg">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
@@ -90,7 +90,8 @@
 
 			<div class="wrap-table100">
 				<div>
-					<input class="tableSearchInputField" type="text" id="patientNameInput" onkeyup="nameFindFunction()"
+					<input class="tableSearchInputField" type="text"
+						id="patientNameInput" onkeyup="nameFindFunction()"
 						placeholder="Search for names.." title="Type in a name">
 				</div>
 				<div class="table100">
@@ -194,6 +195,11 @@
 				}
 			}
 		}
+	</script>
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="popover"]').popover();
+		});
 	</script>
 	<script src="resources/js/jquery.min.js"></script>
 	<script src="resources/js/popper.js"></script>

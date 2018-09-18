@@ -25,11 +25,9 @@ public class DBConnectionTest {
 //		appointmentMapper.delete(appointment);
 //    	
 //    	PatientMapper patientMapper = new PatientMapper();
-    	Address address =  new Address(0, 22, 223, "Station Street", "CBD", "NSW", 2324);
-    	Patient patient = new Patient(0, "Brown", "Hills", address, "24323423", "MEDI323333");
+//    	Address address =  new Address(0, 22, 223, "Station Street", "CBD", "NSW", 2324);
 //    	patientMapper.insert(patient);
-    	AppointmentService as = new AppointmentService();
-    	as.finishCreatePatient(patient);
+//    	AppointmentService as = new AppointmentService();
     	System.out.println("done");
     	
         

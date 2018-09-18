@@ -12,12 +12,17 @@
 <meta charset="ISO-8859-1">
 <title>DIES Booking View</title>
 
-<link rel="apple-touch-icon" sizes="57x57" href="resources/images/favicon/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="180x180" href="resources/images/favicon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="resources/images/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="resources/images/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="57x57"
+	href="resources/images/favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="180x180"
+	href="resources/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32"
+	href="resources/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="resources/images/favicon/favicon-16x16.png">
 <link rel="manifest" href="resources/images/favicon/site.webmanifest">
-<link rel="mask-icon" href="resources/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="mask-icon"
+	href="resources/images/favicon/safari-pinned-tab.svg">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
@@ -92,13 +97,20 @@
 				class="contact100-form validate-form">
 				<span class="contact100-form-title"> Patient Registration </span>
 
+				<c:if test="${not empty errors}">
+
+					<div class="alert alert-danger">
+						<strong> ${errors} </strong>
+					</div>
+				</c:if>
+
 				<div class="wrap-input100 validate-input"
 					data-validate="Name is required">
 					<span class="label-input100">Patient First Name</span> <input
 						<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 						class="input100" type="text" name="patientFirstName"
 						placeholder="Enter patien's first name"
-						value="<c:out value="${appointment.getPatient().getFirstName()}"/>" required>
+						value="<c:out value="${patient.getFirstName()}"/>" required>
 					<span class="focus-input100"></span>
 				</div>
 
@@ -108,7 +120,7 @@
 						<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 						class="input100" type="text" name="patientLastName"
 						placeholder="Enter patient's last name"
-						value="<c:out value="${appointment.getPatient().getLastName()}"/>" required>
+						value="<c:out value="${patient.getLastName()}"/>" required>
 					<span class="focus-input100"></span>
 				</div>
 
@@ -120,7 +132,7 @@
 							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 							type="number" class="input100" name="patientUnitNo"
 							placeholder="Unit no" data-bind="value:replyNumber"
-							value="<c:out value="${appointment.getPatient().getAddress().getUnitNo()}"/>"
+							value="<c:out value="${patient.getAddress().getUnitNo()}"/>"
 							required> <input
 							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 							type="text" class="input100 gaddress-autocomplete"
@@ -129,13 +141,13 @@
 							name="patientStreet"
 							aria-describedby="f12_addressLine1-help-block"
 							placeholder="1234 Main St."
-							value="<c:out value="${appointment.getPatient().getAddress().getStreetName()}"/>"
+							value="<c:out value="${patient.getAddress().getStreetName()}"/>"
 							required> <input
 							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 							type="text" class="input100" data-gaddress-types="locality"
 							data-gaddress-name="long_name" id="f12_city" name="patientCity"
 							aria-describedby="f12_city-help-block" placeholder="City"
-							value="<c:out value="${appointment.getPatient().getAddress().getCity()}"/>"
+							value="<c:out value="${patient.getAddress().getCity()}"/>"
 							required> <input
 							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 							type="text" class="input100"
@@ -143,7 +155,7 @@
 							data-gaddress-name="long_name" id="f12_state" name="patientState"
 							aria-describedby="f12_state-help-block"
 							placeholder="State / Province / Region"
-							value="<c:out value="${appointment.getPatient().getAddress().getState()}"/>"
+							value="<c:out value="${patient.getAddress().getState()}"/>"
 							required> <input
 							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 							type="number" class="input100" data-gaddress-types="postal_code"
@@ -151,7 +163,7 @@
 							name="patientPostalCode"
 							aria-describedby="f12_postalCode-help-block"
 							placeholder="Postal / Zip Code" data-bind="value:replyNumber"
-							value="<c:out value="${appointment.getPatient().getAddress().getPostCode()}"/>"
+							value="<c:out value="${patient.getAddress().getPostCode()}"/>"
 							required>
 					</div>
 					<span class="focus-input100"></span>
@@ -161,8 +173,9 @@
 					data-validate="Valid email is required: ex@abc.xyz">
 					<span class="label-input100">Patient Email</span> <input
 						<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
-						class="input100" type="text" name="email"
-						placeholder="Enter Email" required> <span class="focus-input100"></span>
+						class="input100" type="text" name="patientEmail"
+						placeholder="Enter Email" required> <span
+						class="focus-input100"></span>
 				</div>
 
 				<div class="wrap-input100 validate-input"
@@ -171,7 +184,7 @@
 						<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 						class="input100" type="text" name="patientMedicareNo"
 						placeholder="Enter Medicare no."
-						value="<c:out value="${appointment.getPatient().getMedicareNo()}"/>" required>
+						value="<c:out value="${patient.getMedicareNo()}"/>" required>
 					<span class="focus-input100"></span>
 				</div>
 
@@ -180,21 +193,20 @@
 						<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 						class="input100" type="text" name="patientMobile"
 						placeholder="Enter phone number"
-						value="<c:out value="${appointment.getPatient().getPhone()}"/>" required>
-					<span class="focus-input100"></span>
+						value="<c:out value="${patient.getPhone()}"/>" required> <span
+						class="focus-input100"></span>
 				</div>
 
 				<div class="container-contact100-form-btn">
 					<div class="wrap-contact100-form-btn">
 						<div class="contact100-form-bgbtn"></div>
 						<input type="hidden" id="app_id" name="appointmentid"
-							value="<c:out value="${appointment.getId()}"/>"> <input
+							value="<c:out value="${patient.getId()}"/>"> <input
 							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 							type="hidden" id="patient_id" name="patientid"
-							value="<c:out value="${appointment.getPatient().getId()}"/>">
-						<input type="hidden" id="patient_address_id"
-							name="patientaddressid"
-							value="<c:out value="${appointment.getPatient().getAddress().getId()}"/>">
+							value="<c:out value="${patient.getId()}"/>"> <input
+							type="hidden" id="patient_address_id" name="patientaddressid"
+							value="<c:out value="${patient.getAddress().getId()}"/>">
 
 						<c:choose>
 							<c:when test="${mode == 'view'}">
