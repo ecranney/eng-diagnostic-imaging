@@ -216,7 +216,7 @@
 								type="text" class="input100 gaddress-autocomplete"
 								data-gaddress-types="street_number route"
 								data-gaddress-name="long_name" id="f12_addressLine1"
-								name="patientStreet" 
+								name="patientStreet"
 								aria-describedby="f12_addressLine1-help-block"
 								placeholder="1234 Main St."
 								value="<c:out value="${appointment.getPatient().getAddress().getStreetName()}"/>"
@@ -226,8 +226,7 @@
                 </c:if>
 								type="text" class="input100" data-gaddress-types="locality"
 								data-gaddress-name="long_name" id="f12_city" name="patientCity"
-								aria-describedby="f12_city-help-block"
-								placeholder="City"
+								aria-describedby="f12_city-help-block" placeholder="City"
 								value="<c:out value="${appointment.getPatient().getAddress().getCity()}"/>"
 								required> <input
 								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
@@ -236,8 +235,7 @@
 								type="text" class="input100"
 								data-gaddress-types="administrative_area_level_1"
 								data-gaddress-name="long_name" id="f12_state"
-								name="patientState" 
-								aria-describedby="f12_state-help-block"
+								name="patientState" aria-describedby="f12_state-help-block"
 								placeholder="State / Province / Region"
 								value="<c:out value="${appointment.getPatient().getAddress().getState()}"/>"
 								required> <input
@@ -262,8 +260,9 @@
                 <c:out value="disabled='disabled'"/>
             </c:if>
 							class="input100" type="text" name="patientEmail"
-							id="patientEmail" placeholder="Enter Email" required> <span
-							class="focus-input100"></span>
+							id="patientEmail" placeholder="Enter Email"
+							value="<c:out value="${appointment.getPatient().getEmail()}"/>"
+							required> <span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input"
@@ -438,14 +437,14 @@
 					$("#patientMedicareNo").val(ui.item.medicareNo);
 					$("#patientEmail").val(ui.item.email);
 					$("#patientid").val(ui.item.id);
-					
+
 					$("#patientUnitNo").val(ui.item.address.unitNo);
 					$("#f12_addressLine1").val(ui.item.address.streetName);
 					$("#f12_city").val(ui.item.address.city);
 					$("#f12_state").val(ui.item.address.state);
 					$("#f12_postalCode").val(ui.item.address.postCode);
 					$("#patientAddressid").val(ui.item.address.id);
-					
+
 					document.getElementById("nextBtn").style.color = "#70bf74";
 					document.getElementById("nextBtn").disabled = false;
 				},

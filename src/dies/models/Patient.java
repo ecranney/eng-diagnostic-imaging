@@ -34,6 +34,7 @@ public class Patient implements IDomainObject {
         this.phone = phone;
         this.medicareNo = medicareNo;
         this.email = email;
+        
     }
 
     public int getId() {

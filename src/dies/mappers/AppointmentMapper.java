@@ -25,7 +25,7 @@ public class AppointmentMapper extends DataMapper {
 			"       t1.patient_id           as patient_id,\r\n" + 
 			"       t2t6.first_name         as patient_first_name,\r\n" + 
 			"       t2t6.last_name          as patient_last_name,\r\n" + 
-			"       t2t6.medicare_no        as patient_medicate_no,\r\n" + 
+			"       t2t6.medicare_no        as patient_medicare_no,\r\n" + 
 			"       t2t6.phone              as patient_mobile_no,\r\n" + 
 			"       t2t6.email              as patient_email,\r\n" + 
 			"       t2t6.patient_address_id as patient_address_id,\r\n" + 
@@ -107,7 +107,7 @@ public class AppointmentMapper extends DataMapper {
 
 						patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
 								rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
-								rs.getString("patient_medicate_no"), rs.getString("patient_email"));
+								rs.getString("patient_medicare_no"), rs.getString("patient_email"));
 						machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
 								Machine.Type.valueOf(rs.getString("machine_type")));
 						machines.add(machine);
@@ -161,7 +161,7 @@ public class AppointmentMapper extends DataMapper {
 
 					patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
 							rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
-							rs.getString("patient_medicate_no"), rs.getString("patient_email"));
+							rs.getString("patient_medicare_no"), rs.getString("patient_email"));
 					machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
 							Machine.Type.valueOf(rs.getString("machine_type")));
 					machines.add(machine);
@@ -213,7 +213,7 @@ public class AppointmentMapper extends DataMapper {
 
 					patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
 							rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
-							rs.getString("patient_medicate_no"), rs.getString("patient_email"));
+							rs.getString("patient_medicare_no"), rs.getString("patient_email"));
 					machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
 							Machine.Type.valueOf(rs.getString("machine_type")));
 					machines.add(machine);
