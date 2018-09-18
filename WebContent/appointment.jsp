@@ -88,8 +88,8 @@
 					data-validate="Date is required">
 					<span class="label-input100">Appointment Date and Time</span> <input
 						<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
-						class="input100" type="text" name="appointmentDateTime"
-						placeholder="Enter a date"
+						class="input100 form_datetime" type="text"
+						name="appointmentDateTime" placeholder="Enter a date"
 						value="<c:out value="${appointment.getDate()}"/>"> <span
 						class="focus-input100"></span>
 				</div>
@@ -117,7 +117,7 @@
 				<div class="wrap-input100 input100-select">
 					<span class="label-input100">Examination Type</span>
 					<div>
-						<select 
+						<select
 							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 							class="selection-2" name="machineType">
 							<%
@@ -282,9 +282,10 @@
 	<script src="resources/js/bootstrap/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.min.js"></script>
 	<script type="text/javascript"
-		src="resources/js/bootstrap/bootstrap-datetimepicker.min.js"
+		src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
 		charset="UTF-8"></script>
 	<script type="text/javascript">
+		$('.form_datetime').attr('readonly', true);
 		$(".form_datetime").datetimepicker({
 			format : 'yyyy-mm-dd hh:ii'
 		});
