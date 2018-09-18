@@ -148,7 +148,7 @@ public class AppointmentServlet extends HttpServlet {
 		Integer patientAddressidId = 0;
 
 		if (mode == "update") {
-			patientAddressidId = Integer.valueOf(request.getParameter("patientaddressid"));
+			patientAddressidId = Integer.valueOf(request.getParameter("patientAddressid"));
 		}
 		return new Address(patientAddressidId, patientUnitNo, patientStreetNo, patientStreetName, patientCity,
 				patientState, patientPostCode);

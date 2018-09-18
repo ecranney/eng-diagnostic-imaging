@@ -33,6 +33,7 @@ public class Patient implements IDomainObject {
         this.address = address;
         this.phone = phone;
         this.medicareNo = medicareNo;
+        this.email = email;
     }
 
     public int getId() {
@@ -80,7 +81,7 @@ public class Patient implements IDomainObject {
     }
     
     public String getEmail() {
-        return medicareNo;
+        return email;
     }
 
     public void setEmail(String email) {
