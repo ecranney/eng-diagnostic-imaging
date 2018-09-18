@@ -97,23 +97,26 @@
 				<c:otherwise>
 					"post"
 				</c:otherwise>
+				
 			</c:choose>
 				class="contact100-form validate-form">
 
-				<div class="tab">
-					<span class="contact100-form-title"> Patient Information </span>
 
-					<div class="wrap-input100 validate-input"
-						data-validate="Value is required">
-						<span class="label-input100">Search</span> <input
-							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
-							class="input100" type="text" id="searchValue" 
-							placeholder="Enter patient's Medicare no. to search"
-							value=""
-							required> <span class="focus-input100"></span>
+				<c:if test="${param.mode == 'create'}">
+					<div class="tab">
+						<span class="contact100-form-title"> Patient Information </span>
+
+						<div class="wrap-input100 validate-input"
+							data-validate="Value is required">
+							<span class="label-input100">Search</span> <input
+								<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
+								class="input100" type="text" id="searchValue"
+								placeholder="Enter patient's Medicare no. to search" value=""
+								required> <span class="focus-input100"></span>
+						</div>
+
 					</div>
-
-				</div>
+				</c:if>
 				<div class="tab">
 					<span class="contact100-form-title"> Appointment Form </span>
 
@@ -369,7 +372,7 @@
 
 		gtag('config', 'UA-23581568-13');
 	</script>
-	<script type="text/javascript">
+	<%--<script type="text/javascript">
 		var searchValue = document.getElementById("searchValue");
 		document
 				.getElementById("searchValue")
@@ -377,7 +380,7 @@
 						'input',
 						function(evt) {
 							if (searchValue && searchValue.value) {
-								document.getElementById("nextBtn").style.color = "#70bf74";
+								document.getElementById("nextBtn").style.color = "#70bf74";	
 							} else if (searchValue.value == '') {
 								document.getElementById("nextBtn").style.color = "#fff";
 							}
@@ -385,17 +388,24 @@
 						});
 	</script>
 	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					$("#searchValue").autocomplete({
-						source : "patient?mode=autocomplete",
-						select : function(event, ui) {
-							$("#searchValue").val(ui.item.value);							
-						}
+		document.getElementById("prevBtn").addEventListener("click", unblockNextButton);
+		function unblockNextButton() {
+			document.getElementById("nextBtn").disabled = false;
+		}
+	</script>--%>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#searchValue").autocomplete({
+				source : "patient?mode=autocomplete",
+				select : function(event, ui) {
+					$("#searchValue").val(ui.item.value);
+					document.getElementById("nextBtn").style.color = "#70bf74";
+					document.getElementById("nextBtn").disabled = false;
+				}
 
-					});
-					
-				});		
+			});
+
+		});
 	</script>
 
 	<%--	

@@ -40,7 +40,7 @@ public class AppointmentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println(request.getParameter("appointmentid") + " id during laoding");
-
+		
 		if (request.getParameter("mode").equalsIgnoreCase("view")
 				|| request.getParameter("mode").equalsIgnoreCase("edit")) {
 			AppointmentService appointmentService = new AppointmentService();
