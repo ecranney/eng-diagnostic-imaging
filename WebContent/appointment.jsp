@@ -117,7 +117,7 @@
 				<div class="wrap-input100 input100-select">
 					<span class="label-input100">Examination Type</span>
 					<div>
-						<select
+						<select 
 							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
 							class="selection-2" name="machineType">
 							<%
