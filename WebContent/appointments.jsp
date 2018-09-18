@@ -53,7 +53,9 @@
 						<%=request.getSession(false).getAttribute("firstname")%>
 						<a href="appointment.jsp?mode=create"
 							class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
-							Add new appointment</a>
+							Create Appointment</a> <a href="patient.jsp?mode=create"
+							class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
+							Patient Registration</a>
 					</div>
 				</div>
 				<form action="logout" method="post">
@@ -136,8 +138,8 @@
 						<c:forEach begin="1" end="${noOfPages}" var="i">
 							<c:choose>
 								<c:when test="${currentPage eq i}">
-											<a class="pcurrunt-pagination-number"> ${i} </a>
-										</c:when>
+									<a class="pcurrunt-pagination-number"> ${i} </a>
+								</c:when>
 								<c:otherwise>
 									<a class="pagination-numbers" href="home?page=${i}">${i}</a>
 								</c:otherwise>

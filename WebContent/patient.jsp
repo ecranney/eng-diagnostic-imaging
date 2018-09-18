@@ -72,7 +72,7 @@
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 
-			<form action="appointment"
+			<form action="patient"
 				method=<c:choose>
 				<c:when test="${mode == 'view'}">
 					"get"
@@ -82,55 +82,7 @@
 				</c:otherwise>
 			</c:choose>
 				class="contact100-form validate-form">
-				<span class="contact100-form-title"> Appointment Form </span>
-
-				<div class="wrap-input100 validate-input"
-					data-validate="Date is required">
-					<span class="label-input100">Appointment Date and Time</span> <input
-						<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
-						class="input100 form_datetime" type="text"
-						name="appointmentDateTime" placeholder="Enter a date"
-						value="<c:out value="${appointment.getDate()}"/>" required> <span
-						class="focus-input100"></span>
-				</div>
-
-				<div class="wrap-input100 input100-select">
-					<span class="label-input100">Appointment Status</span>
-					<div>
-						<select
-							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
-							class="selection-2" name="appointmentStatus" required>
-
-							<%
-								for (State state : State.values()) {
-							%>
-
-							<option value=<%=state.name()%>><%=state.name()%></option>
-							<%
-								}
-							%>
-						</select>
-					</div>
-					<span class="focus-input100"></span>
-				</div>
-
-				<div class="wrap-input100 input100-select">
-					<span class="label-input100">Examination Type</span>
-					<div>
-						<select
-							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
-							class="selection-2" name="machineType" required>
-							<%
-								for (Machine.Type machine : Machine.Type.values()) {
-							%>
-							<option value=<%=machine.name()%>><%=machine.name()%></option>
-							<%
-								}
-							%>
-						</select>
-					</div>
-					<span class="focus-input100"></span>
-				</div>
+				<span class="contact100-form-title"> Patient Registration </span>
 
 				<div class="wrap-input100 validate-input"
 					data-validate="Name is required">
@@ -223,13 +175,6 @@
 						value="<c:out value="${appointment.getPatient().getPhone()}"/>" required>
 					<span class="focus-input100"></span>
 				</div>
-				<div class="wrap-input100 validate-input"
-					data-validate="Message is required">
-					<span class="label-input100">Additional Details</span>
-					<textarea class="input100" name="message"
-						placeholder="Message here..."></textarea>
-					<span class="focus-input100"></span>
-				</div>
 
 				<div class="container-contact100-form-btn">
 					<div class="wrap-contact100-form-btn">
@@ -269,8 +214,6 @@
 								</button>
 							</c:otherwise>
 						</c:choose>
-
-
 					</div>
 				</div>
 			</form>
