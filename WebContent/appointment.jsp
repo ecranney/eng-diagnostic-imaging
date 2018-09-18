@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>DIES Booking View</title>
+<title>DIES Appointment View</title>
 
 <link rel="apple-touch-icon" sizes="57x57"
 	href="resources/images/favicon/apple-icon-57x57.png">

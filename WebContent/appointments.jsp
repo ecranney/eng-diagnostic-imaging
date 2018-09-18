@@ -143,7 +143,7 @@
                                         </div>
                                         <button type="submit"
                                                 class="table100-form-btn table100-form-delete-btn alert alert-danger"
-                                                name="delete" value="Delete"
+                                                name="mode" value="Delete"
                                                 onclick="return confirm('Are you sure you want to delete?')">
                                             <i class="fa fa-trash"></i>
                                         </button>
