@@ -33,53 +33,55 @@ import dies.services.AppointmentService;
 @WebServlet("/patients")
 public class PatientServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PatientServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String medicareNo = request.getParameter("term");
-		
-		System.out.println(medicareNo + " THIS IS TO CHECK WHICH VLUE IS PASSING TO MEDICARE NO");
-		AppointmentService as = new AppointmentService();
-		ArrayList<Patient> patients = as.findPatient(medicareNo);
-		for (Patient p: patients) {
-		System.out.println("patient "+ p.getMedicareNo());
-		}
-		response.setContentType("application/json");
-		System.out.println(new JSONArray(patients) + " pringiting responsr ");
-		PrintWriter out = response.getWriter();
-		out.print(new JSONArray(patients));
-		
-		
-		
-//		if (request.getParameter("mode").equalsIgnoreCase("view")
-//				|| request.getParameter("mode").equalsIgnoreCase("edit")) {
-//			AppointmentService appointmentService = new AppointmentService();
-//			int app_id = Integer.parseInt(request.getParameter("patienttid"));
-//			Appointment appointment = appointmentService.findAppointment(app_id);
-//			request.setAttribute("appointment", appointment);
-//			request.setAttribute("mode", request.getParameter("mode"));
-//			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
-//					"/patient.jsp?patientid=" + Integer.valueOf(request.getParameter("patienttid")));
-//			dispatcher.forward(request, response);
-//		}
+	public PatientServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		if (request.getParameter("mode").equalsIgnoreCase("autocomplete")) {
+			String medicareNo = request.getParameter("term");
+
+			System.out.println(medicareNo + " THIS IS TO CHECK WHICH VLUE IS PASSING TO MEDICARE NO");
+			AppointmentService as = new AppointmentService();
+			ArrayList<Patient> patients = as.findPatient(medicareNo);
+			for (Patient p : patients) {
+				System.out.println("patient " + p.getMedicareNo());
+			}
+			response.setContentType("application/json");
+			System.out.println(new JSONArray(patients) + " pringiting responsr ");
+			PrintWriter out = response.getWriter();
+			out.print(new JSONArray(patients));
+			
+		} else if (request.getParameter("mode").equalsIgnoreCase("view")
+				|| request.getParameter("mode").equalsIgnoreCase("edit")) {
+			AppointmentService appointmentService = new AppointmentService();
+			int app_id = Integer.parseInt(request.getParameter("patienttid"));
+			Appointment appointment = appointmentService.findAppointment(app_id);
+			request.setAttribute("appointment", appointment);
+			request.setAttribute("mode", request.getParameter("mode"));
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
+					"/patient.jsp?patientid=" + Integer.valueOf(request.getParameter("patienttid")));
+			dispatcher.forward(request, response);
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		if (request.getParameter("mode").equalsIgnoreCase("update")) {
 			Address patientAddress = getPatientAddressDetails(request, "update");
 			Patient patient = getPatientDetails(request, patientAddress, "update");
@@ -87,11 +89,11 @@ public class PatientServlet extends HttpServlet {
 			as.finishUpdatePatient(patient);
 			response.sendRedirect("patients?patienttid=" + request.getParameter("patienttid") + "&mode=view");
 
-		} else if (request.getParameter("mode").equalsIgnoreCase("create")) {			
+		} else if (request.getParameter("mode").equalsIgnoreCase("create")) {
 			// Creating each objects from form data
 			Address patientAddress = getPatientAddressDetails(request, "create");
 			Patient patient = getPatientDetails(request, patientAddress, "create");
-		
+
 			// Updating the data in the server
 			AppointmentService as = new AppointmentService();
 
@@ -100,7 +102,7 @@ public class PatientServlet extends HttpServlet {
 
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
 			dispatcher.forward(request, response);
-			
+
 		} else if (request.getParameter("mode").equalsIgnoreCase("search")) {
 			AppointmentService as = new AppointmentService();
 			String medicareNo = request.getParameter("medicareNo");
@@ -109,7 +111,7 @@ public class PatientServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-	
+
 	private Patient getPatientDetails(HttpServletRequest request, Address patientAddress, String mode) {
 		String patientFirstName = request.getParameter("patientFirstName");
 		String patientLastName = request.getParameter("patientLastName");
@@ -139,15 +141,14 @@ public class PatientServlet extends HttpServlet {
 		return new Address(patientAddressidId, patientUnitNo, patientStreetNo, patientStreetName, patientCity,
 				patientState, patientPostCode);
 	}
-	
+
 	private Technician getTechnicianDetails(HttpServletRequest request, String mode) {
 		int technicianId = (int) request.getSession().getAttribute("userid");
 		String technicianUsername = (String) request.getSession().getAttribute("username");
 		String technicianFirstname = (String) request.getSession().getAttribute("firstname");
 		String technicianLastName = (String) request.getSession().getAttribute("lastname");
-		
-		return new Technician(technicianId, technicianUsername, "", technicianFirstname,
-				technicianLastName);
+
+		return new Technician(technicianId, technicianUsername, "", technicianFirstname, technicianLastName);
 	}
 
 }

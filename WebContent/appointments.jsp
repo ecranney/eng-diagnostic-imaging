@@ -11,12 +11,17 @@
 <head>
 <title>DIES Dashboard</title>
 
-<link rel="apple-touch-icon" sizes="57x57" href="resources/images/favicon/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="180x180" href="resources/images/favicon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="resources/images/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="resources/images/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="57x57"
+	href="resources/images/favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="180x180"
+	href="resources/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32"
+	href="resources/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="resources/images/favicon/favicon-16x16.png">
 <link rel="manifest" href="resources/images/favicon/site.webmanifest">
-<link rel="mask-icon" href="resources/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="mask-icon"
+	href="resources/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
@@ -80,10 +85,16 @@
 		</nav>
 	</div>
 	<div class="limiter">
+
 		<div class="container-table100">
+
 			<div class="wrap-table100">
+				<div>
+					<input class="tableSearchInputField" type="text" id="patientNameInput" onkeyup="nameFindFunction()"
+						placeholder="Search for names.." title="Type in a name">
+				</div>
 				<div class="table100">
-					<table>
+					<table id="patientsTable">
 						<thead>
 							<tr class="table100-head">
 								<th class="column1">Date</th>
@@ -165,6 +176,25 @@
 		</div>
 	</div>
 
+	<script>
+		function nameFindFunction() {
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("patientNameInput");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("patientsTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[1];
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
 	<script src="resources/js/jquery.min.js"></script>
 	<script src="resources/js/popper.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>

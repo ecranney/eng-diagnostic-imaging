@@ -22,7 +22,7 @@ public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppointmentService appointmentService = new AppointmentService();
 	private int page = 1;
-	private static final int RECORDS_PER_PAGE = 2;
+	private static final int RECORDS_PER_PAGE = 10;
 
 	/**
 	 * @see HttpServlet#HttpServlet()

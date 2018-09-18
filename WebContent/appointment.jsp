@@ -387,25 +387,15 @@
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
-					var data = [ "Boston Celtics", "Chicago Bulls",
-							"Miami Heat", "Orlando Magic", "Atlanta Hawks",
-							"Philadelphia Sixers", "New York Knicks",
-							"Indiana Pacers", "Charlotte Bobcats",
-							"Milwaukee Bucks", "Detroit Pistons",
-							"New Jersey Nets", "Toronto Raptors",
-							"Washington Wizards", "Cleveland Cavaliers" ];
 					$("#searchValue").autocomplete({
-						source : "patients",
+						source : "patients?mode=autocomplete",
 						select : function(event, ui) {
-							$("#searchValue").val(ui.item.value);
-							alert("sss");
+							$("#searchValue").val(ui.item.value);							
 						}
 
 					});
 					
-				});
-
-		
+				});		
 	</script>
 
 	<%--	
