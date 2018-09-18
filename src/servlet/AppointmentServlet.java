@@ -107,11 +107,11 @@ public class AppointmentServlet extends HttpServlet {
 			machines.add(machine);
 
 			as.finishCreatePatient(patient);
-			Patient createdPatient = as.findPatient(patient.getMedicareNo());
+			//Patient createdPatient = as.findPatient(patient.getMedicareNo());
 			System.out.println("Patient created successfully");
-			Appointment appointment = new Appointment(0, ldt, createdPatient, technician, null,
-					appointmentStatusCastType);
-			as.finishCreateAppointment(appointment);
+			//Appointment appointment = new Appointment(0, ldt, createdPatient, technician, null,
+			//		appointmentStatusCastType);
+			//as.finishCreateAppointment(appointment);
 
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home");
 			dispatcher.forward(request, response);

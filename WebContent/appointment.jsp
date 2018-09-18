@@ -26,6 +26,7 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
+<link href="resources/styles/jquery-ui.css" rel="stylesheet">
 <link href="resources/styles/bootstrap/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
 <link
@@ -106,9 +107,9 @@
 						data-validate="Value is required">
 						<span class="label-input100">Search</span> <input
 							<c:if test="${mode == 'view'}"><c:out value="disabled='disabled'"/></c:if>
-							class="input100" type="text" id="searchValue" name="searchValue"
-							placeholder="Enter patien's info to search"
-							value="<c:out value="${appointment.getPatient().getFirstName()}"/>"
+							class="input100" type="text" id="searchValue" 
+							placeholder="Enter patient's Medicare no. to search"
+							value=""
 							required> <span class="focus-input100"></span>
 					</div>
 
@@ -326,8 +327,11 @@
 
 	<div id="dropDownSelect1"></div>
 
-	<script src="resources/js/bootstrap/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.min.js"></script>
+	<script src="resources/js/jquery-ui.min.js"></script>
+
+	<script src="resources/js/bootstrap/bootstrap.min.js"></script>
+
 	<script type="text/javascript"
 		src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
 		charset="UTF-8"></script>
@@ -380,6 +384,30 @@
 
 						});
 	</script>
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					var data = [ "Boston Celtics", "Chicago Bulls",
+							"Miami Heat", "Orlando Magic", "Atlanta Hawks",
+							"Philadelphia Sixers", "New York Knicks",
+							"Indiana Pacers", "Charlotte Bobcats",
+							"Milwaukee Bucks", "Detroit Pistons",
+							"New Jersey Nets", "Toronto Raptors",
+							"Washington Wizards", "Cleveland Cavaliers" ];
+					$("#searchValue").autocomplete({
+						source : "patients",
+						select : function(event, ui) {
+							$("#searchValue").val(ui.item.value);
+							alert("sss");
+						}
+
+					});
+					
+				});
+
+		
+	</script>
+
 	<%--	
 	<script src="resources/js/daterangepicker/moment.min.js"></script>
 	<script src="resources/js/daterangepicker/daterangepicker.js"></script>

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import db.DBConnection;
 import dies.models.Address;
@@ -28,7 +29,7 @@ public class PatientMapper extends DataMapper {
 			"t2.state as patient_state, \r\n" + 
 			"t2.post_code as patient_post_code,\r\n" + 
 			"t1.phone, t1.medicare_no from public.patient t1 \r\n" + 
-			"left outer join public.address t2 on t1.address_id= t2.id where medicare_no=?";
+			"left outer join public.address t2 on t1.address_id= t2.id where lower(medicare_no) like lower(?) limit 10";
 	private String inserSQL = 
 			"with rows as ( \r\n" + 
 			"insert into public.address (unit_no, street_no, street_name, city, state, post_code) \r\n" + 
@@ -55,21 +56,22 @@ public class PatientMapper extends DataMapper {
 			"";
 	private String deleteSQL = "delete from public.patient where id=? and first_name=? and last_name=? and address_id=? and phone=? and medicare_no=?";
 
-	public Patient find(String medicareNo) {
+	public ArrayList<Patient> find(String medicareNo) {
 		Connection con = null;
 		ResultSet rs = null;
 		Patient user = null;
+		ArrayList<Patient> patientList = new ArrayList<Patient>();
 		Address patientAddress = null;
-
+		System.out.println("CALLING THIS METGHO WITH EMDICARE NO SEARCH");
 		try {
 			con = db.getConnection();
 			PreparedStatement statement = null;
 			statement = con.prepareStatement(findByMedicareSQL);
-			statement.setString(1, medicareNo);
+			statement.setString(1, "%" + medicareNo + "%");
 
 			rs = statement.executeQuery();
 			while (rs.next()) {
-				
+				System.out.println("RETURNED VALUES "+rs.getInt("id"));
 				patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
 						rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
 						rs.getString("patient_city"), rs.getString("patient_state"),
@@ -77,13 +79,14 @@ public class PatientMapper extends DataMapper {
 				
 				user = new Patient(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), patientAddress,
 						rs.getString("phone"), rs.getString("medicare_no"));
+				patientList.add(user);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Log In failed: An Exception has occurred! " + e);
 		}
 
-		return user;
+		return patientList;
 	}
 
 	public Patient find(int id) {

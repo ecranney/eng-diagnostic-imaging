@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+
 import dies.models.Address;
 import dies.models.Appointment;
 import dies.models.Machine;
@@ -27,7 +30,7 @@ import dies.services.AppointmentService;
 /**
  * Servlet implementation class PatientServlet
  */
-@WebServlet("/patient")
+@WebServlet("/patients")
 public class PatientServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -43,19 +46,33 @@ public class PatientServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
-		if (request.getParameter("mode").equalsIgnoreCase("view")
-				|| request.getParameter("mode").equalsIgnoreCase("edit")) {
-			AppointmentService appointmentService = new AppointmentService();
-			int app_id = Integer.parseInt(request.getParameter("patienttid"));
-			Appointment appointment = appointmentService.findAppointment(app_id);
-			request.setAttribute("appointment", appointment);
-			request.setAttribute("mode", request.getParameter("mode"));
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
-					"/patient.jsp?patientid=" + Integer.valueOf(request.getParameter("patienttid")));
-			dispatcher.forward(request, response);
+		String medicareNo = request.getParameter("term");
+		
+		System.out.println(medicareNo + " THIS IS TO CHECK WHICH VLUE IS PASSING TO MEDICARE NO");
+		AppointmentService as = new AppointmentService();
+		ArrayList<Patient> patients = as.findPatient(medicareNo);
+		for (Patient p: patients) {
+		System.out.println("patient "+ p.getMedicareNo());
 		}
+		response.setContentType("application/json");
+		System.out.println(new JSONArray(patients) + " pringiting responsr ");
+		PrintWriter out = response.getWriter();
+		out.print(new JSONArray(patients));
+		
+		
+		
+//		if (request.getParameter("mode").equalsIgnoreCase("view")
+//				|| request.getParameter("mode").equalsIgnoreCase("edit")) {
+//			AppointmentService appointmentService = new AppointmentService();
+//			int app_id = Integer.parseInt(request.getParameter("patienttid"));
+//			Appointment appointment = appointmentService.findAppointment(app_id);
+//			request.setAttribute("appointment", appointment);
+//			request.setAttribute("mode", request.getParameter("mode"));
+//			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
+//					"/patient.jsp?patientid=" + Integer.valueOf(request.getParameter("patienttid")));
+//			dispatcher.forward(request, response);
+//		}
 	}
 
 	/**
@@ -68,7 +85,7 @@ public class PatientServlet extends HttpServlet {
 			Patient patient = getPatientDetails(request, patientAddress, "update");
 			AppointmentService as = new AppointmentService();
 			as.finishUpdatePatient(patient);
-			response.sendRedirect("patient?patienttid=" + request.getParameter("patienttid") + "&mode=view");
+			response.sendRedirect("patients?patienttid=" + request.getParameter("patienttid") + "&mode=view");
 
 		} else if (request.getParameter("mode").equalsIgnoreCase("create")) {			
 			// Creating each objects from form data

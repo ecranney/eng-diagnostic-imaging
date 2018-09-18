@@ -77,4 +77,8 @@ public class Patient implements IDomainObject {
     public void setMedicareNo(String medicareNo) {
         this.medicareNo = medicareNo;
     }
+    
+    public String getValue() {
+    	return (String.format("%s %s <%s>", this.firstName, this.lastName, this.medicareNo));
+    }
 }

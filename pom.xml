@@ -79,9 +79,8 @@
 			<artifactId>javax.servlet.jsp.jstl</artifactId>
 			<version>1.2.5</version>
 			<exclusions>
-				<!-- jstl-api was adding selvlet-api 2.5 and jsp-api 
-				More Information: http://www.murraywilliams.com/2011/11/running-jstl-1-2-on-tomcat-7-using-maven/
-				-->				
+				<!-- jstl-api was adding selvlet-api 2.5 and jsp-api More Information: 
+					http://www.murraywilliams.com/2011/11/running-jstl-1-2-on-tomcat-7-using-maven/ -->
 				<exclusion>
 					<artifactId>jstl-api</artifactId>
 					<groupId>javax.servlet.jsp.jstl</groupId>
@@ -100,6 +99,12 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>42.2.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
 		</dependency>
 	</dependencies>
 

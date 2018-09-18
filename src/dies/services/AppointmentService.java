@@ -89,10 +89,9 @@ public class AppointmentService {
 	}
 
 	// attempts to locate a patient by medicare number, returns null if unable
-	public Patient findPatient(String medicareNo) {
-		Patient patient = patientMapper.find(medicareNo);
-		transaction.registerClean(patient);
-		return patient;
+	public ArrayList<Patient> findPatient(String medicareNo) {
+		ArrayList<Patient> patients = patientMapper.find(medicareNo);
+		return patients;
 	}
 
 	// finish CREATE patient sub-transaction
