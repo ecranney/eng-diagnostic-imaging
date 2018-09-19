@@ -8,6 +8,7 @@ import dies.models.Appointment;
 import dies.models.Machine;
 import dies.models.Patient;
 import dies.models.Technician;
+import dies.models.User;
 
 public class ResultSetDetails {
 	public Address getPatientAddress(ResultSet rs) throws SQLException {
@@ -36,5 +37,16 @@ public class ResultSetDetails {
 	public Appointment getAppointment(ResultSet rs, Patient patient, Technician technician) throws SQLException{
 		return new Appointment(rs.getInt("appointment_id"), rs.getTimestamp("appointment_date").toLocalDateTime(), patient,
 				technician, null, Appointment.State.valueOf(rs.getString("appointment_state")));
+	}
+	
+	public User getUser(ResultSet rs){
+		try {
+			return new User(0, rs.getString("username"), rs.getString("password"), rs.getString("first_name"),
+					rs.getString("last_name")) {
+			};
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}		
 	}
 }
