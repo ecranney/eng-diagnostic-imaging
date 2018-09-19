@@ -42,7 +42,7 @@ public class Appointment implements IDomainObject {
         return id;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDateTime getDate() {    
         return date;
     }
 

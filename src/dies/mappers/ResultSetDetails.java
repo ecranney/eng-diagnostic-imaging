@@ -2,6 +2,8 @@ package dies.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import dies.models.Address;
 import dies.models.Appointment;
@@ -35,7 +37,10 @@ public class ResultSetDetails {
 	}
 	
 	public Appointment getAppointment(ResultSet rs, Patient patient, Technician technician) throws SQLException{
-		return new Appointment(rs.getInt("appointment_id"), rs.getTimestamp("appointment_date").toLocalDateTime(), patient,
+		LocalDateTime appointmentDate = LocalDateTime.parse(rs.getString("appointment_date"),
+				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+		
+		return new Appointment(rs.getInt("appointment_id"), appointmentDate, patient,
 				technician, null, Appointment.State.valueOf(rs.getString("appointment_state")));
 	}
 	

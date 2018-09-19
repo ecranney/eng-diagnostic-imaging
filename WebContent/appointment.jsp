@@ -298,11 +298,15 @@
 					<div class="container-contact100-form-btn">
 						<div class="wrap-contact100-form-btn">
 							<div class="contact100-form-bgbtn"></div>
-							<input type="hidden" id="app_id" name="appointmentid"
-								value="<c:out value="${appointment.getId()}"/>"> <input
-								<c:if test="${mode == 'view'}">
-                        <c:out value="readonly='readonly'"/>
-                    </c:if>
+
+							<c:if test="${param.mode != 'create'}">
+								<input type="hidden" id="app_id" name="appointmentid"
+									value="<c:out value="${appointment.getId()}"/>">
+							</c:if>
+							<input
+								<c:if test="${mode == 'view'}"> 
+									  <c:out value="readonly='readonly'"/>
+                                   </c:if>
 								type="hidden" id="patientid" name="patientid"
 								value="<c:out value="${appointment.getPatient().getId()}"/>">
 							<input type="hidden" id="patientAddressid"
@@ -370,7 +374,9 @@
 	<script type="text/javascript">
 		$('.form_datetime').attr('readonly', true);
 		$(".form_datetime").datetimepicker({
-			format : 'yyyy-mm-dd hh:ii'
+			format : 'yyyy-mm-dd hh:ii',
+			inline : true,
+			sideBySide : true
 		});
 	</script>
 	<script src="resources/js/jquery.validate.min.js"

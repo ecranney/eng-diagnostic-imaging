@@ -17,15 +17,13 @@ public class AppointmentMapper extends DataMapper {
 
 
 	private ResultSetDetails rsm = new ResultSetDetails();
-	private Machine machine = null;
-	private List<Machine> machines = new ArrayList<Machine>();
 	
 	private DBConnection db = new DBConnection();
 	private String findAllAppointmentSQL = "\r\n" + 
-			"select t1.id                   as appointment_id,\r\n" + 
-			"       t1.date                 as appointment_date,\r\n" + 
-			"       t1.state                as appointment_state,\r\n" + 
-			"       t1.patient_id           as patient_id,\r\n" + 
+			"select t1.id                   					as appointment_id,\r\n" + 
+			"       to_char(t1.date, 'YYYY-MM-DD HH:MI') 		as appointment_date,\r\n" + 
+			"       t1.state                					as appointment_state,\r\n" + 
+			"       t1.patient_id           					as patient_id,\r\n" + 
 			"       t2t6.first_name         as patient_first_name,\r\n" + 
 			"       t2t6.last_name          as patient_last_name,\r\n" + 
 			"       t2t6.medicare_no        as patient_medicare_no,\r\n" + 
@@ -78,7 +76,7 @@ public class AppointmentMapper extends DataMapper {
 			+ "insert into public.appointment_machine (appointment_id, machine_id) select id, ? from rows ";
 	private String updateSQL = ""
 			+ "update public.appointment "
-			+ "set into id=?, date=?, patient_id=?, technician_id=?, state=?";
+			+ "set date=?, patient_id=?, technician_id=?, state=? where id=?";
 	private String deleteSQL = ""
 			+ "delete from public.appointment "
 			+ "where id=?; delete from public.appointment_machine where appointment_id=?";
@@ -90,6 +88,8 @@ public class AppointmentMapper extends DataMapper {
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
 			Appointment appointment = null;
+			Machine machine = null;
+			List<Machine> machines = new ArrayList<Machine>();
 
 			while (rs.next()) {
 				try {
@@ -113,9 +113,11 @@ public class AppointmentMapper extends DataMapper {
 			PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
 			ResultSet rs = statement.executeQuery();
 			Appointment appointment = null;
+			Machine machine = null;
+			List<Machine> machines = new ArrayList<Machine>();
 			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
 			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
-
+			
 			while (rs.next()) {
 				try {
 					machine = rsm.getMachine(rs);
@@ -142,6 +144,8 @@ public class AppointmentMapper extends DataMapper {
 			statement.setInt(2, offset);
 			ResultSet rs = statement.executeQuery();
 			Appointment appointment = null;
+			Machine machine = null;
+			List<Machine> machines = new ArrayList<Machine>();
 			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
 			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
 			
@@ -202,11 +206,11 @@ public class AppointmentMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(updateSQL);
 			Appointment m = (Appointment) appointment;
-			statement.setInt(1, m.getId());
-			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
-			statement.setInt(3, m.getPatient().getId());
-			statement.setInt(4, m.getTechnician().getId());
-			statement.setString(5, m.getState().name());
+			statement.setTimestamp(1, Timestamp.valueOf(m.getDate()));
+			statement.setInt(2, m.getPatient().getId());
+			statement.setInt(3, m.getTechnician().getId());
+			statement.setString(4, m.getState().name());
+			statement.setInt(5, m.getId());
 			statement.executeUpdate();
 		} catch (SQLException e1) {
 			e1.printStackTrace();

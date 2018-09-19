@@ -21,9 +21,17 @@ public class ServletDetails {
 
 	public Appointment getAppointmentDetails(HttpServletRequest request, Patient patient, Technician technician,
 			List<Machine> machines) {
-		LocalDateTime appointmentDate = LocalDateTime.parse(request.getParameter("appointmentDateTime"),
+		int appointment_id = 0;
+		
+		if (request.getParameterMap().containsKey("appointmentid")) {
+			appointment_id = Integer.parseInt(request.getParameter("appointmentid"));
+		}
+		
+		String appointmentDateTime = request.getParameter("appointmentDateTime").replace("T", " ");
+		LocalDateTime appointmentDate = LocalDateTime.parse(appointmentDateTime,
 				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-		return new Appointment(0, appointmentDate, patient, technician, machines,
+
+		return new Appointment(appointment_id, appointmentDate, patient, technician, machines,
 				State.valueOf(request.getParameter("appointmentStatus")));
 	}
 
@@ -44,7 +52,6 @@ public class ServletDetails {
 		String patientMedicareNo = request.getParameter("patientMedicareNo");
 		String patientEmail = request.getParameter("patientEmail");
 		Integer patientId = Integer.valueOf(request.getParameter("patientid"));
-		System.out.println(patientId + " patient id");
 		return new Patient(patientId, patientFirstName, patientLastName, patientAddress, patientMobile,
 				patientMedicareNo, patientEmail);
 	}

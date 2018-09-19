@@ -13,7 +13,6 @@ import dies.models.Patient;
 public class PatientMapper extends DataMapper {
 
 	private ResultSetDetails rsm = new ResultSetDetails();
-	private Patient patient = null;
 
 	private DBConnection db = new DBConnection();
 	private String findSQL = "" +
@@ -102,40 +101,39 @@ public class PatientMapper extends DataMapper {
 	}
 
 	public Patient find(int id) {
-		Connection con = null;
-		ResultSet rs = null;
 		try {
-			con = db.getConnection();
+			Connection con = db.getConnection();
 			PreparedStatement statement = null;
 			statement = con.prepareStatement(findByIDSQL);
 			statement.setInt(1, id);
-
-			rs = statement.executeQuery();
+			ResultSet rs = statement.executeQuery();
+			Patient patient = null;
+			
 			while (rs.next()) {
 				patient = rsm.getPatient(rs, rsm.getPatientAddress(rs));
 			}
+			return patient;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		return patient;
+			return null;
+		}		
 	}
 
 	public Patient findAll() {
-		Connection con;
-		
 		try {
-			con = db.getConnection();
+			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(findSQL);
 			ResultSet rs = statement.executeQuery();
-
+			Patient patient = null;
+			
 			while (rs.next()) {
 				patient = rsm.getPatient(rs, rsm.getPatientAddress(rs));
 			}
+			return patient;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		;
-		return patient;
+			return null;
+		}		
 	}
 
 	public void insert(IDomainObject patient) {

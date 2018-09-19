@@ -57,7 +57,11 @@ public class AppointmentServlet extends HttpServlet {
 
 		mode = request.getParameter("mode");
 		if (mode.equalsIgnoreCase("update")) {
-			as.finishUpdatePatient(sd.getPatientDetails(request, sd.getAddressDetails(request)));
+			Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
+			Technician technician = sd.getTechnicianDetails(request, "create");
+			Appointment appointment = sd.getAppointmentDetails(request, patient, technician, null);
+			as.finishUpdatePatient(patient);
+			as.finishEditAppointment(appointment);
 			response.sendRedirect("appointment?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
 
 		} else if (mode.equalsIgnoreCase("create")) {
