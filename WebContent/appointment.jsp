@@ -99,7 +99,7 @@
 				class="contact100-form validate-form">
 
 
-				<c:if test="${param.mode == 'create'}">
+				<c:if test="${(param.mode == 'create') || (empty param.mode)}">
 					<div class="tab">
 						<span class="contact100-form-title"> Patient Information </span>
 
@@ -107,7 +107,7 @@
 							data-validate="Value is required">
 							<span class="label-input100">Search</span> <input
 								<c:if test="${(mode == 'view')}">
-                        <c:out value="disabled='disabled'"/>
+                        <c:out value="readonly='readonly'"/>
                     </c:if>
 								class="input100" type="text" id="searchValue"
 								placeholder="Enter patient's Medicare no. to search" value=""
@@ -123,7 +123,7 @@
 						data-validate="Date is required">
 						<span class="label-input100">Appointment Date and Time</span> <input
 							<c:if test="${(mode == 'view')}">
-                    <c:out value="disabled='disabled'"/>
+                    <c:out value="readonly='readonly'"/>
                 </c:if>
 							class="input100 form_datetime" type="text"
 							name="appointmentDateTime" placeholder="Enter a date"
@@ -136,7 +136,7 @@
 						<div>
 							<select
 								<c:if test="${(mode == 'view')}"><c:out
-                                    value="disabled='disabled'"/></c:if>
+                                    value="readonly='readonly'"/></c:if>
 								class="selection-2" name="appointmentStatus" required>
 
 								<%
@@ -158,7 +158,7 @@
 						<div>
 							<select
 								<c:if test="${(mode == 'view')}"><c:out
-                                    value="disabled='disabled'"/></c:if>
+                                    value="readonly='readonly'"/></c:if>
 								class="selection-2" name="machineType" required>
 								<%
 									for (Machine.Type machine : Machine.Type.values()) {
@@ -177,7 +177,7 @@
 						data-validate="Name is required">
 						<span class="label-input100">Patient First Name</span> <input
 							<c:if test="${(mode == 'view') || (param.mode == 'create')}">
-                <c:out value="disabled='disabled'"/>
+                <c:out value="readonly='readonly'"/>
             </c:if>
 							class="input100" type="text" name="patientFirstName"
 							id="patientFirstName" placeholder="Enter patien's first name"
@@ -189,7 +189,7 @@
 						data-validate="Name is required">
 						<span class="label-input100">Patient Last Name</span> <input
 							<c:if test="${(mode == 'view') || (param.mode == 'create')}">
-                <c:out value="disabled='disabled'"/>
+                <c:out value="readonly='readonly'"/>
             </c:if>
 							class="input100" type="text" name="patientLastName"
 							id="patientLastName" placeholder="Enter patient's last name"
@@ -203,7 +203,7 @@
 						<div class="form-group gaddress f12 " data-fid="f12">
 							<input
 								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
-                        <c:out value="disabled='disabled'"/>
+                        <c:out value="readonly='readonly'"/>
                     </c:if>
 								type="number" class="input100" name="patientUnitNo"
 								id="patientUnitNo" placeholder="Unit no"
@@ -211,7 +211,7 @@
 								value="<c:out value="${appointment.getPatient().getAddress().getUnitNo()}"/>"
 								required> <input
 								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
-                    <c:out value="disabled='disabled'"/>
+                    <c:out value="readonly='readonly'"/>
                 </c:if>
 								type="text" class="input100 gaddress-autocomplete"
 								data-gaddress-types="street_number route"
@@ -222,7 +222,7 @@
 								value="<c:out value="${appointment.getPatient().getAddress().getStreetName()}"/>"
 								required> <input
 								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
-                    <c:out value="disabled='disabled'"/>
+                    <c:out value="readonly='readonly'"/>
                 </c:if>
 								type="text" class="input100" data-gaddress-types="locality"
 								data-gaddress-name="long_name" id="f12_city" name="patientCity"
@@ -230,7 +230,7 @@
 								value="<c:out value="${appointment.getPatient().getAddress().getCity()}"/>"
 								required> <input
 								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
-                    <c:out value="disabled='disabled'"/>
+                    <c:out value="readonly='readonly'"/>
                 </c:if>
 								type="text" class="input100"
 								data-gaddress-types="administrative_area_level_1"
@@ -240,7 +240,7 @@
 								value="<c:out value="${appointment.getPatient().getAddress().getState()}"/>"
 								required> <input
 								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
-                    <c:out value="disabled='disabled'"/>
+                    <c:out value="readonly='readonly'"/>
                 </c:if>
 								type="number" class="input100" data-gaddress-types="postal_code"
 								data-gaddress-name="patientUPostalCode" id="f12_postalCode"
@@ -257,7 +257,7 @@
 						data-validate="Valid email is required: ex@abc.xyz">
 						<span class="label-input100">Patient Email</span> <input
 							<c:if test="${(mode == 'view') || (param.mode == 'create')}">
-                <c:out value="disabled='disabled'"/>
+                <c:out value="readonly='readonly'"/>
             </c:if>
 							class="input100" type="text" name="patientEmail"
 							id="patientEmail" placeholder="Enter Email"
@@ -269,7 +269,7 @@
 						data-validate="Medicare no is required">
 						<span class="label-input100">Patient Medicare no.</span> <input
 							<c:if test="${(mode == 'view') || (param.mode == 'create')}">
-                <c:out value="disabled='disabled'"/>
+                <c:out value="readonly='readonly'"/>
             </c:if>
 							class="input100" type="text" name="patientMedicareNo"
 							id="patientMedicareNo" placeholder="Enter Medicare no."
@@ -280,7 +280,7 @@
 					<div class="wrap-input100">
 						<span class="label-input100">Patient Phone Number</span> <input
 							<c:if test="${(mode == 'view') || (param.mode == 'create')}">
-                <c:out value="disabled='disabled'"/>
+                <c:out value="readonly='readonly'"/>
             </c:if>
 							class="input100" type="text" name="patientMobile"
 							id="patientMobile" placeholder="Enter phone number"
@@ -301,12 +301,12 @@
 							<input type="hidden" id="app_id" name="appointmentid"
 								value="<c:out value="${appointment.getId()}"/>"> <input
 								<c:if test="${mode == 'view'}">
-                        <c:out value="disabled='disabled'"/>
+                        <c:out value="readonly='readonly'"/>
                     </c:if>
 								type="hidden" id="patientid" name="patientid"
 								value="<c:out value="${appointment.getPatient().getId()}"/>">
 							<input type="hidden" id="patientAddressid"
-								name="patientaddressid"
+								name="patientAddressid"
 								value="<c:out value="${appointment.getPatient().getAddress().getId()}"/>">
 
 							<c:choose>
@@ -318,10 +318,10 @@
 										</span>
 									</button>
 								</c:when>
-								<c:when test="${mode == 'update'}">
+								<c:when test="${mode == 'edit'}">
 									<button type="submit" name="mode" class="contact100-form-btn"
 										value="update">
-										<span> Submit <i class="fa fa-long-arrow-right m-l-7"
+										<span> Update <i class="fa fa-long-arrow-right m-l-7"
 											aria-hidden="true"></i>
 										</span>
 									</button>
@@ -329,7 +329,7 @@
 								<c:otherwise>
 									<button type="submit" name="mode" class="contact100-form-btn"
 										value="create">
-										<span> Submit <i class="fa fa-long-arrow-right m-l-7"
+										<span> Create <i class="fa fa-long-arrow-right m-l-7"
 											aria-hidden="true"></i>
 										</span>
 									</button>

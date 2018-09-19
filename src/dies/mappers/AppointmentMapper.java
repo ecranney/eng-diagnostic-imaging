@@ -72,7 +72,7 @@ public class AppointmentMapper extends DataMapper {
 			+ "values (?, ?, ?, ?) returning id) "
 			+ "insert into public.appointment_machine (appointment_id, machine_id) select id, ? from rows ";
 	private String updateSQL = "update public.appointment set into id=?, date=?, patient_id=?, technician_id=?, state=?";
-	private String deleteSQL = "delete from public.appointment where id=?";
+	private String deleteSQL = "delete from public.appointment where id=?; delete from public.appointment_machine where appointment_id=?";
 	private String countSQL = "select count(*) from public.appointment";
 
 	public Appointment find(int id) {
@@ -289,6 +289,7 @@ public class AppointmentMapper extends DataMapper {
 			Appointment m = (Appointment) appointment;
 			System.out.println(m.getId() + " is the appointment id for deletion");
 			statement.setInt(1, m.getId());
+			statement.setInt(2, m.getId());
 			statement.executeUpdate();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

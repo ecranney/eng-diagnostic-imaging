@@ -43,9 +43,7 @@
     <link rel="stylesheet" href="resources/styles/basic-header.css">
 </head>
 <body>
-<c:if test="${empty appointmentList}">
-    <c:redirect url="/home"/>
-</c:if>
+
 <div>
     <nav class="navbar navbar-default navigation-clean-button">
         <div class="container">
