@@ -9,7 +9,7 @@ import dies.models.Machine;
 import dies.models.Patient;
 import dies.models.Technician;
 
-public class ResultSetMapper {
+public class ResultSetDetails {
 	public Address getPatientAddress(ResultSet rs) throws SQLException {
 		return new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
 				rs.getInt("patient_street_no"), rs.getString("patient_street_name"),

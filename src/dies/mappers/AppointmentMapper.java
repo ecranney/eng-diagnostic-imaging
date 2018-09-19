@@ -16,11 +16,11 @@ import java.util.Map;
 public class AppointmentMapper extends DataMapper {
 
 
-	private ResultSetMapper rsm = new ResultSetMapper();
-	Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
-	Appointment appointment = null;
-	Machine machine = null;
-	List<Machine> machines = new ArrayList<Machine>();
+	private ResultSetDetails rsm = new ResultSetDetails();
+	private Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
+	private Appointment appointment = null;
+	private Machine machine = null;
+	private List<Machine> machines = new ArrayList<Machine>();
 	
 	private DBConnection db = new DBConnection();
 	private String findAllAppointmentSQL = "\r\n" + 
