@@ -17,8 +17,6 @@ public class AppointmentMapper extends DataMapper {
 
 
 	private ResultSetDetails rsm = new ResultSetDetails();
-	private Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
-	private Appointment appointment = null;
 	private Machine machine = null;
 	private List<Machine> machines = new ArrayList<Machine>();
 	
@@ -91,6 +89,7 @@ public class AppointmentMapper extends DataMapper {
 			PreparedStatement statement = con.prepareStatement(findAppointmentSQL);
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
+			Appointment appointment = null;
 
 			while (rs.next()) {
 				try {
@@ -113,7 +112,9 @@ public class AppointmentMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
 			ResultSet rs = statement.executeQuery();
+			Appointment appointment = null;
 			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
+			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
 
 			while (rs.next()) {
 				try {
@@ -140,7 +141,9 @@ public class AppointmentMapper extends DataMapper {
 			statement.setInt(1, limit);
 			statement.setInt(2, offset);
 			ResultSet rs = statement.executeQuery();
+			Appointment appointment = null;
 			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
+			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
 			
 			while (rs.next()) {
 				try {
