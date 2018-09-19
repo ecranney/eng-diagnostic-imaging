@@ -176,7 +176,7 @@
 					<div class="wrap-input100 validate-input"
 						data-validate="Name is required">
 						<span class="label-input100">Patient First Name</span> <input
-							<c:if test="${(mode == 'view') || (param.mode == 'create')}">
+							<c:if test="${(mode == 'view')}">
                 <c:out value="readonly='readonly'"/>
             </c:if>
 							class="input100" type="text" name="patientFirstName"
@@ -188,7 +188,7 @@
 					<div class="wrap-input100 validate-input"
 						data-validate="Name is required">
 						<span class="label-input100">Patient Last Name</span> <input
-							<c:if test="${(mode == 'view') || (param.mode == 'create')}">
+							<c:if test="${(mode == 'view')}">
                 <c:out value="readonly='readonly'"/>
             </c:if>
 							class="input100" type="text" name="patientLastName"
@@ -202,7 +202,7 @@
 						<span class="label-input100">Patient Address</span>
 						<div class="form-group gaddress f12 " data-fid="f12">
 							<input
-								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
+								<c:if test="${(mode == 'view') }">
                         <c:out value="readonly='readonly'"/>
                     </c:if>
 								type="number" class="input100" name="patientUnitNo"
@@ -210,7 +210,7 @@
 								data-bind="value:replyNumber"
 								value="<c:out value="${appointment.getPatient().getAddress().getUnitNo()}"/>"
 								required> <input
-								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
+								<c:if test="${(mode == 'view')}">
                     <c:out value="readonly='readonly'"/>
                 </c:if>
 								type="text" class="input100 gaddress-autocomplete"
@@ -221,7 +221,7 @@
 								placeholder="1234 Main St."
 								value="<c:out value="${appointment.getPatient().getAddress().getStreetName()}"/>"
 								required> <input
-								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
+								<c:if test="${(mode == 'view')}">
                     <c:out value="readonly='readonly'"/>
                 </c:if>
 								type="text" class="input100" data-gaddress-types="locality"
@@ -229,7 +229,7 @@
 								aria-describedby="f12_city-help-block" placeholder="City"
 								value="<c:out value="${appointment.getPatient().getAddress().getCity()}"/>"
 								required> <input
-								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
+								<c:if test="${(mode == 'view')}">
                     <c:out value="readonly='readonly'"/>
                 </c:if>
 								type="text" class="input100"
@@ -239,7 +239,7 @@
 								placeholder="State / Province / Region"
 								value="<c:out value="${appointment.getPatient().getAddress().getState()}"/>"
 								required> <input
-								<c:if test="${(mode == 'view') || (param.mode == 'create')}">
+								<c:if test="${(mode == 'view')}">
                     <c:out value="readonly='readonly'"/>
                 </c:if>
 								type="number" class="input100" data-gaddress-types="postal_code"
@@ -256,7 +256,7 @@
 					<div class="wrap-input100 validate-input"
 						data-validate="Valid email is required: ex@abc.xyz">
 						<span class="label-input100">Patient Email</span> <input
-							<c:if test="${(mode == 'view') || (param.mode == 'create')}">
+							<c:if test="${(mode == 'view') }">
                 <c:out value="readonly='readonly'"/>
             </c:if>
 							class="input100" type="text" name="patientEmail"
@@ -267,8 +267,16 @@
 
 					<div class="wrap-input100 validate-input"
 						data-validate="Medicare no is required">
+						<div class="container">
+							<a href="#" data-toggle="tooltip"
+								title="You cannot change the medicare no, if it's need to be done create a new patient">
+								<i class="fa fa-question-circle" aria-hidden="true"
+								aria-hidden="true"></i> info
+							</a>
+						</div>
 						<span class="label-input100">Patient Medicare no.</span> <input
-							<c:if test="${(mode == 'view') || (param.mode == 'create')}">
+							<c:if test="${(mode == 'view') || (param.mode == 'edit') || (param.mode == 'create')}">
+							
                 <c:out value="readonly='readonly'"/>
             </c:if>
 							class="input100" type="text" name="patientMedicareNo"
@@ -277,9 +285,11 @@
 							required> <span class="focus-input100"></span>
 					</div>
 
+
+
 					<div class="wrap-input100">
 						<span class="label-input100">Patient Phone Number</span> <input
-							<c:if test="${(mode == 'view') || (param.mode == 'create')}">
+							<c:if test="${(mode == 'view')}">
                 <c:out value="readonly='readonly'"/>
             </c:if>
 							class="input100" type="text" name="patientMobile"

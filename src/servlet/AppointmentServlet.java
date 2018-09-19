@@ -16,8 +16,6 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/appointment")
 public class AppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AppointmentService as = new AppointmentService();
-	private ServletDetails sd = new ServletDetails();
 	private String mode = "";
 
 	/**
@@ -36,6 +34,8 @@ public class AppointmentServlet extends HttpServlet {
 
 		mode = request.getParameter("mode");
 		if (mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("edit")) {
+			AppointmentService as = new AppointmentService();
+			ServletDetails sd = new ServletDetails();
 			int appointment_id = sd.getAppointmentId(request);
 			request.setAttribute("appointment", as.findAppointment(appointment_id));
 			request.setAttribute("mode", request.getParameter("mode"));
@@ -43,6 +43,8 @@ public class AppointmentServlet extends HttpServlet {
 					.forward(request, response);
 
 		} else if (mode.equalsIgnoreCase("delete")) {
+			AppointmentService as = new AppointmentService();
+			ServletDetails sd = new ServletDetails();
 			as.finishDeleteAppointment(new Appointment(sd.getAppointmentId(request), null, null, null, null, null));
 			getServletContext().getRequestDispatcher("/home").forward(request, response);
 		}
@@ -57,6 +59,8 @@ public class AppointmentServlet extends HttpServlet {
 
 		mode = request.getParameter("mode");
 		if (mode.equalsIgnoreCase("update")) {
+			AppointmentService as = new AppointmentService();
+			ServletDetails sd = new ServletDetails();
 			Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
 			Technician technician = sd.getTechnicianDetails(request, "create");
 			Appointment appointment = sd.getAppointmentDetails(request, patient, technician, null);
@@ -65,6 +69,8 @@ public class AppointmentServlet extends HttpServlet {
 			response.sendRedirect("appointment?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
 
 		} else if (mode.equalsIgnoreCase("create")) {
+			AppointmentService as = new AppointmentService();
+			ServletDetails sd = new ServletDetails();
 			Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
 			Technician technician = sd.getTechnicianDetails(request, "create");
 			// TODO Add machine list

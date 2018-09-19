@@ -26,8 +26,6 @@ import dies.services.AppointmentService;
 @WebServlet("/patient")
 public class PatientServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AppointmentService as = new AppointmentService();
-	private ServletDetails sd = new ServletDetails();
 	private String mode = "";
 	private static final boolean AUTOCOMPLETE = true;
 
