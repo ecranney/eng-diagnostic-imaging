@@ -20,8 +20,8 @@ public class ResultSetDetails {
 	
 	public Patient getPatient(ResultSet rs, Address patientAddress) throws SQLException{
 		return new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
-				rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
-				rs.getString("patient_medicare_no"), rs.getString("patient_email"));
+				rs.getString("patient_last_name"), patientAddress,
+				rs.getString("patient_phone"), rs.getString("patient_medicare_no"), rs.getString("patient_email"));
 	}
 	
 	public Technician getTechnician(ResultSet rs) throws SQLException {

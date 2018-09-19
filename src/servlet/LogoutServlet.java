@@ -22,7 +22,6 @@ public class LogoutServlet extends HttpServlet {
      */
     public LogoutServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -32,8 +31,7 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-		dispatcher.forward(request, response);
+		getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
 	}
 
 	/**
@@ -42,8 +40,7 @@ public class LogoutServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-		dispatcher.forward(request, response);
+		getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
 	}
 
 }

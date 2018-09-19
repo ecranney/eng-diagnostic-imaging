@@ -26,6 +26,9 @@ import dies.services.AppointmentService;
 @WebServlet("/patient")
 public class PatientServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private AppointmentService as = new AppointmentService();
+	private ServletDetails sd = new ServletDetails();
+	private String mode = "";
 	private static final boolean AUTOCOMPLETE = true;
 
 	/**
@@ -41,28 +44,25 @@ public class PatientServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println( " THIS IS TO CHECK WHICH VLUE IS PASSING TO MEDICARE NO");
-		if (request.getParameter("mode").equalsIgnoreCase("autocomplete")) {
+		mode = request.getParameter("mode");
+		if (mode.equalsIgnoreCase("autocomplete")) {
 			String medicareNo = request.getParameter("term");
-			
-			System.out.println(medicareNo + " THIS IS TO CHECK WHICH VLUE IS PASSING TO MEDICARE NO");
 			AppointmentService as = new AppointmentService();
 			ArrayList<Patient> patients = as.findPatient(medicareNo, AUTOCOMPLETE);
 			for (Patient p : patients) {
 				System.out.println("patient " + p.getMedicareNo());
 			}
 			response.setContentType("application/json");
-			System.out.println(new JSONArray(patients) + " pringiting responsr ");
 			PrintWriter out = response.getWriter();
 			out.print(new JSONArray(patients));
 
-		} else if (request.getParameter("mode").equalsIgnoreCase("view")
-				|| request.getParameter("mode").equalsIgnoreCase("edit")) {
+		} else if (mode.equalsIgnoreCase("view")
+				|| mode.equalsIgnoreCase("edit")) {
 			AppointmentService appointmentService = new AppointmentService();
 			int app_id = Integer.parseInt(request.getParameter("patienttid"));
 			Appointment appointment = appointmentService.findAppointment(app_id);
 			request.setAttribute("appointment", appointment);
-			request.setAttribute("mode", request.getParameter("mode"));
+			request.setAttribute("mode", mode);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
 					"/patient.jsp?patientid=" + Integer.valueOf(request.getParameter("patienttid")));
 			dispatcher.forward(request, response);
@@ -75,14 +75,15 @@ public class PatientServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (request.getParameter("mode").equalsIgnoreCase("update")) {
+		mode = request.getParameter("mode");
+		if (mode.equalsIgnoreCase("update")) {
 			Address patientAddress = getPatientAddressDetails(request, "update");
 			Patient patient = getPatientDetails(request, patientAddress, "update");
 			AppointmentService as = new AppointmentService();
 			as.finishUpdatePatient(patient);
 			response.sendRedirect("patient?patienttid=" + request.getParameter("patienttid") + "&mode=view");
 
-		} else if (request.getParameter("mode").equalsIgnoreCase("create")) {
+		} else if (mode.equalsIgnoreCase("create")) {
 			Map<String, String> errors = new HashMap<String, String>();
 
 			String patientMedicareNo = request.getParameter("patientMedicareNo");
@@ -99,7 +100,6 @@ public class PatientServlet extends HttpServlet {
 			if (errors.isEmpty()) {
 				
 				// Updating the data in the server
-
 				as.finishCreatePatient(patient);
 				System.out.println("Patient created successfully");
 
@@ -111,7 +111,7 @@ public class PatientServlet extends HttpServlet {
 				request.getRequestDispatcher("patient.jsp?mode=create").forward(request, response);
 			}
 
-		} else if (request.getParameter("mode").equalsIgnoreCase("search")) {
+		} else if (mode.equalsIgnoreCase("search")) {
 			AppointmentService as = new AppointmentService();
 			String medicareNo = request.getParameter("medicareNo");
 			as.findPatient(medicareNo, !AUTOCOMPLETE);

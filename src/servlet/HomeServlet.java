@@ -3,7 +3,6 @@ package servlet;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,13 +47,13 @@ public class HomeServlet extends HttpServlet {
 			throws ServletException, IOException {
 		pagePagination(request, response);
 	}
-	
-	private void pagePagination(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	private void pagePagination(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
-			System.out.println(page + " priting current page number");
 		}
 
 		if (session != null && session.getAttribute("userid") != null) {
@@ -67,14 +66,10 @@ public class HomeServlet extends HttpServlet {
 			request.setAttribute("appointmentList", appointmentList);
 			request.setAttribute("noOfPages", noOfPages);
 			request.setAttribute("currentPage", page);
-			System.out.println("noOfPages do post" + noOfPages);
-			System.out.println("currentPage do post" + page);
 
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/appointments.jsp");
-			dispatcher.forward(request, response);
+			getServletContext().getRequestDispatcher("/appointments.jsp").forward(request, response);
 		} else {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login");
-			dispatcher.forward(request, response);
+			getServletContext().getRequestDispatcher("/login").forward(request, response);
 		}
 	}
 

@@ -17,9 +17,9 @@ public class PatientMapper extends DataMapper {
 
 	private DBConnection db = new DBConnection();
 	private String findSQL = "" +
-			"select t1.id,\r\n" + 
-			"       t1.first_name,\r\n" + 
-			"       t1.last_name,\r\n" + 
+			"select t1.id          as patient_id,\r\n" + 
+			"       t1.first_name  as patient_first_name,\r\n" + 
+			"       t1.last_name   as patient_last_name,\r\n" + 
 			"       t2.id          as patient_address_id,\r\n" + 
 			"       t2.unit_no     as patient_unit_no,\r\n" + 
 			"       t2.street_no   as patient_street_no,\r\n" + 
@@ -27,9 +27,9 @@ public class PatientMapper extends DataMapper {
 			"       t2.city        as patient_city,\r\n" + 
 			"       t2.state       as patient_state,\r\n" + 
 			"       t2.post_code   as patient_post_code,\r\n" + 
-			"       t1.phone,\r\n" + 
-			"       t1.medicare_no,\r\n" + 
-			"       t1.email\r\n" + 
+			"       t1.phone       as patient_phone,\r\n" + 
+			"       t1.medicare_no as patient_medicare_no,\r\n" + 
+			"       t1.email       as patient_email\r\n" + 
 			"from public.patient t1\r\n" + 
 			"       inner join public.address t2 on t1.address_id = t2.id ";
 	

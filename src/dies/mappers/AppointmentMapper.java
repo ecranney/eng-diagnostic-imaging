@@ -31,7 +31,7 @@ public class AppointmentMapper extends DataMapper {
 			"       t2t6.first_name         as patient_first_name,\r\n" + 
 			"       t2t6.last_name          as patient_last_name,\r\n" + 
 			"       t2t6.medicare_no        as patient_medicare_no,\r\n" + 
-			"       t2t6.phone              as patient_mobile_no,\r\n" + 
+			"       t2t6.phone              as patient_phone,\r\n" + 
 			"       t2t6.email              as patient_email,\r\n" + 
 			"       t2t6.patient_address_id as patient_address_id,\r\n" + 
 			"       t2t6.unit_no            as patient_unit_no,\r\n" + 
