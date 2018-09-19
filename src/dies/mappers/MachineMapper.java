@@ -38,11 +38,7 @@ public class MachineMapper extends DataMapper {
 					e.printStackTrace();
 				}
 			}
-
-			
-
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		return macnineList;
@@ -71,13 +67,9 @@ public class MachineMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(inserMachineSQL);
 			Machine m = (Machine) machine;
-
 			statement.setInt(1, m.getId());
-
 			statement.setLong(2, m.getSerialNo());
-
 			statement.setString(3, m.getType().name());
-
 			statement.executeUpdate();
 
 		} catch (SQLException e1) {
@@ -91,17 +83,11 @@ public class MachineMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(updateMachineSQL);
 			Machine m = (Machine) machine;
-
 			statement.setInt(1, m.getId());
-
 			statement.setLong(2, m.getSerialNo());
-
 			statement.setString(3, m.getType().name());
-
 			statement.executeUpdate();
-
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -111,17 +97,11 @@ public class MachineMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(deleteMachineSQL);
 			Machine m = (Machine) machine;
-
 			statement.setInt(1, m.getId());
-
 			statement.setLong(2, m.getSerialNo());
-
 			statement.setString(3, m.getType().name());
-
 			statement.executeUpdate();
-
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}

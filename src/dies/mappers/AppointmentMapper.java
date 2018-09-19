@@ -15,6 +15,13 @@ import java.util.Map;
 
 public class AppointmentMapper extends DataMapper {
 
+
+	private ResultSetMapper rsm = new ResultSetMapper();
+	Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
+	Appointment appointment = null;
+	Machine machine = null;
+	List<Machine> machines = new ArrayList<Machine>();
+	
 	private DBConnection db = new DBConnection();
 	private String findAllAppointmentSQL = "\r\n" + 
 			"select t1.id                   as appointment_id,\r\n" + 
@@ -83,17 +90,13 @@ public class AppointmentMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(findAppointmentSQL);
 			statement.setInt(1, id);
-			
-			Appointment appointment = null;
-			Machine machine = null;
-			List<Machine> machines = new ArrayList<Machine>();
 			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()) {
 				try {
-					machine = getMachine(rs);
+					machine = rsm.getMachine(rs);
 					machines.add(machine);
-					appointment = getAppointment(rs, getPatient(rs, getPatientAddress(rs)), getTechnician(rs));
+					appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs));
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -109,19 +112,14 @@ public class AppointmentMapper extends DataMapper {
 		try {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
-			
-			Appointment appointment= null;
-			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
-			Machine machine = null;
-			List<Machine> machines = new ArrayList<Machine>();
 			ResultSet rs = statement.executeQuery();
-			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
+			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
 
 			while (rs.next()) {
 				try {
-					machine = getMachine(rs);
+					machine = rsm.getMachine(rs);
 					machines.add(machine);
-					appointment = getAppointment(rs, getPatient(rs, getPatientAddress(rs)), getTechnician(rs));
+					appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs));
 					appointmentMap.put(appointment.getId(), appointment);
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -141,19 +139,14 @@ public class AppointmentMapper extends DataMapper {
 			PreparedStatement statement = connection.prepareStatement(findAllAppointmentWithLimitSQL);
 			statement.setInt(1, limit);
 			statement.setInt(2, offset);
-			
-			Appointment appointment = null;
-			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
-			Machine machine = null;
-			List<Machine> machines = new ArrayList<Machine>();
 			ResultSet rs = statement.executeQuery();
-			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
-
+			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
+			
 			while (rs.next()) {
 				try {
-					machine = getMachine(rs);
+					machine = rsm.getMachine(rs);
 					machines.add(machine);
-					appointment = getAppointment(rs, getPatient(rs, getPatientAddress(rs)), getTechnician(rs));
+					appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs));
 					appointmentMap.put(appointment.getId(), appointment);
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -228,33 +221,5 @@ public class AppointmentMapper extends DataMapper {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-	}
-	
-	private Address getPatientAddress(ResultSet rs) throws SQLException {
-		return new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
-				rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
-				rs.getString("patient_city"), rs.getString("patient_state"),
-				rs.getInt("patient_post_code"));		
-	}
-	
-	private Patient getPatient(ResultSet rs, Address patientAddress) throws SQLException{
-		return new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
-				rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
-				rs.getString("patient_medicare_no"), rs.getString("patient_email"));
-	}
-	
-	private Technician getTechnician(ResultSet rs) throws SQLException {
-		return new Technician(rs.getInt("technician_id"), rs.getString("technician_username"), null,
-				rs.getString("technician_first_name"), rs.getString("technician_last_name"));
-	}
-	
-	private Machine getMachine(ResultSet rs) throws SQLException{
-		return new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
-				Machine.Type.valueOf(rs.getString("machine_type")));
-	}
-	
-	private Appointment getAppointment(ResultSet rs, Patient patient, Technician technician) throws SQLException{
-		return new Appointment(rs.getInt("appointment_id"), rs.getTimestamp("appointment_date").toLocalDateTime(), patient,
-				technician, null, Appointment.State.valueOf(rs.getString("appointment_state")));
 	}
 }
