@@ -1,7 +1,6 @@
 package dies.mappers;
 
 import db.DBConnection;
-import dies.data.IdentityMap;
 import dies.models.*;
 
 import java.sql.Connection;
@@ -9,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,9 +17,9 @@ public class AppointmentMapper extends DataMapper {
 
 	private DBConnection db = new DBConnection();
 	private String findAllAppointmentSQL = "\r\n" + 
-			"select t1.id                   as ap_id,\r\n" + 
-			"       t1.date                 as ap_date,\r\n" + 
-			"       t1.state                as ap_state,\r\n" + 
+			"select t1.id                   as appointment_id,\r\n" + 
+			"       t1.date                 as appointment_date,\r\n" + 
+			"       t1.state                as appointment_state,\r\n" + 
 			"       t1.patient_id           as patient_id,\r\n" + 
 			"       t2t6.first_name         as patient_first_name,\r\n" + 
 			"       t2t6.last_name          as patient_last_name,\r\n" + 
@@ -59,74 +57,49 @@ public class AppointmentMapper extends DataMapper {
 			"                          t6.city,\r\n" + 
 			"                          t6.state,\r\n" + 
 			"                          t6.post_code\r\n" + 
-			"                   from public.patient t2\r\n" + 
-			"                          left outer join public.address t6 on t2.address_id = t6.id) t2t6 on t2t6.id = patient_id\r\n" + 
-			"       left outer join (select t7.id, t7.serial_code, t7.type, t8.appointment_id\r\n" + 
-			"                        from public.machine t7\r\n" + 
-			"                               right outer join public.appointment_machine t8 on t8.machine_id = t7.id) t7t8\r\n" + 
-			"         on t7t8.appointment_id = t1.id";
+			"                          from public.patient t2\r\n" + 
+			"                                left outer join public.address t6 on t2.address_id = t6.id) t2t6 on t2t6.id = patient_id\r\n" + 
+			"                                left outer join (select t7.id, t7.serial_code, t7.type, t8.appointment_id\r\n" + 
+			"                                from public.machine t7\r\n" + 
+			"                                      right outer join public.appointment_machine t8 on t8.machine_id = t7.id) t7t8\r\n" + 
+			"                                      on t7t8.appointment_id = t1.id";
 
 	private String findAppointmentSQL = findAllAppointmentSQL + " where t1.id = ?";
-	private String findAllAppointmentWithLimitSQL = findAllAppointmentSQL + " LIMIT ? OFFSET ?";
-	private String insertSQL = "with rows as (insert into public.appointment (date, patient_id, technician_id, state) "
+	private String findAllAppointmentWithLimitSQL = findAllAppointmentSQL + " limit ? offset ?";
+	private String countSQL = "select count(*) from public.appointment";
+	private String insertSQL = ""
+			+ "with rows as (insert into public.appointment (date, patient_id, technician_id, state) "
 			+ "values (?, ?, ?, ?) returning id) "
 			+ "insert into public.appointment_machine (appointment_id, machine_id) select id, ? from rows ";
-	private String updateSQL = "update public.appointment set into id=?, date=?, patient_id=?, technician_id=?, state=?";
-	private String deleteSQL = "delete from public.appointment where id=?; delete from public.appointment_machine where appointment_id=?";
-	private String countSQL = "select count(*) from public.appointment";
+	private String updateSQL = ""
+			+ "update public.appointment "
+			+ "set into id=?, date=?, patient_id=?, technician_id=?, state=?";
+	private String deleteSQL = ""
+			+ "delete from public.appointment "
+			+ "where id=?; delete from public.appointment_machine where appointment_id=?";
 
 	public Appointment find(int id) {
 		try {
-			System.out.println(id + " checking mapper has the right id ");
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(findAppointmentSQL);
 			statement.setInt(1, id);
-			int app_id = 0;
-			LocalDateTime app_date = null;
-			Appointment.State app_state = null;
-			Appointment app = null;
-			Address patientAddress = null;
-			Patient patient = null;
-			Technician technician = null;
+			
+			Appointment appointment = null;
 			Machine machine = null;
 			List<Machine> machines = new ArrayList<Machine>();
 			ResultSet rs = statement.executeQuery();
 
-			IdentityMap<Appointment> map = IdentityMap.getInstance(Appointment.class);
-			if (map.contains(id)) {
-			} else {
-				while (rs.next()) {
-					try {
-						patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
-								rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
-								rs.getString("patient_city"), rs.getString("patient_state"),
-								rs.getInt("patient_post_code"));
-
-						technician = new Technician(rs.getInt("technician_id"), rs.getString("technician_username"),
-								null, rs.getString("technician_first_name"), rs.getString("technician_last_name"));
-
-						patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
-								rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
-								rs.getString("patient_medicare_no"), rs.getString("patient_email"));
-						machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
-								Machine.Type.valueOf(rs.getString("machine_type")));
-						machines.add(machine);
-
-						app_id = rs.getInt("ap_id");
-						app_date = rs.getTimestamp("ap_date").toLocalDateTime();
-						app_state = Appointment.State.valueOf(rs.getString("ap_state"));
-
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-
+			while (rs.next()) {
+				try {
+					machine = getMachine(rs);
+					machines.add(machine);
+					appointment = getAppointment(rs, getPatient(rs, getPatientAddress(rs)), getTechnician(rs));
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
-				app = new Appointment(app_id, app_date, patient, technician, null, app_state);
-				return app;
 			}
-			return null;
+			return appointment;
 		} catch (SQLException e1) {
-
 			e1.printStackTrace();
 			return null;
 		}
@@ -136,48 +109,27 @@ public class AppointmentMapper extends DataMapper {
 		try {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
-
-			Appointment app = null;
-			ArrayList<Appointment> appList = new ArrayList<Appointment>();
-			Address patientAddress = null;
-			Technician technician = null;
-			Patient patient = null;
+			
+			Appointment appointment= null;
+			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
 			Machine machine = null;
 			List<Machine> machines = new ArrayList<Machine>();
 			ResultSet rs = statement.executeQuery();
-
 			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
 
 			while (rs.next()) {
-
 				try {
-					patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
-							rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
-							rs.getString("patient_city"), rs.getString("patient_state"),
-							rs.getInt("patient_post_code"));
-
-					technician = new Technician(rs.getInt("technician_id"), rs.getString("technician_username"), null,
-							rs.getString("technician_first_name"), rs.getString("technician_last_name"));
-
-					patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
-							rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
-							rs.getString("patient_medicare_no"), rs.getString("patient_email"));
-					machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
-							Machine.Type.valueOf(rs.getString("machine_type")));
+					machine = getMachine(rs);
 					machines.add(machine);
-					app = new Appointment(rs.getInt("ap_id"), rs.getTimestamp("ap_date").toLocalDateTime(), patient,
-							technician, null, Appointment.State.valueOf(rs.getString("ap_state")));
-
-					appointmentMap.put(rs.getInt("ap_id"), app);
+					appointment = getAppointment(rs, getPatient(rs, getPatientAddress(rs)), getTechnician(rs));
+					appointmentMap.put(appointment.getId(), appointment);
 				} catch (SQLException e) {
 					e.printStackTrace();
-
 				}
 			}
-			appList.addAll(appointmentMap.values());
-			return appList;
+			appointmentList.addAll(appointmentMap.values());
+			return appointmentList;
 		} catch (SQLException e1) {
-
 			e1.printStackTrace();
 			return null;
 		}
@@ -185,53 +137,51 @@ public class AppointmentMapper extends DataMapper {
 
 	public ArrayList<Appointment> findAll(int limit, int offset) {
 		try {
-			Connection con = db.getConnection();
-			PreparedStatement statement = con.prepareStatement(findAllAppointmentWithLimitSQL);
+			Connection connection = db.getConnection();
+			PreparedStatement statement = connection.prepareStatement(findAllAppointmentWithLimitSQL);
 			statement.setInt(1, limit);
 			statement.setInt(2, offset);
-			Appointment app = null;
-			ArrayList<Appointment> appList = new ArrayList<Appointment>();
-			Address patientAddress = null;
-			Technician technician = null;
-			Patient patient = null;
+			
+			Appointment appointment = null;
+			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
 			Machine machine = null;
 			List<Machine> machines = new ArrayList<Machine>();
 			ResultSet rs = statement.executeQuery();
-
 			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
 
 			while (rs.next()) {
-
 				try {
-					patientAddress = new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
-							rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
-							rs.getString("patient_city"), rs.getString("patient_state"),
-							rs.getInt("patient_post_code"));
-
-					technician = new Technician(rs.getInt("technician_id"), rs.getString("technician_username"), null,
-							rs.getString("technician_first_name"), rs.getString("technician_last_name"));
-
-					patient = new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
-							rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
-							rs.getString("patient_medicare_no"), rs.getString("patient_email"));
-					machine = new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
-							Machine.Type.valueOf(rs.getString("machine_type")));
+					machine = getMachine(rs);
 					machines.add(machine);
-					app = new Appointment(rs.getInt("ap_id"), rs.getTimestamp("ap_date").toLocalDateTime(), patient,
-							technician, null, Appointment.State.valueOf(rs.getString("ap_state")));
-
-					appointmentMap.put(rs.getInt("ap_id"), app);
+					appointment = getAppointment(rs, getPatient(rs, getPatientAddress(rs)), getTechnician(rs));
+					appointmentMap.put(appointment.getId(), appointment);
 				} catch (SQLException e) {
 					e.printStackTrace();
-
 				}
 			}
-			appList.addAll(appointmentMap.values());
-			return appList;
+			appointmentList.addAll(appointmentMap.values());
+			return appointmentList;
 		} catch (SQLException e1) {
-
 			e1.printStackTrace();
 			return null;
+		}
+	}
+	
+	public int countAll() {
+		try {
+			Connection con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(countSQL);
+			ResultSet rs = statement.executeQuery();
+			
+			if (rs.next()) {
+				int numberOfRows = rs.getInt(1);
+				return numberOfRows;
+			} else {
+				return 0;
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return 0;
 		}
 	}
 
@@ -240,23 +190,13 @@ public class AppointmentMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(insertSQL);
 			Appointment m = (Appointment) appointment;
-
 			statement.setTimestamp(1, Timestamp.valueOf(m.getDate()));
-
 			statement.setInt(2, m.getPatient().getId());
-
 			statement.setInt(3, m.getTechnician().getId());
-
 			statement.setString(4, m.getState().name());
-			
 			statement.setLong(5, 1);
-
 			statement.executeUpdate();
-
-			System.out.println("Updated the appointment table");
-
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -267,17 +207,12 @@ public class AppointmentMapper extends DataMapper {
 			PreparedStatement statement = con.prepareStatement(updateSQL);
 			Appointment m = (Appointment) appointment;
 			statement.setInt(1, m.getId());
-
 			statement.setTimestamp(2, Timestamp.valueOf(m.getDate()));
-
 			statement.setInt(3, m.getPatient().getId());
-
 			statement.setInt(4, m.getTechnician().getId());
-
 			statement.setString(5, m.getState().name());
 			statement.executeUpdate();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -287,36 +222,39 @@ public class AppointmentMapper extends DataMapper {
 			Connection con = db.getConnection();
 			PreparedStatement statement = con.prepareStatement(deleteSQL);
 			Appointment m = (Appointment) appointment;
-			System.out.println(m.getId() + " is the appointment id for deletion");
 			statement.setInt(1, m.getId());
 			statement.setInt(2, m.getId());
 			statement.executeUpdate();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
-
-	public int countAll() {
-		try {
-			Connection con = db.getConnection();
-			PreparedStatement statement = con.prepareStatement(countSQL);
-
-			ResultSet rs = statement.executeQuery();
-			if (rs.next()) {
-				int numberOfRows = rs.getInt(1);
-				System.out.println("numberOfRows= " + numberOfRows);
-				return numberOfRows;
-			} else {
-				System.out.println("error: could not get the record counts");
-				return 0;
-			}
-
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			return 0;
-		}
-
+	
+	private Address getPatientAddress(ResultSet rs) throws SQLException {
+		return new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
+				rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
+				rs.getString("patient_city"), rs.getString("patient_state"),
+				rs.getInt("patient_post_code"));		
+	}
+	
+	private Patient getPatient(ResultSet rs, Address patientAddress) throws SQLException{
+		return new Patient(rs.getInt("patient_id"), rs.getString("patient_first_name"),
+				rs.getString("patient_last_name"), patientAddress, rs.getString("patient_address_id"),
+				rs.getString("patient_medicare_no"), rs.getString("patient_email"));
+	}
+	
+	private Technician getTechnician(ResultSet rs) throws SQLException {
+		return new Technician(rs.getInt("technician_id"), rs.getString("technician_username"), null,
+				rs.getString("technician_first_name"), rs.getString("technician_last_name"));
+	}
+	
+	private Machine getMachine(ResultSet rs) throws SQLException{
+		return new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
+				Machine.Type.valueOf(rs.getString("machine_type")));
+	}
+	
+	private Appointment getAppointment(ResultSet rs, Patient patient, Technician technician) throws SQLException{
+		return new Appointment(rs.getInt("appointment_id"), rs.getTimestamp("appointment_date").toLocalDateTime(), patient,
+				technician, null, Appointment.State.valueOf(rs.getString("appointment_state")));
 	}
 }
