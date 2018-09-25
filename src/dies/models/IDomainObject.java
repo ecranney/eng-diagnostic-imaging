@@ -9,5 +9,4 @@
 
 package dies.models;
 
-public interface IDomainObject {
-}
+public interface IDomainObject {}
