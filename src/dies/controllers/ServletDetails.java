@@ -1,4 +1,4 @@
-package servlet;
+package dies.controllers;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -74,7 +74,8 @@ public class ServletDetails {
 		String technicianUsername = (String) request.getSession().getAttribute("username");
 		String technicianFirstname = (String) request.getSession().getAttribute("firstname");
 		String technicianLastName = (String) request.getSession().getAttribute("lastname");
+		String technicianGroup = (String) request.getSession().getAttribute("group");
 
-		return new Technician(technicianId, technicianUsername, "", technicianFirstname, technicianLastName);
+		return new Technician(technicianId, technicianUsername, "", technicianFirstname, technicianLastName, technicianGroup);
 	}
 }

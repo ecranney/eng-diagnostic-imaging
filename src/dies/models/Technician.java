@@ -23,8 +23,8 @@ public class Technician extends User {
     // note, identity field inherited from User
 
     public Technician(int id, String username, String password,
-                      String firstName, String lastName) {
-        super(id, username, password, firstName, lastName);
+                      String firstName, String lastName, String group) {
+        super(id, username, password, firstName, lastName, group);
     }
 
 }

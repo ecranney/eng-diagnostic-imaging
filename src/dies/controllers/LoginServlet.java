@@ -1,4 +1,4 @@
-package servlet;
+package dies.controllers;
 
 import dies.models.User;
 import dies.services.LoginService;
@@ -69,6 +69,7 @@ public class LoginServlet extends HttpServlet {
 		session.setAttribute("username", user.getUsername());
 		session.setAttribute("firstname", user.getFirstName());
 		session.setAttribute("lastname", user.getLastName());
+		session.setAttribute("group", user.getGroup());
 		return session;
 	}
 

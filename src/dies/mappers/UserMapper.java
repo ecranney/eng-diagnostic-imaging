@@ -15,7 +15,12 @@ public class UserMapper extends DataMapper {
 	
 	private ResultSetDetails rsm = new ResultSetDetails();
 	private DBConnection db = new DBConnection();
-	private String findUserSQL = "select username, password, firstname as first_name, lastname as last_name from public.user where username=? and password=?";
+	private String findUserSQL = "" + 
+			"select t1.username, t1.password, t1.firstname as first_name, t1.lastname as last_name, t2.name as group\r\n" + 
+			"from public.user t1\r\n" + 
+			"       inner join public.group t2 on t1.group_id = t2.id\r\n" + 
+			"where username = ?\r\n" + 
+			"  and password = ?";
 	private String findTechnicianSQL = ""
 			+ "select t1.id as technician_id, "
 			+ "t1.username as technician_username, "

@@ -20,14 +20,16 @@ public abstract class User implements IDomainObject {
     private String password;
     private String firstName;
     private String lastName;
+    private String group;
 
     public User(int id, String username, String password, String firstName,
-                String lastName) {
+                String lastName, String group) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.group =  group;
     }
 
     public int getId() {
@@ -65,4 +67,14 @@ public abstract class User implements IDomainObject {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    
+    public String getGroup() {
+    	return this.group;
+    }
+    
+    public void setGroup(String group) {
+    	this.group = group;
+    }
+    
+    
 }

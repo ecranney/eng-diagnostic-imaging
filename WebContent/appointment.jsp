@@ -159,7 +159,8 @@
 							<select
 								<c:if test="${(mode == 'view')}"><c:out
                                     value="readonly='readonly'"/></c:if>
-								class="selection-2" name="machineType" required>
+								class="selection-2" multiple data-live-search="true"
+								name="machineType" required>
 								<%
 									for (Machine.Type machine : Machine.Type.values()) {
 								%>
@@ -267,7 +268,7 @@
 
 					<div class="wrap-input100 validate-input"
 						data-validate="Medicare no is required">
-						<div class="container">
+						<div class="">
 							<a href="#" data-toggle="tooltip"
 								title="You cannot change the medicare no, if it's need to be done create a new patient">
 								<i class="fa fa-question-circle" aria-hidden="true"

@@ -1,4 +1,4 @@
-package servlet;
+package dies.controllers;
 
 import dies.models.*;
 import dies.services.AppointmentService;

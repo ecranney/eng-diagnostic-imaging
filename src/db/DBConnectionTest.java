@@ -1,9 +1,4 @@
 package db;
-
-import dies.models.Address;
-import dies.models.Patient;
-import dies.services.AppointmentService;
-
 public class DBConnectionTest {
 
     public static void main(String[] args) {
