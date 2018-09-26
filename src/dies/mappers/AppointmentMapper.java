@@ -40,11 +40,12 @@ public class AppointmentMapper extends DataMapper {
 			"       t3t4.username           as technician_username,\r\n" + 
 			"       t3t4.firstname          as technician_first_name,\r\n" + 
 			"       t3t4.lastname           as technician_last_name,\r\n" + 
+			"       t3t4.group_id           as technician_group,\r\n" + 
 			"       t7t8.id                 as appointment_machine_id,\r\n" + 
 			"       t7t8.serial_code        as machine_serial_code,\r\n" + 
 			"       t7t8.type               as machine_type\r\n" + 
 			"from public.appointment t1\r\n" + 
-			"       left outer join (select t4.id, t4.username, t4.firstname, t4.lastname\r\n" + 
+			"       left outer join (select t4.id, t4.username, t4.firstname, t4.lastname, t4.group_id\r\n" + 
 			"                        from public.user t4\r\n" + 
 			"                               inner join public.technician t3 on t4.id = t3.id) t3t4 on t3t4.id = t1.technician_id\r\n" + 
 			"       inner join (select t2.id,\r\n" + 
