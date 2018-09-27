@@ -286,8 +286,6 @@
 							required> <span class="focus-input100"></span>
 					</div>
 
-
-
 					<div class="wrap-input100">
 						<span class="label-input100">Patient Phone Number</span> <input
 							<c:if test="${(mode == 'view')}">

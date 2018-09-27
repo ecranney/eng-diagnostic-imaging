@@ -223,6 +223,11 @@ iframe {
   padding: 0 5px;
 }
 
+.input100[readonly]
+{
+    color: darkgray;
+}
+
 .focus-input100 {
   position: absolute;
   display: block;
