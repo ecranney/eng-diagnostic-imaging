@@ -70,21 +70,6 @@ public class LoginServlet extends HttpServlet {
 		session.setAttribute("firstname", user.getFirstName());
 		session.setAttribute("lastname", user.getLastName());
 		session.setAttribute("group", user.getGroup());
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
-		System.out.println(user.getGroup() + " THIS IS TO CHECK THE GROUP ID");
 		return session;
 	}
 

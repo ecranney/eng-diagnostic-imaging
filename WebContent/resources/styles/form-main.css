@@ -534,6 +534,10 @@ textarea.input100 {
   padding-bottom: 10px;
 }
 
+.select2-container {
+    width: 50% !important;
+}
+
 .select2-container .select2-results__option[aria-selected="true"] {
   background: #a64bf4;
   background: -webkit-linear-gradient(right, #00dbde, #fc00ff);
@@ -566,6 +570,7 @@ textarea.input100 {
   font-size: 15px;
   color: #333333;
   line-height: 1.2;
+  width:100px;
 }
 
 /* These are the CSS for the tab format in form page */
@@ -597,7 +602,6 @@ textarea.input100 {
   background-color: #4CAF50;
 }
 
-
 .stepbysteptab100-btn {
   font-size: 13px;
   font-family: Montserrat-Bold;
@@ -618,5 +622,117 @@ textarea.input100 {
   transition: all 0.4s;
 }
 
+.selection-2-multiple-fixed{
+	padding-right: 100px;
+}
 
+
+.contact100-form-btn-report{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  height: 50px;
+  margin-top: 10px;
+
+  font-family: Poppins-Medium;
+  font-size: 16px;
+  background: #70bf74;
+  color: #fff;
+  line-height: 1.2;
+  border-radius: 25px;
+}
+
+
+
+#reportImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 15px;
+    background-color: black;
+    margin-left:10px;
+    height: 100px;
+    display: inline-block; /* makes it fit in like an <img> */
+    background-size: cover; /* or contain */
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#reportImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
 
