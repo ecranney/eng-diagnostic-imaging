@@ -14,7 +14,7 @@ import dies.models.Technician;
 import dies.models.Appointment.State;
 import dies.models.Machine;
 
-public class ServletDetails {
+public class ServletParam {
 	public int getAppointmentId(HttpServletRequest request) {
 		return Integer.parseInt(request.getParameter("appointmentid"));
 	}
@@ -39,7 +39,7 @@ public class ServletDetails {
 		// TODO This method need refactoring after implementing it
 		String machineType = request.getParameter("machineType");
 		Machine.Type machineCastType = Machine.Type.valueOf(machineType);
-		Machine machine = new Machine(0, 0, machineCastType);
+		Machine machine = new Machine(0, "", machineCastType);
 		List<Machine> machines = new ArrayList<Machine>();
 		machines.add(machine);
 		return machines;
@@ -77,5 +77,26 @@ public class ServletDetails {
 		String technicianGroup = (String) request.getSession().getAttribute("group");
 
 		return new Technician(technicianId, technicianUsername, "", technicianFirstname, technicianLastName, technicianGroup);
+	}
+	
+	public List<Machine> getMachineDetails(HttpServletRequest request, String mode) {
+		List<Machine> appointment_machines =  new ArrayList<Machine>();
+		request.getParameterValues("machineType");
+		new Machine(0, null, type)
+		return ;
+	}
+	
+	public List<Machine> getAvailableMachines(List<Machine> appointmentMachines) {
+		List<Machine> available_machines = new ArrayList<Machine>();
+		for (Machine.Type machine_type: Machine.Type.values()) { 		      
+			available_machines.add(new Machine(0, null, machine_type));
+		}
+		
+		if (appointmentMachines != null) {
+			for(Machine machine: appointmentMachines) {
+				available_machines.removeIf(obj -> obj.getType() == machine.getType());
+			}
+		}
+		return available_machines;
 	}
 }

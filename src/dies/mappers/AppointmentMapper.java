@@ -16,7 +16,7 @@ import java.util.Map;
 public class AppointmentMapper extends DataMapper {
 
 
-	private ResultSetDetails rsm = new ResultSetDetails();
+	private ResultSetMap rsm = new ResultSetMap();
 	
 	private DBConnection db = new DBConnection();
 	private String findAllAppointmentSQL = "\r\n" + 
@@ -71,10 +71,15 @@ public class AppointmentMapper extends DataMapper {
 	private String findAppointmentSQL = findAllAppointmentSQL + " where t1.id = ?";
 	private String findAllAppointmentWithLimitSQL = findAllAppointmentSQL + " limit ? offset ?";
 	private String countSQL = "select count(*) from public.appointment";
-	private String insertSQL = ""
-			+ "with rows as (insert into public.appointment (date, patient_id, technician_id, state) "
-			+ "values (?, ?, ?, ?) returning id) "
-			+ "insert into public.appointment_machine (appointment_id, machine_id) select id, ? from rows ";
+//	private String insertSQL = ""
+//			+ "with rows as (insert into public.appointment (date, patient_id, technician_id, state) "
+//			+ "values (?, ?, ?, ?) returning id) "
+//			+ "insert into public.appointment_machine (appointment_id, machine_id) select id, ? from rows ";
+	private String insertAppointmentSQL = ""
+			+ "insert into public.appointment (date, patient_id, technician_id, state) "
+			+ "values (?, ?, ?, ?) returning id ";
+	private String insertAppointmentMachineSQL = ""
+			+ "insert into public.appointment_machine (appointment_id, machine_id) values (?, ?)";
 	private String updateSQL = ""
 			+ "update public.appointment "
 			+ "set date=?, patient_id=?, technician_id=?, state=? where id=?";
@@ -89,14 +94,12 @@ public class AppointmentMapper extends DataMapper {
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
 			Appointment appointment = null;
-			Machine machine = null;
 			List<Machine> machines = new ArrayList<Machine>();
 
 			while (rs.next()) {
 				try {
-					machine = rsm.getMachine(rs);
-					machines.add(machine);
-					appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs));
+					machines.add(rsm.getMachine(rs));
+					appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -114,16 +117,14 @@ public class AppointmentMapper extends DataMapper {
 			PreparedStatement statement = con.prepareStatement(findAllAppointmentSQL);
 			ResultSet rs = statement.executeQuery();
 			Appointment appointment = null;
-			Machine machine = null;
 			List<Machine> machines = new ArrayList<Machine>();
 			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
 			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
 			
 			while (rs.next()) {
 				try {
-					machine = rsm.getMachine(rs);
-					machines.add(machine);
-					appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs));
+					machines.add(rsm.getMachine(rs));
+					appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines);
 					appointmentMap.put(appointment.getId(), appointment);
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -145,16 +146,14 @@ public class AppointmentMapper extends DataMapper {
 			statement.setInt(2, offset);
 			ResultSet rs = statement.executeQuery();
 			Appointment appointment = null;
-			Machine machine = null;
 			List<Machine> machines = new ArrayList<Machine>();
 			ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
 			Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
 			
 			while (rs.next()) {
 				try {
-					machine = rsm.getMachine(rs);
-					machines.add(machine);
-					appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs));
+					machines.add(rsm.getMachine(rs));
+					appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines);
 					appointmentMap.put(appointment.getId(), appointment);
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -188,15 +187,27 @@ public class AppointmentMapper extends DataMapper {
 
 	public void insert(IDomainObject appointment) {
 		try {
+			int appointmentId = 0;
 			Connection con = db.getConnection();
-			PreparedStatement statement = con.prepareStatement(insertSQL);
+			PreparedStatement statement = con.prepareStatement(insertAppointmentSQL);
+			PreparedStatement statement2 = con.prepareStatement(insertAppointmentMachineSQL);
+			
 			Appointment m = (Appointment) appointment;
 			statement.setTimestamp(1, Timestamp.valueOf(m.getDate()));
 			statement.setInt(2, m.getPatient().getId());
 			statement.setInt(3, m.getTechnician().getId());
 			statement.setString(4, m.getState().name());
-			statement.setLong(5, 1);
-			statement.executeUpdate();
+			ResultSet rs = statement.executeQuery();
+			
+			if (rs.next()) {
+				appointmentId = rs.getInt(1);	
+			}
+			
+			for (Machine machine: m.getMachines()) {
+				statement2.setInt(1, appointmentId);
+				statement2.setInt(2, machine.getId());
+				statement2.executeUpdate();
+			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}

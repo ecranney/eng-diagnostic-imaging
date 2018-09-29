@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import dies.models.Address;
 import dies.models.Appointment;
@@ -12,7 +13,7 @@ import dies.models.Patient;
 import dies.models.Technician;
 import dies.models.User;
 
-public class ResultSetDetails {
+public class ResultSetMap {
 	public Address getPatientAddress(ResultSet rs) throws SQLException {
 		return new Address(rs.getInt("patient_address_id"), rs.getInt("patient_unit_no"),
 				rs.getInt("patient_street_no"), rs.getString("patient_street_name"),
@@ -32,16 +33,16 @@ public class ResultSetDetails {
 	}
 	
 	public Machine getMachine(ResultSet rs) throws SQLException{
-		return new Machine(rs.getInt("appointment_machine_id"), rs.getLong("machine_serial_code"),
+		return new Machine(rs.getInt("appointment_machine_id"), rs.getString("machine_serial_code"),
 				Machine.Type.valueOf(rs.getString("machine_type")));
 	}
 	
-	public Appointment getAppointment(ResultSet rs, Patient patient, Technician technician) throws SQLException{
+	public Appointment getAppointment(ResultSet rs, Patient patient, Technician technician, List<Machine> machines) throws SQLException{
 		LocalDateTime appointmentDate = LocalDateTime.parse(rs.getString("appointment_date"),
 				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 		
 		return new Appointment(rs.getInt("appointment_id"), appointmentDate, patient,
-				technician, null, Appointment.State.valueOf(rs.getString("appointment_state")));
+				technician, machines, Appointment.State.valueOf(rs.getString("appointment_state")));
 	}
 	
 	public User getUser(ResultSet rs){

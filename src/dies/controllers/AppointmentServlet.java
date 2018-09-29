@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet implementation class AppointmentServlet
@@ -31,20 +32,27 @@ public class AppointmentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		mode = request.getParameter("mode");
-		if (mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("edit")) {
+		 if (mode.equalsIgnoreCase("create")) {
+			 ServletParam sd = new ServletParam();
+			 request.setAttribute("available_machines", sd.getAvailableMachines(null));
+			 getServletContext().getRequestDispatcher("/appointment.jsp?mode=create")
+				.forward(request, response);
+		} else if (mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("edit")) {
 			AppointmentService as = new AppointmentService();
-			ServletDetails sd = new ServletDetails();
+			ServletParam sd = new ServletParam();
 			int appointment_id = sd.getAppointmentId(request);
+			Appointment appointment = as.findAppointment(appointment_id);
+			List<Machine> appointment_machines = appointment.getMachines();	
+			request.setAttribute("appointment_machines", appointment.getMachines());
+			request.setAttribute("available_machines", sd.getAvailableMachines(appointment_machines));
 			request.setAttribute("appointment", as.findAppointment(appointment_id));
 			request.setAttribute("mode", request.getParameter("mode"));
 			getServletContext().getRequestDispatcher("/appointment.jsp?appointmentid=" + appointment_id)
 					.forward(request, response);
-
 		} else if (mode.equalsIgnoreCase("delete")) {
 			AppointmentService as = new AppointmentService();
-			ServletDetails sd = new ServletDetails();
+			ServletParam sd = new ServletParam();
 			as.finishDeleteAppointment(new Appointment(sd.getAppointmentId(request), null, null, null, null, null));
 			getServletContext().getRequestDispatcher("/home").forward(request, response);
 		}
@@ -60,7 +68,7 @@ public class AppointmentServlet extends HttpServlet {
 		mode = request.getParameter("mode");
 		if (mode.equalsIgnoreCase("update")) {
 			AppointmentService as = new AppointmentService();
-			ServletDetails sd = new ServletDetails();
+			ServletParam sd = new ServletParam();
 			Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
 			Technician technician = sd.getTechnicianDetails(request, "create");
 			Appointment appointment = sd.getAppointmentDetails(request, patient, technician, null);
@@ -70,11 +78,11 @@ public class AppointmentServlet extends HttpServlet {
 
 		} else if (mode.equalsIgnoreCase("create")) {
 			AppointmentService as = new AppointmentService();
-			ServletDetails sd = new ServletDetails();
+			ServletParam sd = new ServletParam();
 			Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
-			Technician technician = sd.getTechnicianDetails(request, "create");
-			// TODO Add machine list
-			Appointment appointment = sd.getAppointmentDetails(request, patient, technician, null);
+			Technician technician = sd.getTechnicianDetails(request, "create");	
+			List<Machine> appointment_machines = sd.getMachineDetails(request, "create");	
+			Appointment appointment = sd.getAppointmentDetails(request, patient, technician, appointment_machines);
 			as.finishUpdatePatient(patient);
 			as.finishCreateAppointment(appointment);
 			getServletContext().getRequestDispatcher("/home").forward(request, response);

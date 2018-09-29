@@ -1,5 +1,4 @@
 <%@page import="dies.models.Appointment.State" %>
-<%@page import="dies.models.Machine" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
@@ -8,7 +7,6 @@
     <head>
         <meta charset="ISO-8859-1">
         <title>DIES Appointment View</title>
-
         <link rel="apple-touch-icon" sizes="57x57"
               href="resources/images/favicon/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="180x180"
@@ -22,7 +20,6 @@
               href="resources/images/favicon/safari-pinned-tab.svg">
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
-
         <link href="resources/styles/jquery-ui.css" rel="stylesheet">
         <link href="resources/styles/bootstrap/bootstrap.min.css"
               rel="stylesheet" id="bootstrap-css">
@@ -55,14 +52,13 @@
         --%>
     </head>
     </head>
-
     <body>
         <div>
             <nav class="navbar navbar-default navigation-clean-button">
                 <div class="container">
                     <div class="navbar-header">
                         <a class="navbar-brand title-of-header" href="#">Diagnostic
-                            Imaging Enterprise System</a>
+                                                                         Imaging Enterprise System</a>
                         <button class="navbar-toggle collapsed"
                                 data-toggle="collapse"
                                 data-target="#navcol-1">
@@ -82,7 +78,6 @@
                 </div>
             </nav>
         </div>
-
         <div class="container-contact100">
             <div class="wrap-contact100">
                 <form action="appointment"
@@ -90,18 +85,15 @@
                       <c:choose>
                       <c:when test="${mode == 'view'}">
                               "get"
-                	  </c:when>
-		              <c:otherwise>
-		                     "post"
-		              </c:otherwise>
-		              </c:choose>
+                </c:when>
+                <c:otherwise>
+                    "post"
+                </c:otherwise>
+                </c:choose>
                 class="contact100-form validate-form">
-
-
                 <c:if test="${(param.mode == 'create') || (empty param.mode)}">
                     <div class="tab">
                         <span class="contact100-form-title"> Patient Information </span>
-
                         <div class="wrap-input100 validate-input"
                              data-validate="Value is required">
                             <span class="label-input100">Search</span> <input
@@ -113,12 +105,10 @@
                                 value=""
                                 required> <span class="focus-input100"></span>
                         </div>
-
                     </div>
                 </c:if>
                 <div class="tab">
                     <span class="contact100-form-title"> Appointment Form </span>
-
                     <div class="wrap-input100 validate-input"
                          data-validate="Date is required">
                         <span class="label-input100">Appointment Date and Time</span>
@@ -133,7 +123,6 @@
                                 required>
                         <span class="focus-input100"></span>
                     </div>
-
                     <div class="wrap-input100 input100-select">
                         <span class="label-input100">Appointment Status</span>
                         <div>
@@ -154,47 +143,52 @@
                         </div>
                         <span class="focus-input100"></span>
                     </div>
-
                     <div class="wrap-input100 input100-select">
                         <span class="label-input100">Examination Type</span>
                         <div class="selection-2-multiple-fixed">
                             <select style="width: 200px;"
-                                    <c:if test="${(mode == 'view')}"><c:out
-                                            value="readonly='readonly'"/></c:if>
+                                    <c:if test="${(mode == 'view')}">
+                                        <c:out value="readonly='readonly'"/>
+                                    </c:if>
                                     class="selection-2" multiple='multiple'
                                     data-live-search="true"
-                                    name="machineType[]" required>
-                                <%
-                                    for (Machine.Type machine : Machine.Type.values()) {
-                                %>
-                                <option value=<%=machine.name()%>><%=machine.name()%>
-                                </option>
-                                <%
-                                    }
-                                %>
+                                    name="machineType" required>
+                                <c:forEach var="appointment_machine"
+                                           items="${appointment_machines}">
+                                    <option selected='selected'
+                                            value="${appointment_machine.getType()}">${appointment_machine.getType()}</option>
+                                </c:forEach>
+                                <c:forEach var="available_machine"
+                                           items="${available_machines}">
+                                    <option value="${available_machine.getType()}">${available_machine.getType()}</option>
+                                </c:forEach>
                             </select>
+                            <%-- <c:forEach var="appointment_machine" items="${appointment.getMachines()}"> 
+                            ${appointment_machine.getType().name()}		
+                            </c:forEach> --%>
                         </div>
                         <c:if test="${group == 'TECH'}">
-                        	<img id="reportImg" src="resources/uploads/xray.jpg" alt="X-RAY">
-                        	<img id="reportImg" src="resources/uploads/cat.jpg" alt="X-RAY">
-							<!-- The Modal -->
-							<div id="reportModal" class="modal">
-							  <span class="close">&times;</span>
-							  <img class="modal-content" id="img01">
-							  <div id="caption"></div>
-							</div>
-							<!-- <button type="submit" name="mode"
-                            	    class="contact100-form-btn-report"
-                                    value="report">
-									<span> View Report <i
-										class="fa fa-long-arrow-right m-l-7"
-										aria-hidden="true"></i>
-									</span>
-							</button> -->							
+                            <img id="reportImg" src="resources/uploads/xray.jpg"
+                                 alt="X-RAY">
+                            <img id="reportImg" src="resources/uploads/cat.jpg"
+                                 alt="X-RAY">
+                            <!-- The Modal -->
+                            <div id="reportModal" class="modal">
+                                <span class="close">&times;</span>
+                                <img class="modal-content" id="img01">
+                                <div id="caption"></div>
+                            </div>
+                            <!-- <button type="submit" name="mode"
+                            class="contact100-form-btn-report"
+                            value="report">
+                            <span> View Report <i
+                            class="fa fa-long-arrow-right m-l-7"
+                            aria-hidden="true"></i>
+                            </span>
+                            </button> -->
                         </c:if>
                         <span class="focus-input100"></span>
                     </div>
-
                     <div class="wrap-input100 validate-input"
                          data-validate="Name is required">
                         <span class="label-input100">Patient First Name</span>
@@ -210,7 +204,6 @@
                                 required>
                         <span class="focus-input100"></span>
                     </div>
-
                     <div class="wrap-input100 validate-input"
                          data-validate="Name is required">
                         <span class="label-input100">Patient Last Name</span>
@@ -225,7 +218,6 @@
                                 value="<c:out value="${appointment.getPatient().getLastName()}"/>"
                                 required> <span class="focus-input100"></span>
                     </div>
-
                     <div class="wrap-input100 validate-input"
                          data-validate="Name is required">
                         <span class="label-input100">Patient Address</span>
@@ -291,7 +283,6 @@
                         </div>
                         <span class="focus-input100"></span>
                     </div>
-
                     <div class="wrap-input100 validate-input"
                          data-validate="Valid email is required: ex@abc.xyz">
                         <span class="label-input100">Patient Email</span> <input
@@ -303,7 +294,6 @@
                             value="<c:out value="${appointment.getPatient().getEmail()}"/>"
                             required> <span class="focus-input100"></span>
                     </div>
-
                     <div class="wrap-input100 validate-input"
                          data-validate="Medicare no is required">
                         <div class="">
@@ -317,7 +307,6 @@
                         <span class="label-input100">Patient Medicare no.</span>
                         <input
                         <c:if test="${(mode == 'view') || (param.mode == 'edit') || (param.mode == 'create')}">
-
                             <c:out value="readonly='readonly'"/>
                         </c:if>
                                 class="input100" type="text"
@@ -327,7 +316,6 @@
                                 value="<c:out value="${appointment.getPatient().getMedicareNo()}"/>"
                                 required> <span class="focus-input100"></span>
                     </div>
-                    
                     <div class="wrap-input100">
                         <span class="label-input100">Patient Phone Number</span>
                         <input
@@ -341,7 +329,6 @@
                                 value="<c:out value="${appointment.getPatient().getPhone()}"/>"
                                 required> <span class="focus-input100"></span>
                     </div>
-                    
                     <div class="wrap-input100 validate-input"
                          data-validate="Message is required">
                         <span class="label-input100">Additional Details</span>
@@ -349,11 +336,9 @@
                                   placeholder="Message here..."></textarea>
                         <span class="focus-input100"></span>
                     </div>
-                    
                     <div class="container-contact100-form-btn">
                         <div class="wrap-contact100-form-btn">
                             <div class="contact100-form-bgbtn"></div>
-
                             <c:if test="${param.mode != 'create'}">
                                 <input type="hidden" id="app_id"
                                        name="appointmentid"
@@ -424,7 +409,6 @@
             </div>
         </div>
         <div id="dropDownSelect1"></div>
-        
         <script src="resources/js/jquery.min.js"></script>
         <script src="resources/js/jquery-ui.min.js"></script>
         <script src="resources/js/bootstrap/bootstrap.min.js"></script>
@@ -503,7 +487,7 @@
                     source: "patient?mode=autocomplete",
                     select: function (event, ui) {
                         $("#searchValue").val(ui.item.value);
-                        
+
                         $("#patientFirstName").val(ui.item.firstName);
                         $("#patientLastName").val(ui.item.lastName);
                         $("#patientMobile").val(ui.item.phone);
@@ -533,28 +517,27 @@
             });
         </script>
         <script>
-			// Get the modal
-			var modal = document.getElementById('reportModal');
-			
-			// Get the image and insert it inside the modal - use its "alt" text as a caption
-			var img = document.getElementById('reportImg');
-			var modalImg = document.getElementById("img01");
-			var captionText = document.getElementById("caption");
-			img.onclick = function(){
-			    modal.style.display = "block";
-			    modalImg.src = this.src;
-			    captionText.innerHTML = this.alt;
-			}
-			
-			// Get the <span> element that closes the modal
-			var span = document.getElementsByClassName("close")[0];
-			
-			// When the user clicks on <span> (x), close the modal
-			span.onclick = function() { 
-			    modal.style.display = "none";
-			}
-		</script>
+            // Get the modal
+            var modal = document.getElementById('reportModal');
 
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = document.getElementById('reportImg');
+            var modalImg = document.getElementById("img01");
+            var captionText = document.getElementById("caption");
+            img.onclick = function () {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+            }
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+        </script>
         <%--
         <script src="resources/js/daterangepicker/moment.min.js"></script>
         <script src="resources/js/daterangepicker/daterangepicker.js"></script>

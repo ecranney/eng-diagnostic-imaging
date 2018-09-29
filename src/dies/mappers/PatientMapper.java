@@ -12,7 +12,7 @@ import dies.models.Patient;
 
 public class PatientMapper extends DataMapper {
 
-	private ResultSetDetails rsm = new ResultSetDetails();
+	private ResultSetMap rsm = new ResultSetMap();
 
 	private DBConnection db = new DBConnection();
 	private String findSQL = "" +

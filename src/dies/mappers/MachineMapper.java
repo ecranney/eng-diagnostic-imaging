@@ -31,7 +31,7 @@ public class MachineMapper extends DataMapper {
 
 			while (rs.next()) {
 				try {
-					machine = new Machine(rs.getInt("id"), rs.getInt("serial_code"),
+					machine = new Machine(rs.getInt("id"), rs.getString("serial_code"),
 							Machine.Type.valueOf(rs.getString("type")));
 					macnineList.add(machine);
 				} catch (SQLException e) {
@@ -53,7 +53,7 @@ public class MachineMapper extends DataMapper {
 
 		while (rs.next()) {
 			try {
-				machine = new Machine(rs.getInt("id"), rs.getInt("serial_code"),
+				machine = new Machine(rs.getInt("id"), rs.getString("serial_code"),
 						Machine.Type.valueOf(rs.getString("type")));
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -68,7 +68,7 @@ public class MachineMapper extends DataMapper {
 			PreparedStatement statement = con.prepareStatement(inserMachineSQL);
 			Machine m = (Machine) machine;
 			statement.setInt(1, m.getId());
-			statement.setLong(2, m.getSerialNo());
+			statement.setString(2, m.getSerialNo());
 			statement.setString(3, m.getType().name());
 			statement.executeUpdate();
 
@@ -83,7 +83,7 @@ public class MachineMapper extends DataMapper {
 			PreparedStatement statement = con.prepareStatement(updateMachineSQL);
 			Machine m = (Machine) machine;
 			statement.setInt(1, m.getId());
-			statement.setLong(2, m.getSerialNo());
+			statement.setString(2, m.getSerialNo());
 			statement.setString(3, m.getType().name());
 			statement.executeUpdate();
 		} catch (SQLException e1) {
@@ -97,7 +97,7 @@ public class MachineMapper extends DataMapper {
 			PreparedStatement statement = con.prepareStatement(deleteMachineSQL);
 			Machine m = (Machine) machine;
 			statement.setInt(1, m.getId());
-			statement.setLong(2, m.getSerialNo());
+			statement.setString(2, m.getSerialNo());
 			statement.setString(3, m.getType().name());
 			statement.executeUpdate();
 		} catch (SQLException e1) {

@@ -19,10 +19,10 @@ public class Machine implements IDomainObject {
     private final int id;
 
     // the machine's serial number
-    private long serialNo;
+    private String serialNo;
     private Type type;
 
-    public Machine(int id, long serialNo, Type type) {
+    public Machine(int id, String serialNo, Type type) {
         this.id = id;
         this.serialNo = serialNo;
         this.type = type;
@@ -32,7 +32,7 @@ public class Machine implements IDomainObject {
         return id;
     }
 
-    public long getSerialNo() {
+    public String getSerialNo() {
         return serialNo;
     }
 

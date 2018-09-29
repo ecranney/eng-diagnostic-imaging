@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class UserMapper extends DataMapper {
 	
-	private ResultSetDetails rsm = new ResultSetDetails();
+	private ResultSetMap rsm = new ResultSetMap();
 	private DBConnection db = new DBConnection();
 	private String findUserSQL = "" + 
 			"select t1.username, t1.password, t1.firstname as first_name, t1.lastname as last_name, t2.name as group\r\n" + 

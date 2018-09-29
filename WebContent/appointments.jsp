@@ -57,12 +57,12 @@
                         <div class="welcome-message">
                             Hola! ${firstname} ${lastname}
                             <c:if test="${group == 'STAFF'}">
-	                            <a href="appointment.jsp?mode=create"
-	                               class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
-	                                Create Appointment</a> <a
-	                                href="patient.jsp?mode=create"
-	                                class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
-	                            Patient Registration</a>
+                                <a href="appointment?mode=create"
+                                   class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
+                                    Create Appointment</a> <a
+                                    href="patient.jsp?mode=create"
+                                    class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
+                                Patient Registration</a>
                             </c:if>
                         </div>
                     </div>
@@ -142,13 +142,13 @@
                                                                 value="${appointmentList.getId()}"/>>
                                                     </div>
                                                     <c:if test="${group == 'STAFF'}">
-	                                                    <button type="submit"
-	                                                            class="table100-form-btn table100-form-delete-btn alert alert-danger"
-	                                                            name="mode"
-	                                                            value="Delete"
-	                                                            onclick="return confirm('Are you sure you want to delete?')">
-	                                                        <i class="fa fa-trash"></i>
-	                                                    </button>
+                                                        <button type="submit"
+                                                                class="table100-form-btn table100-form-delete-btn alert alert-danger"
+                                                                name="mode"
+                                                                value="Delete"
+                                                                onclick="return confirm('Are you sure you want to delete?')">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
                                                     </c:if>
                                                 </div>
                                             </form>
