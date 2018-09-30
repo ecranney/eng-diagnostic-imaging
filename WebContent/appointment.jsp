@@ -8,49 +8,20 @@
     <head>
         <meta charset="ISO-8859-1">
         <title>DIES Appointment View</title>
-        <link rel="apple-touch-icon" sizes="57x57"
-              href="resources/images/favicon/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="180x180"
-              href="resources/images/favicon/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32"
-              href="resources/images/favicon/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16"
-              href="resources/images/favicon/favicon-16x16.png">
-        <link rel="manifest" href="resources/images/favicon/site.webmanifest">
-        <link rel="mask-icon"
-              href="resources/images/favicon/safari-pinned-tab.svg">
-        <meta name="msapplication-TileColor" content="#da532c">
-        <meta name="theme-color" content="#ffffff">
+        <%@ include file="templates/header.jsp" %> 
         <link href="resources/styles/jquery-ui.css" rel="stylesheet">
-        <link href="resources/styles/bootstrap/bootstrap.min.css"
-              rel="stylesheet" id="bootstrap-css">
-        <link
-                href="resources/styles/datetimepicker/bootstrap-datetimepicker.min.css"
-                rel="stylesheet" media="screen">
+        <link rel="stylesheet" media="screen"
+              href="resources/styles/datetimepicker/bootstrap-datetimepicker.min.css">
         <link rel="stylesheet" type="text/css"
               href="resources/styles/form-util.css">
         <link rel="stylesheet" type="text/css"
               href="resources/styles/form-main.css">
         <link rel="stylesheet" type="text/css"
-              href="resources/styles/header-main.css">
-        <link rel="stylesheet" type="text/css"
-              href="resources/styles/select2/select2.min.css">
-        <link rel="stylesheet" type="text/css"
               href="resources/styles/css-hamburgers/hamburgers.min.css">
         <link rel="stylesheet" type="text/css"
               href="resources/styles/animsition/animsition.min.css">
         <link rel="stylesheet" type="text/css"
-              href="resources/styles/animate/animate.css">
-        <link rel="stylesheet" type="text/css"
-              href="resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="resources/styles/basic-header.css">
-        <%--
-        <link
-              href="resources/styles/picker/bootstrap-datetimepicker.min.css"
-              rel="stylesheet" media="screen">
-        <link rel="stylesheet" type="text/css"
-              href="resources/styles/daterangepicker/daterangepicker.css">
-        --%>
+			  href="resources/styles/select2/select2.min.css">
     </head>
     </head>
     <body>
@@ -411,9 +382,20 @@
             </div>
         </div>
         <div id="dropDownSelect1"></div>
-        <script src="resources/js/jquery.min.js"></script>
-        <script src="resources/js/jquery-ui.min.js"></script>
-        <script src="resources/js/bootstrap/bootstrap.min.js"></script>
+        <%@ include file="templates/footer.jsp" %> 
+        <script src="resources/js/jquery.validate.min.js" type="text/javascript"></script>
+        <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtXpn6gUreNd7lbpKUKPEgt6oXmVl5BSo&libraries=places"></script>
+        <script src="resources/js/google-address.js"
+                type="text/javascript"></script>
+        <script src="resources/js/validator.min.js"
+                type="text/javascript"></script>
+        <script src="resources/js/animsition/animsition.min.js"></script>
+        <script src="resources/js/popper.js"></script>
+        <script src="resources/js/select2/select2.min.js"></script>
+        <script src="resources/js/form-main.js"></script>
+        <script async
+                src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>  
         <script type="text/javascript"
                 src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
                 charset="UTF-8"></script>
@@ -425,18 +407,7 @@
                 sideBySide: true
             });
         </script>
-        <script src="resources/js/jquery.validate.min.js"
-                type="text/javascript"></script>
-        <script
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtXpn6gUreNd7lbpKUKPEgt6oXmVl5BSo&libraries=places"></script>
-        <script src="resources/js/google-address.js"
-                type="text/javascript"></script>
-        <script src="resources/js/validator.min.js"
-                type="text/javascript"></script>
-        <script src="resources/js/animsition/animsition.min.js"></script>
-        <script src="resources/js/popper.js"></script>
-        <script src="resources/js/select2/select2.min.js"></script>
-        <script>
+         <script>
             $(".selection-2").select2({
                 minimumResultsForSearch: 20,
                 dropdownParent: $('#dropDownSelect1')
@@ -448,21 +419,15 @@
                 dropdownParent: $('#dropDownSelect1')
             });
         </script>
-        <script src="resources/js/form-main.js"></script>
-        <script async
-                src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
 
             function gtag() {
                 dataLayer.push(arguments);
             }
-
             gtag('js', new Date());
-
             gtag('config', 'UA-23581568-13');
         </script>
-      
         <script type="text/javascript">
             $(document).ready(function () {
                 $("#searchValue").autocomplete({
@@ -498,11 +463,9 @@
 
             });
         </script>
-        
         <script>
             // Get the modal
             var modal = document.getElementById('reportModal');
-
             // Get the image and insert it inside the modal - use its "alt" text as a caption
             var img = document.getElementById('reportImg');
             var modalImg = document.getElementById("img01");
@@ -512,19 +475,12 @@
                 modalImg.src = this.src;
                 captionText.innerHTML = this.alt;
             }
-
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close")[0];
-
             // When the user clicks on <span> (x), close the modal
             span.onclick = function () {
                 modal.style.display = "none";
             }
-        </script>
-        <%--
-        <script src="resources/js/daterangepicker/moment.min.js"></script>
-        <script src="resources/js/daterangepicker/daterangepicker.js"></script>
-        <script src="resources/js/countdowntime/countdowntime.js"></script>
-        --%>
+        </script>            
     </body>
 </html>
