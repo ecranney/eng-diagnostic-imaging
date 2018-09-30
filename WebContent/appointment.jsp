@@ -1,4 +1,5 @@
 <%@page import="dies.models.Appointment.State" %>
+<%@page import="dies.models.Machine" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
@@ -45,7 +46,7 @@
         <link rel="stylesheet" href="resources/styles/basic-header.css">
         <%--
         <link
-              href="resources/styles/datetimepicker/bootstrap-datetimepicker.min.css"
+              href="resources/styles/picker/bootstrap-datetimepicker.min.css"
               rel="stylesheet" media="screen">
         <link rel="stylesheet" type="text/css"
               href="resources/styles/daterangepicker/daterangepicker.css">
@@ -118,6 +119,7 @@
                         </c:if>
                                 class="input100 form_datetime" type="text"
                                 name="appointmentDateTime"
+                                id="appointmentDateTime"
                                 placeholder="Enter a date"
                                 value="<c:out value="${appointment.getDate()}"/>"
                                 required>
@@ -152,7 +154,7 @@
                                     </c:if>
                                     class="selection-2" multiple='multiple'
                                     data-live-search="true"
-                                    name="machineType" required>
+                                    name="machineType" id="machineType" required>
                                 <c:forEach var="appointment_machine"
                                            items="${appointment_machines}">
                                     <option selected='selected'
@@ -460,27 +462,7 @@
 
             gtag('config', 'UA-23581568-13');
         </script>
-        <%--<script type="text/javascript">
-        var searchValue = document.getElementById("searchValue");
-        document
-                .getElementById("searchValue")
-                .addEventListener(
-                        'input',
-                        function(evt) {
-                            if (searchValue && searchValue.value) {
-                                document.getElementById("nextBtn").style.color = "#70bf74";
-                            } else if (searchValue.value == '') {
-                                document.getElementById("nextBtn").style.color = "#fff";
-                            }
-
-                        });
-        </script>
-        <script type="text/javascript">
-           document.getElementById("prevBtn").addEventListener("click", unblockNextButton);
-           function unblockNextButton() {
-               document.getElementById("nextBtn").disabled = false;
-           }
-        </script>--%>
+      
         <script type="text/javascript">
             $(document).ready(function () {
                 $("#searchValue").autocomplete({
@@ -516,6 +498,7 @@
 
             });
         </script>
+        
         <script>
             // Get the modal
             var modal = document.getElementById('reportModal');

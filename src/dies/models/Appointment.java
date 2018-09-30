@@ -5,7 +5,6 @@
  *
  * @author ecranney
  * @since September 2018
- * 
  */
 package dies.models;
 
@@ -42,7 +41,7 @@ public class Appointment implements IDomainObject {
         return id;
     }
 
-    public LocalDateTime getDate() {    
+    public LocalDateTime getDate() {
         return date;
     }
 

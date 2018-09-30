@@ -4,10 +4,9 @@
  * <p>
  * Note: this class is a stub. It has been included for a more complete view of
  * the User-type hierarchy, but will not be used until Feature B is implemented.
- * 
+ *
  * @author ecranney
  * @since September 2018
- * 
  */
 package dies.models;
 

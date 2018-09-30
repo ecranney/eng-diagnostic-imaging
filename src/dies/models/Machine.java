@@ -9,7 +9,6 @@
  *
  * @author ecranney
  * @since September 2018
- * 
  */
 package dies.models;
 

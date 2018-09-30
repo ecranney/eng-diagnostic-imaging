@@ -1,12 +1,11 @@
 /**
- *  A User of the DIES system. This is the abstract parent of all other
- *  user-types (Radiologist, Receptionist, Technician, Admin). It contains
- *  the properties and methods common to all user-types, and permits for
- *  polymorphic operations over sets of users.
- *  
- *  @author ecranney
- *  @since September 2018
- *  
+ * A User of the DIES system. This is the abstract parent of all other
+ * user-types (Radiologist, Receptionist, Technician, Admin). It contains
+ * the properties and methods common to all user-types, and permits for
+ * polymorphic operations over sets of users.
+ *
+ * @author ecranney
+ * @since September 2018
  */
 package dies.models;
 
@@ -29,7 +28,7 @@ public abstract class User implements IDomainObject {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.group =  group;
+        this.group = group;
     }
 
     public int getId() {
@@ -67,14 +66,14 @@ public abstract class User implements IDomainObject {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
+
     public String getGroup() {
-    	return this.group;
+        return this.group;
     }
-    
+
     public void setGroup(String group) {
-    	this.group = group;
+        this.group = group;
     }
-    
-    
+
+
 }

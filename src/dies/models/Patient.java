@@ -9,7 +9,6 @@
  *
  * @author ecranney
  * @since September 2018
- * 
  */
 package dies.models;
 
@@ -34,7 +33,7 @@ public class Patient implements IDomainObject {
         this.phone = phone;
         this.medicareNo = medicareNo;
         this.email = email;
-        
+
     }
 
     public int getId() {
@@ -80,7 +79,7 @@ public class Patient implements IDomainObject {
     public void setMedicareNo(String medicareNo) {
         this.medicareNo = medicareNo;
     }
-    
+
     public String getEmail() {
         return email;
     }
@@ -88,8 +87,8 @@ public class Patient implements IDomainObject {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     public String getValue() {
-    	return (String.format("%s %s <%s>", this.firstName, this.lastName, this.medicareNo));
+        return (String.format("%s %s <%s>", this.firstName, this.lastName, this.medicareNo));
     }
 }
