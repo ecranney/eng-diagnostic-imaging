@@ -5,13 +5,13 @@
 <html>
     <head>
         <title>DIES Dashboard</title>
-        <%@ include file="templates/header.jsp" %>  
+        <%@ include file="templates/header.jsp" %>
         <link rel="stylesheet" type="text/css"
-			href="resources/styles/perfect-scrollbar/perfect-scrollbar.css">
-		<link rel="stylesheet" type="text/css"
-			href="resources/styles/table-util.css">
-		<link rel="stylesheet" type="text/css"
-			href="resources/styles/table-main.css">
+              href="resources/styles/perfect-scrollbar/perfect-scrollbar.css">
+        <link rel="stylesheet" type="text/css"
+              href="resources/styles/table-util.css">
+        <link rel="stylesheet" type="text/css"
+              href="resources/styles/table-main.css">
     </head>
     <body>
         <div>
@@ -28,16 +28,18 @@
                                 class="icon-bar"></span><span
                                 class="icon-bar"></span>
                         </button>
-                        <div class="welcome-message">
-                            Hola! ${firstname} ${lastname}
-                            <c:if test="${group == 'STAFF'}">
-                                <a href="appointment?mode=create"
-                                   class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
-                                    Create Appointment</a> <a
-                                    href="patient.jsp?mode=create"
+                        <div class="welcome-message navbar-nav mr-auto">
+                        	<div>Hola! ${firstname} ${lastname}</div>
+                        	<c:if test="${group == 'STAFF'}">
+                        	     <div class="welcome-message-buttons">
+                        	        <a href="appointment?mode=create"
                                     class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
-                                Patient Registration</a>
-                            </c:if>
+                                    Create Appointment</a></div>
+                                 <div class="welcome-message-buttons">
+                                    <a href="patient.jsp?mode=create"
+                                    class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
+                                    Patient Registration</a></div>
+                            </c:if>                          
                         </div>
                     </div>
                     <form action="logout" method="post">
@@ -154,7 +156,7 @@
                 </div>
             </div>
         </div>
-        <%@ include file="templates/footer.jsp" %> 
+        <%@ include file="templates/footer.jsp" %>
         <script src="resources/js/popper.js"></script>
         <script src="resources/js/select2/select2.min.js"></script>
         <script>

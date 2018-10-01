@@ -1,6 +1,7 @@
 package db;
 
 import org.postgresql.ds.PGSimpleDataSource;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -14,8 +15,8 @@ public class DBConnection {
 //        ds.setPortNumber(5432);
 //        Connection dbConnection = ds.getConnection();
 //        return dbConnection;
-    	
-    	PGSimpleDataSource ds = new PGSimpleDataSource();
+
+        PGSimpleDataSource ds = new PGSimpleDataSource();
         ds.setServerName("localhost");
         ds.setDatabaseName("dies");
         ds.setUser("user");

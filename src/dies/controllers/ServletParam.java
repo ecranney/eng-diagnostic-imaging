@@ -2,8 +2,6 @@ package dies.controllers;
 
 import dies.models.*;
 import dies.models.Appointment.State;
-import dies.services.AppointmentService;
-
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -97,7 +95,6 @@ public class ServletParam {
     }
 
     public List<Machine> getAvailableMachines(List<Machine> appointmentMachines) {
-        AppointmentService as = new AppointmentService();
         List<Machine> available_machines = new ArrayList<Machine>();
 
         for (Machine.Type machine_type : Machine.Type.values()) {

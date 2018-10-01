@@ -41,18 +41,18 @@ public class AppointmentServlet extends HttpServlet {
         mode = request.getParameter("mode");
 
         if (mode.equalsIgnoreCase("autocomplete")) {
-        	response.setContentType("text/html;charset=UTF-8");
+            response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
-        	AppointmentService as = new AppointmentService();            
+            AppointmentService as = new AppointmentService();
             LocalDateTime appointmentDate = LocalDateTime.parse(request.getParameter("appointmentdatetime"),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-            List<Machine> machines = as.findAvailableMachines(appointmentDate);           
-            for(Machine m: machines) {
-            	out.print(
-            		
-            			 "<option value="+ m.getType() +">"+ m.getType() +"</option>"             
-            	);
-            }   
+            List<Machine> machines = as.findAvailableMachines(appointmentDate);
+            for (Machine m : machines) {
+                out.print(
+
+                        "<option value=" + m.getType() + ">" + m.getType() + "</option>"
+                );
+            }
         } else if (mode.equalsIgnoreCase("create")) {
             ServletParam sd = new ServletParam();
             request.setAttribute("available_machines", sd.getAvailableMachines(null));

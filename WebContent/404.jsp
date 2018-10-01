@@ -2,7 +2,7 @@
          pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html>
 <html>
-	<%@ include file="templates/header.jsp" %>  
+    <%@ include file="templates/header.jsp" %>
     <head>
         <meta charset="ISO-8859-1">
         <title>404</title>
@@ -22,6 +22,6 @@
                 </div>
             </div>
         </div>
-        <%@ include file="templates/footer.jsp" %> 
+        <%@ include file="templates/footer.jsp" %>
     </body>
 </html>

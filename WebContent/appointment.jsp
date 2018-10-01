@@ -1,5 +1,4 @@
 <%@page import="dies.models.Appointment.State" %>
-<%@page import="dies.models.Machine" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
@@ -8,7 +7,7 @@
     <head>
         <meta charset="ISO-8859-1">
         <title>DIES Appointment View</title>
-        <%@ include file="templates/header.jsp" %> 
+        <%@ include file="templates/header.jsp" %>
         <link href="resources/styles/jquery-ui.css" rel="stylesheet">
         <link rel="stylesheet" media="screen"
               href="resources/styles/datetimepicker/bootstrap-datetimepicker.min.css">
@@ -21,7 +20,7 @@
         <link rel="stylesheet" type="text/css"
               href="resources/styles/animsition/animsition.min.css">
         <link rel="stylesheet" type="text/css"
-			  href="resources/styles/select2/select2.min.css">
+              href="resources/styles/select2/select2.min.css">
     </head>
     </head>
     <body>
@@ -125,7 +124,8 @@
                                     </c:if>
                                     class="selection-2" multiple='multiple'
                                     data-live-search="true"
-                                    name="machineType" id="machineType" required>
+                                    name="machineType" id="machineType"
+                                    required>
                                 <c:forEach var="appointment_machine"
                                            items="${appointment_machines}">
                                     <option selected='selected'
@@ -379,9 +379,9 @@
             </div>
         </div>
         <div id="dropDownSelect1"></div>
-        <%@ include file="templates/footer.jsp" %> 
-        <script src="resources/js/jquery.validate.min.js" 
-        		type="text/javascript"></script>
+        <%@ include file="templates/footer.jsp" %>
+        <script src="resources/js/jquery.validate.min.js"
+                type="text/javascript"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtXpn6gUreNd7lbpKUKPEgt6oXmVl5BSo&libraries=places">
         </script>
         <script src="resources/js/google-address.js"
@@ -393,29 +393,29 @@
         <script src="resources/js/select2/select2.min.js"></script>
         <script src="resources/js/form-main.js"></script>
         <script async
-                src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>  
+                src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
         <script type="text/javascript"
                 src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
                 charset="UTF-8"></script>
         <script type="text/javascript">
-        	$("#appointmentDateTime").attr('readonly', true);
+            $("#appointmentDateTime").attr('readonly', true);
             $("#appointmentDateTime").datetimepicker({
                 format: 'yyyy-mm-dd hh:ii',
                 inline: true,
                 sideBySide: true
-            }).on('change.dp', function (e) { 
-            	$appointmentdatetime = $('#appointmentDateTime');                
+            }).on('change.dp', function (e) {
+                $appointmentdatetime = $('#appointmentDateTime');
                 $.ajax({
-                   	type: "GET",
+                    type: "GET",
                     url: "appointment?mode=autocomplete",
-                    data: {appointmentdatetime: $appointmentdatetime.val() },
-                    success: function(data){
-                      	$("#machineType").html(data)
+                    data: {appointmentdatetime: $appointmentdatetime.val()},
+                    success: function (data) {
+                        $("#machineType").html(data)
                     }
-				});
+                });
             });
         </script>
-         <script>
+        <script>
             $(".selection-2").select2({
                 minimumResultsForSearch: 20,
                 dropdownParent: $('#dropDownSelect1')
@@ -433,6 +433,7 @@
             function gtag() {
                 dataLayer.push(arguments);
             }
+
             gtag('js', new Date());
             gtag('config', 'UA-23581568-13');
         </script>
@@ -489,6 +490,6 @@
             span.onclick = function () {
                 modal.style.display = "none";
             }
-        </script>  
+        </script>
     </body>
 </html>

@@ -5,7 +5,7 @@
 <html>
     <head>
         <title>DIES Login</title>
-		<%@ include file="templates/header.jsp" %>  
+        <%@ include file="templates/header.jsp" %>
         <link rel="stylesheet" type="text/css"
               href="resources/styles/login-util.css">
         <link rel="stylesheet" type="text/css"
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-        <%@ include file="templates/footer.jsp" %> 
+        <%@ include file="templates/footer.jsp" %>
         <script src="resources/js/popper.js"></script>
         <script src="resources/js/select2/select2.min.js"></script>
         <script src="resources/js/tilt/tilt.jquery.min.js"></script>

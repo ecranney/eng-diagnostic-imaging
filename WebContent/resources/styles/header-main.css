@@ -48,9 +48,36 @@
 	padding-top: 30px;
 	padding-bottom: 15px;
 	padding-right: 20px;
+	flex-direction: row;
+}
+
+.welcome-message-buttons{
+		flex-direction: row;
 }
 
 .title-of-header {
 	font-size: 30px;
 	font-family: Montserrat-Bold;
+}
+
+
+@media (max-width: 992px) {
+	.welcome-message {
+		flex-direction: column;
+	}
+	
+	.welcome-message-buttons{
+		padding-top: 12px;
+		flex-direction: column;
+	}
+	
+	.header100-form-add-appointment-btn {
+		margin-left: 0px;
+	}
+	
+	.header100-form-logout-btn {
+		margin-top: 5px;
+	}
+}
+	
 }

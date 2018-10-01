@@ -1,4 +1,5 @@
 package db;
+
 public class DBConnectionTest {
 
     public static void main(String[] args) {
@@ -8,7 +9,7 @@ public class DBConnectionTest {
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss");
 //        AppointmentService appointmentService = new AppointmentService();
 //        List<Technician> tList = appointmentService.findAvailableTechnicians(localDateTime);
-    	
+
 //    	UserMapper um = new UserMapper();
 //    	um.find("admin", "admin");
 //    	LoginService loginService = new LoginService();
@@ -23,8 +24,8 @@ public class DBConnectionTest {
 //    	Address address =  new Address(0, 22, 223, "Station Street", "CBD", "NSW", 2324);
 //    	patientMapper.insert(patient);
 //    	AppointmentService as = new AppointmentService();
-    	System.out.println("done");
-    	
-        
+        System.out.println("done");
+
+
     }
 }

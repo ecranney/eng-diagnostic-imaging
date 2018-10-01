@@ -6,7 +6,7 @@
     <head>
         <meta charset="ISO-8859-1">
         <title>DIES Booking View</title>
-        <%@ include file="templates/header.jsp" %> 
+        <%@ include file="templates/header.jsp" %>
         <link href="resources/styles/jquery-ui.css" rel="stylesheet">
         <link rel="stylesheet" media="screen"
               href="resources/styles/datetimepicker/bootstrap-datetimepicker.min.css">
@@ -19,7 +19,7 @@
         <link rel="stylesheet" type="text/css"
               href="resources/styles/animsition/animsition.min.css">
         <link rel="stylesheet" type="text/css"
-			  href="resources/styles/select2/select2.min.css">
+              href="resources/styles/select2/select2.min.css">
     </head>
     </head>
     <body>
@@ -244,7 +244,7 @@
             </div>
         </div>
         <div id="dropDownSelect1"></div>
-         <%@ include file="templates/footer.jsp" %> 
+        <%@ include file="templates/footer.jsp" %>
         <script type="text/javascript"
                 src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
                 charset="UTF-8"></script>
