@@ -14,6 +14,9 @@
               href="resources/styles/table-main.css">
     </head>
     <body>
+    	<c:if test="${empty sessionScope.userid}">
+            <c:redirect url="/login"/>
+        </c:if>
         <div>
             <nav class="navbar navbar-default navigation-clean-button">
                 <div class="container">
