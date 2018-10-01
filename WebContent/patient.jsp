@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
-<%@ taglib prefix="mt" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="mtform" tagdir="/WEB-INF/tags/forms"%>
 <!DOCTYPE html>
 
-<mt:formtemplate title="DIES Booking View">
+<mtform:formtemplate title="DIES Booking View">
 	<jsp:attribute name="content">
 		<c:if test="${empty sessionScope.userid}">
             <c:redirect url="/login" />
@@ -205,48 +205,6 @@
                 </form>
             </div>
         </div>
-        <div id="dropDownSelect1"></div>
 	</jsp:attribute>
-	<jsp:attribute name="scripts">
-	<script type="text/javascript"
-			src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
-			charset="UTF-8"></script>
-        <script type="text/javascript">
-									$('.form_datetime').attr('readonly', true);
-									$(".form_datetime").datetimepicker({
-										format : 'yyyy-mm-dd hh:ii'
-									});
-								</script>
-        <script src="resources/js/jquery.validate.min.js"
-			type="text/javascript"></script>
-        <script
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtXpn6gUreNd7lbpKUKPEgt6oXmVl5BSo&libraries=places"></script>
-        <script src="resources/js/google-address.js"
-			type="text/javascript"></script>
-        <script src="resources/js/validator.min.js"
-			type="text/javascript"></script>
-        <script src="resources/js/animsition/animsition.min.js"></script>
-        <script src="resources/js/popper.js"></script>
-        <script src="resources/js/select2/select2.min.js"></script>
-        <script>
-									$(".selection-2").select2({
-										minimumResultsForSearch : 20,
-										dropdownParent : $('#dropDownSelect1')
-									});
-								</script>
-        <script src="resources/js/form-main.js"></script>
-        <script async
-			src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-        <script>
-									window.dataLayer = window.dataLayer || [];
-
-									function gtag() {
-										dataLayer.push(arguments);
-									}
-
-									gtag('js', new Date());
-
-									gtag('config', 'UA-23581568-13');
-								</script>
-	</jsp:attribute>
-</mt:formtemplate>
+	<jsp:attribute name="scripts"/>
+</mtform:formtemplate>

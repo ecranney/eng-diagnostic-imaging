@@ -2,10 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
-<%@ taglib prefix="mt" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="mtform" tagdir="/WEB-INF/tags/forms"%>
 <!DOCTYPE html>
 
-<mt:formtemplate title="DIES Booking View">
+<mtform:formtemplate title="DIES Booking View">
 	<jsp:attribute name="content">
     	<c:if test="${empty sessionScope.userid}">
             <c:redirect url="/login"/>
@@ -360,20 +360,6 @@
         <div id="dropDownSelect1"></div>
 	</jsp:attribute>
 	<jsp:attribute name="scripts">
-		<script src="resources/js/jquery.validate.min.js"
-                type="text/javascript"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtXpn6gUreNd7lbpKUKPEgt6oXmVl5BSo&libraries=places">
-        </script>
-        <script src="resources/js/google-address.js"
-                type="text/javascript"></script>
-        <script src="resources/js/validator.min.js"
-                type="text/javascript"></script>
-        <script src="resources/js/animsition/animsition.min.js"></script>
-        <script src="resources/js/popper.js"></script>
-        <script src="resources/js/select2/select2.min.js"></script>
-        <script src="resources/js/form-main.js"></script>
-        <script async
-                src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
         <script type="text/javascript"
                 src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
                 charset="UTF-8"></script>
@@ -447,9 +433,7 @@
                         console.log(ui.item.value);
                         return false;
                     }
-
                 });
-
             });
         </script>
         <script>
@@ -472,4 +456,4 @@
             }
         </script>
 	</jsp:attribute>
-</mt:formtemplate>
+</mtform:formtemplate>

@@ -3,6 +3,7 @@
 <%@ attribute name="content" fragment="true"%>
 <%@ attribute name="scripts" fragment="true"%>
 <%@ taglib prefix="mt" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="mtform" tagdir="/WEB-INF/tags/forms"%>
 
 <!DOCTYPE html>
 <html>
@@ -28,6 +29,7 @@
 <body>
 	<jsp:invoke fragment="content"></jsp:invoke>
 	<mt:footer />
+	<mtform:formfooter />
 	<jsp:invoke fragment="scripts"></jsp:invoke>
 </body>
 </html>
