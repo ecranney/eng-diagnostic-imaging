@@ -45,9 +45,6 @@ public class PatientServlet extends HttpServlet {
             String medicareNo = request.getParameter("term");
             AppointmentService as = new AppointmentService();
             ArrayList<Patient> patients = as.findPatient(medicareNo, AUTOCOMPLETE);
-            for (Patient p : patients) {
-                System.out.println("patient " + p.getMedicareNo());
-            }
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
             out.print(new JSONArray(patients));

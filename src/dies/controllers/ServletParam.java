@@ -37,7 +37,6 @@ public class ServletParam {
     }
 
     public List<Machine> getMachineDetails(HttpServletRequest request) {
-        // TODO This method need refactoring after implementing it
         String machineType = request.getParameter("machineType");
         Machine.Type machineCastType = Machine.Type.valueOf(machineType);
         Machine machine = new Machine(0, "", machineCastType);

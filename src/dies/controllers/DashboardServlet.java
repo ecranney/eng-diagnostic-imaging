@@ -16,7 +16,7 @@ import java.util.List;
  * Servlet implementation class HomeServlet
  */
 @WebServlet("/home")
-public class HomeServlet extends HttpServlet {
+public class DashboardServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final int RECORDS_PER_PAGE = 10;
     private AppointmentService appointmentService = new AppointmentService();
@@ -25,7 +25,7 @@ public class HomeServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeServlet() {
+    public DashboardServlet() {
         super();
     }
 
@@ -66,7 +66,7 @@ public class HomeServlet extends HttpServlet {
             request.setAttribute("noOfPages", noOfPages);
             request.setAttribute("currentPage", page);
 
-            getServletContext().getRequestDispatcher("/appointments.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
         } else {
             getServletContext().getRequestDispatcher("/login").forward(request, response);
         }

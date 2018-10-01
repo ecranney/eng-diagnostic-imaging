@@ -136,9 +136,6 @@
                                     <option value="${available_machine.getType()}">${available_machine.getType()}</option>
                                 </c:forEach>
                             </select>
-                            <%-- <c:forEach var="appointment_machine" items="${appointment.getMachines()}"> 
-                            ${appointment_machine.getType().name()}		
-                            </c:forEach> --%>
                         </div>
                         <c:if test="${group == 'TECH'}">
                             <img id="reportImg" src="resources/uploads/xray.jpg"
@@ -383,9 +380,10 @@
         </div>
         <div id="dropDownSelect1"></div>
         <%@ include file="templates/footer.jsp" %> 
-        <script src="resources/js/jquery.validate.min.js" type="text/javascript"></script>
-        <script
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtXpn6gUreNd7lbpKUKPEgt6oXmVl5BSo&libraries=places"></script>
+        <script src="resources/js/jquery.validate.min.js" 
+        		type="text/javascript"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtXpn6gUreNd7lbpKUKPEgt6oXmVl5BSo&libraries=places">
+        </script>
         <script src="resources/js/google-address.js"
                 type="text/javascript"></script>
         <script src="resources/js/validator.min.js"
@@ -400,11 +398,21 @@
                 src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
                 charset="UTF-8"></script>
         <script type="text/javascript">
-            $('.form_datetime').attr('readonly', true);
-            $(".form_datetime").datetimepicker({
+        	$("#appointmentDateTime").attr('readonly', true);
+            $("#appointmentDateTime").datetimepicker({
                 format: 'yyyy-mm-dd hh:ii',
                 inline: true,
                 sideBySide: true
+            }).on('change.dp', function (e) { 
+            	$appointmentdatetime = $('#appointmentDateTime');                
+                $.ajax({
+                   	type: "GET",
+                    url: "appointment?mode=autocomplete",
+                    data: {appointmentdatetime: $appointmentdatetime.val() },
+                    success: function(data){
+                      	$("#machineType").html(data)
+                    }
+				});
             });
         </script>
          <script>
@@ -481,6 +489,6 @@
             span.onclick = function () {
                 modal.style.display = "none";
             }
-        </script>            
+        </script>  
     </body>
 </html>

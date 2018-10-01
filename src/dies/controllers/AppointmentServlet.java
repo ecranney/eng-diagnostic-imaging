@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -36,7 +39,21 @@ public class AppointmentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         mode = request.getParameter("mode");
-        if (mode.equalsIgnoreCase("create")) {
+
+        if (mode.equalsIgnoreCase("autocomplete")) {
+        	response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+        	AppointmentService as = new AppointmentService();            
+            LocalDateTime appointmentDate = LocalDateTime.parse(request.getParameter("appointmentdatetime"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            List<Machine> machines = as.findAvailableMachines(appointmentDate);           
+            for(Machine m: machines) {
+            	out.print(
+            		
+            			 "<option value="+ m.getType() +">"+ m.getType() +"</option>"             
+            	);
+            }   
+        } else if (mode.equalsIgnoreCase("create")) {
             ServletParam sd = new ServletParam();
             request.setAttribute("available_machines", sd.getAvailableMachines(null));
             getServletContext().getRequestDispatcher("/appointment.jsp?mode=create")
