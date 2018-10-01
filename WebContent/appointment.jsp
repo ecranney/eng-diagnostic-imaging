@@ -1,29 +1,12 @@
 <%@page import="dies.models.Appointment.State" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1" %>
-<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib prefix="mt" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="ISO-8859-1">
-        <title>DIES Appointment View</title>
-        <%@ include file="templates/header.jsp" %>
-        <link href="resources/styles/jquery-ui.css" rel="stylesheet">
-        <link rel="stylesheet" media="screen"
-              href="resources/styles/datetimepicker/bootstrap-datetimepicker.min.css">
-        <link rel="stylesheet" type="text/css"
-              href="resources/styles/form-util.css">
-        <link rel="stylesheet" type="text/css"
-              href="resources/styles/form-main.css">
-        <link rel="stylesheet" type="text/css"
-              href="resources/styles/css-hamburgers/hamburgers.min.css">
-        <link rel="stylesheet" type="text/css"
-              href="resources/styles/animsition/animsition.min.css">
-        <link rel="stylesheet" type="text/css"
-              href="resources/styles/select2/select2.min.css">
-    </head>
-    </head>
-    <body>
+
+<mt:formtemplate title="DIES Booking View">
+	<jsp:attribute name="content">
     	<c:if test="${empty sessionScope.userid}">
             <c:redirect url="/login"/>
         </c:if>
@@ -81,15 +64,12 @@
                         </div>
                     </div>
                 </c:if>
-                <div class="tab">
+                <div class="tab">    
                     <span class="contact100-form-title"> Appointment Form </span>
                     <div class="wrap-input100 validate-input"
                          data-validate="Date is required">
                         <span class="label-input100">Appointment Date and Time</span>
                         <input
-                        <c:if test="${(mode == 'view')}">
-                            <c:out value="readonly='readonly'"/>
-                        </c:if>
                                 class="input100 form_datetime" type="text"
                                 name="appointmentDateTime"
                                 id="appointmentDateTime"
@@ -106,14 +86,10 @@
                                             value="readonly='readonly'"/></c:if>
                                     class="selection-2" name="appointmentStatus"
                                     required>
-                                <%
-                                    for (State state : State.values()) {
-                                %>
-                                <option value=<%=state.name()%>><%=state.name()%>
-                                </option>
-                                <%
-                                    }
-                                %>
+                                <c:forEach var="appointment_state"
+                                           items="${appointment_states}">
+                                    <option value="${appointment_state.name()}">${appointment_state.name()}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <span class="focus-input100"></span>
@@ -382,8 +358,9 @@
             </div>
         </div>
         <div id="dropDownSelect1"></div>
-        <%@ include file="templates/footer.jsp" %>
-        <script src="resources/js/jquery.validate.min.js"
+	</jsp:attribute>
+	<jsp:attribute name="scripts">
+		<script src="resources/js/jquery.validate.min.js"
                 type="text/javascript"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtXpn6gUreNd7lbpKUKPEgt6oXmVl5BSo&libraries=places">
         </script>
@@ -494,5 +471,5 @@
                 modal.style.display = "none";
             }
         </script>
-    </body>
-</html>
+	</jsp:attribute>
+</mt:formtemplate>

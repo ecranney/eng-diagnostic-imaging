@@ -1,7 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<%@ include file="meta.jsp"%>
+<%@ tag language="java" pageEncoding="ISO-8859-1"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" id="bootstrap-css"
@@ -14,4 +11,3 @@
 	href="resources/styles/basic-header.css">
 <link rel="stylesheet" type="text/css"
 	href="resources/styles/header-main.css">
-

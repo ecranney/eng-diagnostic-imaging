@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="mt" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
 <html>
     <head>
         <title>DIES Login</title>
-        <%@ include file="templates/header.jsp" %>
+        <mt:header/>
         <link rel="stylesheet" type="text/css"
               href="resources/styles/login-util.css">
         <link rel="stylesheet" type="text/css"
@@ -31,7 +32,7 @@
                           class="login100-form validate-form">
                         <div class="container">
                             <a href="#" data-toggle="tooltip"
-                               title="username: admin, password: admin"> <i
+                               title="uernames:<admin> <tech> <radiol> password:<same as username>"> <i
                                     class="fa fa-question-circle"
                                     aria-hidden="true"
                                     aria-hidden="true"></i> info</a>
@@ -78,7 +79,7 @@
                 </div>
             </div>
         </div>
-        <%@ include file="templates/footer.jsp" %>
+        <mt:footer/>
         <script src="resources/js/popper.js"></script>
         <script src="resources/js/select2/select2.min.js"></script>
         <script src="resources/js/tilt/tilt.jquery.min.js"></script>

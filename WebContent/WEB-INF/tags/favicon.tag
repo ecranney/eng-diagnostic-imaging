@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
+<%@ tag language="java" pageEncoding="ISO-8859-1"%>
 
 <link rel="apple-touch-icon" sizes="57x57"
 	href="resources/images/favicon/apple-icon-57x57.png">

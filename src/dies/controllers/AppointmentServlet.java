@@ -49,15 +49,16 @@ public class AppointmentServlet extends HttpServlet {
             List<Machine> machines = as.findAvailableMachines(appointmentDate);
             for (Machine m : machines) {
                 out.print(
-
                         "<option value=" + m.getType() + ">" + m.getType() + "</option>"
                 );
             }
         } else if (mode.equalsIgnoreCase("create")) {
             ServletParam sd = new ServletParam();
             request.setAttribute("available_machines", sd.getAvailableMachines(null));
+            request.setAttribute("appointment_states", Appointment.State.values());
             getServletContext().getRequestDispatcher("/appointment.jsp?mode=create")
                     .forward(request, response);
+            
         } else if (mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("edit")) {
             AppointmentService as = new AppointmentService();
             ServletParam sd = new ServletParam();
@@ -67,7 +68,7 @@ public class AppointmentServlet extends HttpServlet {
 
             request.setAttribute("available_machines", sd.getAvailableMachines(appointment_machines));
             request.setAttribute("appointment_machines", appointment.getMachines());
-
+            request.setAttribute("appointment_states", Appointment.State.values());
             request.setAttribute("appointment", as.findAppointment(appointment_id));
             request.setAttribute("mode", request.getParameter("mode"));
             getServletContext().getRequestDispatcher("/appointment.jsp?appointmentid=" + appointment_id)

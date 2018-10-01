@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="mt" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
 <html>
     <head>
         <title>DIES Dashboard</title>
-        <%@ include file="templates/header.jsp" %>
+        <mt:header/>
         <link rel="stylesheet" type="text/css"
               href="resources/styles/perfect-scrollbar/perfect-scrollbar.css">
         <link rel="stylesheet" type="text/css"
@@ -159,7 +160,7 @@
                 </div>
             </div>
         </div>
-        <%@ include file="templates/footer.jsp" %>
+        <mt:footer/>
         <script src="resources/js/popper.js"></script>
         <script src="resources/js/select2/select2.min.js"></script>
         <script>

@@ -128,4 +128,8 @@ java -jar target/dependency/webapp-runner.jar target/*.war
 * **Evan Cranney** https://github.com/ecra93/
 * **Shalitha Weerakoon Karunatilleke** https://github.com/shalithakaru/
 
+##FAQ
+Eclipse – SimpleTagSupport was not found on the Java Build Path
+https://www.mkyong.com/eclipse/eclipse-simpletagsupport-was-not-found-on-the-java-build-path/
+
 
