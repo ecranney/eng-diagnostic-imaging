@@ -49,6 +49,10 @@ public class PatientServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.print(new JSONArray(patients));
 
+        } else if (mode.equalsIgnoreCase("create")) {
+            getServletContext().getRequestDispatcher("/patient.jsp?mode=create")
+                    .forward(request, response);
+
         } else if (mode.equalsIgnoreCase("view")
                 || mode.equalsIgnoreCase("edit")) {
             AppointmentService appointmentService = new AppointmentService();

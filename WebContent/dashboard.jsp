@@ -27,10 +27,10 @@
                         <button class="navbar-toggle collapsed"
                                 data-toggle="collapse"
                                 data-target="#navcol-1">
-                            <span class="sr-only">Toggle navigation</span><span
-                                class="icon-bar"></span><span
-                                class="icon-bar"></span><span
-                                class="icon-bar"></span>
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
                         </button>
                         <div class="welcome-message navbar-nav mr-auto">
                         	<div>Hola! ${firstname} ${lastname}</div>
@@ -40,7 +40,7 @@
                                     class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
                                     Create Appointment</a></div>
                                  <div class="welcome-message-buttons">
-                                    <a href="patient.jsp?mode=create"
+                                    <a href="patient?mode=create"
                                     class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>
                                     Patient Registration</a></div>
                             </c:if>                          

@@ -109,7 +109,7 @@
 	                     <c:if test="${(mode == 'view')}">
 	                        <c:out value="readonly='readonly'"/>
 	                     </c:if>
-	                     class="selection-2" 
+	                     class="selection-2"
 	                     multiple='multiple'
 	                     data-live-search="true"
 	                     name="machineType" 
@@ -272,12 +272,6 @@
       </script>
       <script>
          $(".selection-2").select2({
-             minimumResultsForSearch: 20,
-             dropdownParent: $('#dropDownSelect1')
-         });
-      </script>
-      <script>
-         $(".selection-2-multiple").select2({
              minimumResultsForSearch: 20,
              dropdownParent: $('#dropDownSelect1')
          });
