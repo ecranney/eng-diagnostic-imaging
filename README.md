@@ -8,8 +8,12 @@ This project dynamically configured settings for Heroku support
 ### Live Demo URL
 
 * https://diags.herokuapp.com/
-  Default `user`: admin, `password`: admin
- 
+  Default 
+  ````
+  user: admin, password: admin
+  user: radiol, password: radiol
+  user: tech, password: tech
+ ````
 # Development 
 
 ### Version Controlling 
@@ -35,7 +39,14 @@ After cloning the project add the project using following steps
  
  - Again go to properties by right click on project properties and go to 'Server' and add tomcat server
 	 > Please note that this option will be available if you already define  Tomcat Server from Eclipse -> Windows -> Preferences -> Server -> Runtime Environments -> Add. We recommend using Tomcat 9.0
- 
+
+######FAQ 
+ - Eclipse – SimpleTagSupport was not found on the Java Build Path (If you get this error in Eclipse it's because of the IDE, you need to setup the project facet runtime environment manually)
+
+```
+https://www.mkyong.com/eclipse/eclipse-simpletagsupport-was-not-found-on-the-java-build-path/
+```
+
 ##### Option 2: Eclipse with Maven Support 
  - After cloning the project run the following commands 
 	  ````
@@ -128,8 +139,5 @@ java -jar target/dependency/webapp-runner.jar target/*.war
 * **Evan Cranney** https://github.com/ecra93/
 * **Shalitha Weerakoon Karunatilleke** https://github.com/shalithakaru/
 
-##FAQ
-Eclipse – SimpleTagSupport was not found on the Java Build Path
-https://www.mkyong.com/eclipse/eclipse-simpletagsupport-was-not-found-on-the-java-build-path/
 
 
