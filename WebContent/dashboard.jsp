@@ -2,6 +2,7 @@
          pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="mt" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,9 +16,6 @@
               href="resources/styles/table-main.css">
     </head>
     <body>
-	    <c:if test="${empty user}">
-	         <c:redirect url="/login"/>
-	    </c:if> 
         <div>
             <nav class="navbar navbar-default navigation-clean-button">
                 <div class="container">

@@ -6,9 +6,6 @@
 <!DOCTYPE html>
 <mtform:formtemplate title="DIES Booking View">
    <jsp:attribute name="content">
-      <c:if test="${empty user}">
-         <c:redirect url="/login"/>
-      </c:if> 
       <div>
          <nav class="navbar navbar-default navigation-clean-button">
             <div class="container">
@@ -126,7 +123,7 @@
 	                     </c:forEach>
                      </select>
                   </div>
-                  <c:if test="${user.getGroup() == 'TECH'}">
+                  <c:if test="${user.getGroup() == 'RADIOLOGIST'}">
                      <img id="reportImg" src="resources/uploads/xray.jpg"
                         alt="X-RAY">
                      <img id="reportImg" src="resources/uploads/cat.jpg"

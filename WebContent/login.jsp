@@ -25,7 +25,7 @@
                     <div class="login100-pic js-tilt" data-tilt>
                         <img src="resources/images/dies.png" alt="IMG">
                     </div>
-                    <form action="login" method="post"
+                    <form action="" method="post"
                           class="login100-form validate-form">
                         <div class="container">
                             <a href="#" data-toggle="tooltip"

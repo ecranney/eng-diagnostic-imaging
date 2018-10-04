@@ -38,7 +38,8 @@ public class Radiologist extends User {
     
     public static User load(ResultSet rs) {
     	User user = rsm.getUser(rs);
-		return new Radiologist(user.getId(), user.getUsername(), "", user.getPassword(), user.getFirstName(),
+    	
+		return new Radiologist(user.getId(), user.getUsername(), user.getPassword(), "", user.getFirstName(),
 				user.getLastName(), user.getGroup());
     }
 

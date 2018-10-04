@@ -64,6 +64,7 @@ public class LoginServlet extends HttpServlet {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(false);
         
+        // get the currently executing user:
         Subject currentUser = SecurityUtils.getSubject();
         String view = "/login.jsp";
         try {
