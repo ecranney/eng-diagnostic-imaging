@@ -62,16 +62,11 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        System.out.println(String.valueOf(token.getPassword()) + " PASSWORD");
-        System.out.println(token.getUsername() + " USERNAME");
-        System.out.println(String.valueOf(token.getPrincipal().toString()) + " username of");
-        System.out.println(String.valueOf(token.getPassword()) + " PASSWORD");
-        //token.setRememberMe(true);
+        token.setRememberMe(false);
         
         Subject currentUser = SecurityUtils.getSubject();
         String view = "/login.jsp";
         try {
-        	System.out.println(token);
 			currentUser.login(token);
 			view = "/home";
 			User user = loginService.findByUsername(username);
@@ -79,23 +74,9 @@ public class LoginServlet extends HttpServlet {
 		} catch (AuthenticationException e) {
 			e.printStackTrace();
 		} finally {
-			System.out.println(view + " WHICH VIEW");
 			ServletContext servletContext = getServletContext();
             RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(view);
             requestDispatcher.forward(request, response);
 		}
-        
-        //HttpSession session = request.getSession(true);
-        //session = setSessionDetails(request, user, session);
     }
-
-    /*private HttpSession setSessionDetails(HttpServletRequest request, User user, HttpSession session) {
-        session.setAttribute("userid", user.getId());
-        session.setAttribute("username", user.getUsername());
-        session.setAttribute("firstname", user.getFirstName());
-        session.setAttribute("lastname", user.getLastName());
-        session.setAttribute("group", user.getGroup());
-        return session;
-    }*/
-
 }

@@ -1,6 +1,7 @@
 package dies.auth;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 import dies.models.User;
 
@@ -16,6 +17,10 @@ public class LoginSession {
 
 	public static boolean isAuthenticated() {
 		return SecurityUtils.getSubject().isAuthenticated();
+	}
+	
+	public static Subject getSubject() {
+		return SecurityUtils.getSubject();
 	}
 
 	public static void init(User user) {

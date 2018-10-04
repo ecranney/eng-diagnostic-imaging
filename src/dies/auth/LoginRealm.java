@@ -28,7 +28,7 @@ public class LoginRealm extends JdbcRealm {
         if (user == null) {
             return null;
         }
-        System.out.println("doGetAuthenticationInfo END ");
+        System.out.println(" calling doGetAuthenticationInfo");
         return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
     }
 
