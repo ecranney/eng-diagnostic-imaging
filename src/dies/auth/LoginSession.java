@@ -30,4 +30,8 @@ public class LoginSession {
 	public static User getUser() {
 		return (User) SecurityUtils.getSubject().getSession().getAttribute(USER_ATTRIBUTE_NAME);
 	}
+	
+	public static void logout() {
+		SecurityUtils.getSubject().logout();
+	}
 }

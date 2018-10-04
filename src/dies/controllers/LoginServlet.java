@@ -3,6 +3,7 @@ package dies.controllers;
 import dies.auth.LoginSession;
 import dies.models.User;
 import dies.services.LoginService;
+import dies.util.PasswordUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -61,7 +63,15 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        String salt = "dies*";
+        int iterations = 10000;
+        int keyLength = 512;
+        char[] passwordChars = password.toCharArray();
+        byte[] saltBytes = salt.getBytes();
+        byte[] hashedBytes = PasswordUtil.hashPassword(passwordChars, saltBytes, iterations, keyLength);
+        String hashedPassword = Hex.encodeHexString(hashedBytes);        
+        
+        UsernamePasswordToken token = new UsernamePasswordToken(username, hashedPassword);
         token.setRememberMe(false);
         
         // get the currently executing user:
