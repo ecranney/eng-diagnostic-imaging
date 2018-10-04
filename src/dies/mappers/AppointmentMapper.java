@@ -105,6 +105,8 @@ public class AppointmentMapper extends DataMapper {
                     e.printStackTrace();
                 }
             }
+
+            con.close();
             return appointment;
         } catch (SQLException e1) {
             e1.printStackTrace();
@@ -132,6 +134,8 @@ public class AppointmentMapper extends DataMapper {
                 }
             }
             appointmentList.addAll(appointmentMap.values());
+
+            con.close();
             return appointmentList;
         } catch (SQLException e1) {
             e1.printStackTrace();
@@ -141,8 +145,8 @@ public class AppointmentMapper extends DataMapper {
 
     public ArrayList<Appointment> findAll(int limit, int offset) {
         try {
-            Connection connection = db.getConnection();
-            PreparedStatement statement = connection.prepareStatement(findAllAppointmentWithLimitSQL);
+            Connection con = db.getConnection();
+            PreparedStatement statement = con.prepareStatement(findAllAppointmentWithLimitSQL);
             statement.setInt(1, limit);
             statement.setInt(2, offset);
             ResultSet rs = statement.executeQuery();
@@ -164,6 +168,8 @@ public class AppointmentMapper extends DataMapper {
                 }
             }
             appointmentList.addAll(appointmentMap.values());
+
+            con.close();
             return appointmentList;
         } catch (SQLException e1) {
             e1.printStackTrace();

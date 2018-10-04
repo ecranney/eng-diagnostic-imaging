@@ -22,16 +22,17 @@ public class LoginService {
 
     // login attempt using a given username and password, returns
     // null or a user object
-    public User login(String username, String password) {
+    public User findByUsername(String username) {
 
         // fetch the user (or null) from the database
-        User user = userMapper.find(username, password);
+        User user = userMapper.find(username);
+        return user;
+    }
+    
+    public User findByUserId(int userid) {
 
-        // check that password matches
-        if (user != null && !user.getPassword().equalsIgnoreCase(password)) {
-            System.out.println(user.getUsername());
-            return null;
-        }
+        // fetch the user (or null) from the database
+        User user = userMapper.find(userid);
         return user;
     }
 

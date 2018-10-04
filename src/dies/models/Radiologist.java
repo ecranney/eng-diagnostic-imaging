@@ -10,10 +10,15 @@
  */
 package dies.models;
 
+import java.sql.ResultSet;
+
+import dies.mappers.ResultSetMap;
+
 public class Radiologist extends User {
 
     // note, identity field inherited from User
-
+	private static ResultSetMap rsm = new ResultSetMap();
+	
     // Australian medical practitioners registration number
     private String registrationNo;
 
@@ -29,6 +34,12 @@ public class Radiologist extends User {
 
     public void setRegistratinoNo(String registrationNo) {
         this.registrationNo = registrationNo;
+    }
+    
+    public static User load(ResultSet rs) {
+    	User user = rsm.getUser(rs);
+		return new Radiologist(user.getId(), user.getUsername(), "", user.getPassword(), user.getFirstName(),
+				user.getLastName(), user.getGroup());
     }
 
 }

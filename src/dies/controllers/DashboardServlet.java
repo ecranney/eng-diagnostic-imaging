@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -49,27 +48,23 @@ public class DashboardServlet extends HttpServlet {
 
     private void pagePagination(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-
+    	
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
 
-        if (session != null && session.getAttribute("userid") != null) {
-            List<Appointment> appointmentList = appointmentService.findAllAppointments(RECORDS_PER_PAGE + 1,
-                    (page - 1) * RECORDS_PER_PAGE);
+		List<Appointment> appointmentList = appointmentService.findAllAppointments(RECORDS_PER_PAGE + 1,
+				(page - 1) * RECORDS_PER_PAGE);
 
-            int noOfRecords = appointmentService.countAllAppointments();
-            int noOfPages = (int) Math.ceil((noOfRecords - 1) * 1.0 / RECORDS_PER_PAGE);
+		int noOfRecords = appointmentService.countAllAppointments();
+		int noOfPages = (int) Math.ceil((noOfRecords - 1) * 1.0 / RECORDS_PER_PAGE);
 
-            request.setAttribute("appointmentList", appointmentList);
-            request.setAttribute("noOfPages", noOfPages);
-            request.setAttribute("currentPage", page);
+		request.setAttribute("appointmentList", appointmentList);
+		request.setAttribute("noOfPages", noOfPages);
+		request.setAttribute("currentPage", page);
 
-            getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
-        } else {
-            getServletContext().getRequestDispatcher("/login").forward(request, response);
-        }
+		getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
+        
     }
 
 }

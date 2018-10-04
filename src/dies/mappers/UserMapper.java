@@ -2,6 +2,8 @@ package dies.mappers;
 
 import db.DBConnection;
 import dies.models.IDomainObject;
+import dies.models.Radiologist;
+import dies.models.Receptionist;
 import dies.models.Technician;
 import dies.models.User;
 
@@ -18,9 +20,10 @@ public class UserMapper extends DataMapper {
     private String findUserSQL = "" +
             "select t1.username, t1.password, t1.firstname as first_name, t1.lastname as last_name, t2.name as group\r\n" +
             "from public.user t1\r\n" +
-            "       inner join public.group t2 on t1.group_id = t2.id\r\n" +
-            "where username = ?\r\n" +
-            "  and password = ?";
+            "       inner join public.group t2 on t1.group_id = t2.id\r\n";
+    
+    private String findUserByUsernameSQL = findUserSQL + " where t1.username = ?\r\n";
+    private String findUserByUserIdSQL =  findUserSQL + " where id = ?\r\n";
     private String findTechnicianSQL = ""
             + "select t1.id as technician_id, "
             + "t1.username as technician_username, "
@@ -33,7 +36,7 @@ public class UserMapper extends DataMapper {
     private String updateSQL = "update public.machines set username=?, password=?, firstname=?, lastname=?";
     private String deleteSQL = "delete from public.machines where username=? and password=? and firstname=? and lastname=?";
 
-    public User find(String username, String password) {
+    public User find(String username) {
         Connection con = null;
         ResultSet rs = null;
         User user = null;
@@ -41,14 +44,50 @@ public class UserMapper extends DataMapper {
         try {
             con = db.getConnection();
             PreparedStatement statement = null;
-            statement = con.prepareStatement(findUserSQL);
+            statement = con.prepareStatement(findUserByUsernameSQL);
             statement.setString(1, username);
-            statement.setString(2, password);
+
+            rs = statement.executeQuery();
+            while (rs.next()) {            	
+                String group = rs.getString("group");
+                if (group.equalsIgnoreCase("RECEPTIONIST")) {
+                	user = Receptionist.load(rs);
+                } else if (group.equalsIgnoreCase("RADIOLOGIST")) {
+                	user = Radiologist.load(rs);
+                } else if (group.equalsIgnoreCase("TECHNICIAN")) {
+                	user =  Technician.load(rs);
+                }
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+    
+    public User find(int userId) {
+        Connection con = null;
+        ResultSet rs = null;
+        User user = null;
+
+        try {
+            con = db.getConnection();
+            PreparedStatement statement = null;
+            statement = con.prepareStatement(findUserByUserIdSQL);
+            statement.setInt(1, userId);
 
             rs = statement.executeQuery();
             while (rs.next()) {
-                user = rsm.getUser(rs);
+            	String group = rs.getString("group");
+                if (group == "RECEPTIONIST") {
+                	user = Receptionist.load(rs);
+                } else if (group == "RADIOLOGIST") {
+                	user = Radiologist.load(rs);
+                } else if (group == "TECHNICIAN") {
+                	user =  Technician.load(rs);
+                }
             }
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -68,8 +107,7 @@ public class UserMapper extends DataMapper {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        ;
+        };
         return technicians;
     }
 

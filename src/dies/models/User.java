@@ -9,6 +9,7 @@
  */
 package dies.models;
 
+
 public abstract class User implements IDomainObject {
 
     // identity field, used for database lookup
@@ -74,6 +75,4 @@ public abstract class User implements IDomainObject {
     public void setGroup(String group) {
         this.group = group;
     }
-
-
 }

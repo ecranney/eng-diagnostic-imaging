@@ -15,9 +15,9 @@
               href="resources/styles/table-main.css">
     </head>
     <body>
-    	<c:if test="${empty sessionScope.userid}">
+    	<%-- <c:if test="${empty user.getId()}">
             <c:redirect url="/login"/>
-        </c:if>
+        </c:if> --%>
         <div>
             <nav class="navbar navbar-default navigation-clean-button">
                 <div class="container">
@@ -33,8 +33,8 @@
                             <span class="icon-bar"></span>
                         </button>
                         <div class="welcome-message navbar-nav mr-auto">
-                        	<div>Hola! ${firstname} ${lastname}</div>
-                        	<c:if test="${group == 'STAFF'}">
+                        	<div>Hola! ${user.getFirstName()} ${user.getLastName()}</div>
+                        	<c:if test="${user.getGroup() == 'STAFF'}">
                         	     <div class="welcome-message-buttons">
                         	        <a href="appointment?mode=create"
                                     class="header100-header-btn header100-form-add-appointment-btn"><b>+</b>

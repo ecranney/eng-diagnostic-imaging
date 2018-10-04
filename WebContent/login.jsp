@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="mt" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="mt" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,9 +17,6 @@
               href="resources/styles/css-hamburgers/hamburgers.min.css">
     </head>
     <body>
-        <c:if test="${not empty sessionScope.userid}">
-            <c:redirect url="/home"/>
-        </c:if>
         <div class="limiter">
             <div class="container-login100">
                 <div class="wrap-login100">
@@ -32,10 +29,11 @@
                           class="login100-form validate-form">
                         <div class="container">
                             <a href="#" data-toggle="tooltip"
-                               title="uernames:<admin> <tech> <radiol> password:<same as username>"> <i
-                                    class="fa fa-question-circle"
-                                    aria-hidden="true"
-                                    aria-hidden="true"></i> info</a>
+                               title="uernames:<admin> <tech> <radiol> password:<same as username>">
+                                <i
+                                        class="fa fa-question-circle"
+                                        aria-hidden="true"
+                                        aria-hidden="true"></i> info</a>
                         </div>
                         <br>
                         <div class="wrap-input100 validate-input"

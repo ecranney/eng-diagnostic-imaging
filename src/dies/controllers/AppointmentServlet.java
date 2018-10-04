@@ -52,6 +52,7 @@ public class AppointmentServlet extends HttpServlet {
                         "<option value=" + m.getType() + ">" + m.getType() + "</option>"
                 );
             }
+            
         } else if (mode.equalsIgnoreCase("create")) {
             ServletParam sd = new ServletParam();
             request.setAttribute("available_machines", sd.getAvailableMachines(null));
@@ -73,6 +74,7 @@ public class AppointmentServlet extends HttpServlet {
             request.setAttribute("mode", request.getParameter("mode"));
             getServletContext().getRequestDispatcher("/appointment.jsp?appointmentid=" + appointment_id)
                     .forward(request, response);
+            
         } else if (mode.equalsIgnoreCase("delete")) {
             AppointmentService as = new AppointmentService();
             ServletParam sd = new ServletParam();
