@@ -71,6 +71,9 @@
                   data-validate="Date is required">
                   <span class="label-input100">Appointment Date and Time</span>
                   <input
+                      <c:if test="${user.getGroup() != 'RECEPTIONIST'}">
+					      <c:out value="readonly='readonly'"/>
+					  </c:if>
 	                  class="input100 form_datetime" 
 	                  type="text"
 	                  name="appointmentDateTime"
@@ -84,7 +87,7 @@
                   <span class="label-input100">Appointment Status</span>
                   <div>
                      <select
-	                     <c:if test="${(mode == 'view')}">
+	                     <c:if test="${(mode == 'view') || user.getGroup() != 'RECEPTIONIST'}">
 	                        <c:out
 	                           value="readonly='readonly'"/>
 	                     </c:if>
@@ -103,7 +106,7 @@
                   <span class="label-input100">Examination Type</span>
                   <div class="selection-2-multiple-fixed">
                      <select style="width: 200px;"
-	                     <c:if test="${(mode == 'view')}">
+	                     <c:if test="${(mode == 'view') || user.getGroup() != 'RECEPTIONIST'}">
 	                        <c:out value="readonly='readonly'"/>
 	                     </c:if>
 	                     class="selection-2"
@@ -171,24 +174,18 @@
                      <c:if test="${param.mode != 'create'}">
                         <input type="hidden" id="app_id"
                         name="appointmentid"
-                        value="
-                        <c:out value="${appointment.getId()}"/>
-                        ">
+                        value="<c:out value="${appointment.getId()}"/>">
                      </c:if>
                      <input
-                     <c:if test="${mode == 'view'}">
-                        <c:out value="readonly='readonly'"/>
-                     </c:if>
-                     type="hidden" id="patientid"
-                     name="patientid"
-                     value="
-                     <c:out value="${appointment.getPatient().getId()}"/>
-                     ">
+	                     <c:if test="${mode == 'view'}">
+	                        <c:out value="readonly='readonly'"/>
+	                     </c:if>
+	                     type="hidden" id="patientid"
+	                     name="patientid"
+	                     value="<c:out value="${appointment.getPatient().getId()}"/>">
                      <input type="hidden" id="patientAddressid"
-                     name="patientAddressid"
-                     value="
-                     <c:out value="${appointment.getPatient().getAddress().getId()}"/>
-                     ">
+	                     name="patientAddressid"
+	                     value="<c:out value="${appointment.getPatient().getAddress().getId()}"/>">
                      <c:choose>
                         <c:when test="${mode == 'view'}">
                            <button type="submit" name="mode"
@@ -334,6 +331,9 @@
          span.onclick = function () {
              modal.style.display = "none";
          }
+      </script>
+      <script>
+      
       </script>
    </jsp:attribute>
 </mtform:formtemplate>

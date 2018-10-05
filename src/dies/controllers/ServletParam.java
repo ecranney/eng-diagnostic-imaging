@@ -1,5 +1,6 @@
 package dies.controllers;
 
+import dies.auth.LoginSession;
 import dies.models.*;
 import dies.models.Appointment.State;
 import javax.servlet.http.HttpServletRequest;
@@ -68,11 +69,11 @@ public class ServletParam {
     }
 
     public Technician getTechnicianDetails(HttpServletRequest request, String mode) {
-        int technicianId = (int) request.getSession().getAttribute("userid");
-        String technicianUsername = (String) request.getSession().getAttribute("username");
-        String technicianFirstname = (String) request.getSession().getAttribute("firstname");
-        String technicianLastName = (String) request.getSession().getAttribute("lastname");
-        String technicianGroup = (String) request.getSession().getAttribute("group");
+        int technicianId = LoginSession.getUser().getId();
+        String technicianUsername = LoginSession.getUser().getUsername();
+        String technicianFirstname = LoginSession.getUser().getFirstName();
+        String technicianLastName = LoginSession.getUser().getLastName();
+        String technicianGroup = LoginSession.getUser().getGroup();
 
         return new Technician(technicianId, technicianUsername, "", technicianFirstname, technicianLastName, technicianGroup);
     }
