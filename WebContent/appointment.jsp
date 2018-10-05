@@ -143,7 +143,6 @@
 						    id="patientReport" 
 		                 	placeholder="Enter patient report..."><c:out value="${fn:replace(patient_draft_report, '_', ' ')}"/></textarea>
 		             <div>
-		             <c:set var="flag" value="true" />
 
 		             <c:forEach var="appointment_machine"
 	                        items="${appointment_machines}">
@@ -160,14 +159,6 @@
 			            	<img class="modal-content" id="img01">
 			            	<div id="caption"></div>
 			            </div>
-			            <!-- <button type="submit" name="mode"
-			            class="contact100-form-btn-report"
-			            value="report">
-			            <span> View Report <i
-			            class="fa fa-long-arrow-right m-l-7"
-			            aria-hidden="true"></i>
-			            </span>
-			            </button> -->
 			            <span class="focus-input100"></span>
 			       	 </div>
 			       </div>
@@ -288,6 +279,24 @@
                  }
              });
          });
+      </script>
+      <script type="text/javascript">
+      		$("#patientReport").on('keyup', function () {
+      			  $patientReport = $('#patientReport');
+      			  $appointmentid = ${appointment.getId()};
+	      		  data = {
+	      			patientReport: $patientReport.val(),
+	      			appointmentid: $appointmentid
+	      		  }
+      		     
+	      		  $.ajax({
+	                  type: "GET",
+	                  url: "appointment?mode=savedraft",
+	                  data: data,
+	                  success: function (data) {
+	                  }
+	              });
+      		});
       </script>
       <script>
          $(".selection-2").select2({

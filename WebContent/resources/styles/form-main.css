@@ -349,6 +349,25 @@ textarea.input100 {
   line-height: 1.2;
 }
 
+.contact100-form-save-draft-btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  height: 50px;
+
+  font-family: Poppins-Medium;
+  font-size: 16px;
+  background: #b2a7b3;
+  color: #fff;
+  line-height: 1.2;
+  border-radius: 10px;
+}
+
 .wrap-contact100-form-btn:hover .contact100-form-bgbtn {
   left: 0;
 }
