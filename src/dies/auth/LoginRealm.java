@@ -5,6 +5,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
 import dies.models.Radiologist;
 import dies.models.Receptionist;
@@ -20,16 +21,21 @@ public class LoginRealm extends JdbcRealm {
 	
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        // identify account to log to
         UsernamePasswordToken userPassToken = (UsernamePasswordToken) token;
         final String username = userPassToken.getUsername();
+                
         User user = loginService.findByUsername(username);
         
         if (user == null) {
             return null;
         }
-        System.out.println(" calling doGetAuthenticationInfo");
-        return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+        System.out.println(user.getPassword() + " <-- DB PASSWORD ");
+        
+        SimpleAuthenticationInfo authentication =   
+                new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());  
+        authentication.setCredentialsSalt(ByteSource.Util.bytes(user.getUsername() + user.getHash()));  
+        System.out.println(authentication.getCredentials() + " <-- GENERATED PASSWORD ");
+        return authentication;
     }
 
     @Override

@@ -28,14 +28,14 @@ public class Technician extends User {
 	private static ResultSetMap rsm = new ResultSetMap();
 
     public Technician(int id, String username, String password,
-                      String firstName, String lastName, String group) {
-        super(id, username, password, firstName, lastName, group);
+                      String firstName, String lastName, String group, String hash) {
+        super(id, username, password, firstName, lastName, group, hash);
     }
     
     public static User load(ResultSet rs) {
     	User user = rsm.getUser(rs);
 		return new Technician(user.getId(), user.getUsername(), user.getPassword(), user.getFirstName(),
-				user.getLastName(), user.getGroup());
+				user.getLastName(), user.getGroup(), user.getHash());
     }
 
 }

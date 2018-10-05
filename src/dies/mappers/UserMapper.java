@@ -18,7 +18,13 @@ public class UserMapper extends DataMapper {
     private ResultSetMap rsm = new ResultSetMap();
     private DBConnection db = new DBConnection();
     private String findUserSQL = "" +
-            "select t1.username, t1.password, t1.firstname as first_name, t1.lastname as last_name, t2.name as group\r\n" +
+            "select "
+            + "t1.username, "
+            + "t1.password, "
+            + "t1.firstname as first_name, "
+            + "t1.lastname as last_name, "
+            + "t1.hash as password_hash, "
+            + "t2.name as group\r\n" +
             "from public.user t1\r\n" +
             "       inner join public.group t2 on t1.group_id = t2.id\r\n";
     

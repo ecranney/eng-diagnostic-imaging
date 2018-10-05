@@ -74,7 +74,7 @@ public class ServletParam {
         String technicianLastName = (String) request.getSession().getAttribute("lastname");
         String technicianGroup = (String) request.getSession().getAttribute("group");
 
-        return new Technician(technicianId, technicianUsername, "", technicianFirstname, technicianLastName, technicianGroup);
+        return new Technician(technicianId, technicianUsername, "", technicianFirstname, technicianLastName, technicianGroup, "");
     }
 
     public List<Machine> getMachineDetails(HttpServletRequest request, String mode) {

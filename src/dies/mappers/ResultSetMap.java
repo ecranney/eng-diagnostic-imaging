@@ -24,7 +24,7 @@ public class ResultSetMap {
 
     public Technician getTechnician(ResultSet rs) throws SQLException {
         return new Technician(rs.getInt("technician_id"), rs.getString("technician_username"), null,
-                rs.getString("technician_first_name"), rs.getString("technician_last_name"), rs.getString("technician_group"));
+                rs.getString("technician_first_name"), rs.getString("technician_last_name"), rs.getString("technician_group"), null);
     }
 
     public Machine getMachine(ResultSet rs) throws SQLException {
@@ -47,7 +47,7 @@ public class ResultSetMap {
         try {
         	System.out.println("returning the login details from mapper");
             return new User(0, rs.getString("username"), rs.getString("password"), rs.getString("first_name"),
-                    rs.getString("last_name"), rs.getString("group")) {
+                    rs.getString("last_name"), rs.getString("group"), rs.getString("password_hash")) {
             };
         } catch (SQLException e) {
             e.printStackTrace();

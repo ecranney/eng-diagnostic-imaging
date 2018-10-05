@@ -18,6 +18,8 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.apache.shiro.subject.Subject;
 
 import java.io.IOException;
@@ -63,22 +65,21 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String salt = "dies*";
+        String salt = username;
         int iterations = 10000;
-        int keyLength = 512;
-        char[] passwordChars = password.toCharArray();
-        byte[] saltBytes = salt.getBytes();
-        byte[] hashedBytes = PasswordUtil.hashPassword(passwordChars, saltBytes, iterations, keyLength);
-        String hashedPassword = Hex.encodeHexString(hashedBytes);        
         
-        UsernamePasswordToken token = new UsernamePasswordToken(username, hashedPassword);
+        String generatedPassword = shiroPasswordGenerator(password, salt, iterations);    
+        //passwordGenerator(password, salt, iterations);
+        
+        
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(false);
         
         // get the currently executing user:
         Subject currentUser = SecurityUtils.getSubject();
         String view = "/login.jsp";
         try {
-			currentUser.login(token);
+        	currentUser.login(token);
 			view = "/home";
 			User user = loginService.findByUsername(username);
 			LoginSession.init(user);
@@ -90,4 +91,23 @@ public class LoginServlet extends HttpServlet {
             requestDispatcher.forward(request, response);
 		}
     }
+
+	private String shiroPasswordGenerator(String password, String salt, int iterations) {
+		String salt2 =  new  SecureRandomNumberGenerator().nextBytes().toHex();
+        System.out.println(salt2 + " SALT 2");
+        
+        Sha512Hash hash =  new  Sha512Hash(password, salt + "28540d279868c608a8facfae39264a72", iterations);  
+        String encodedPassword = hash.toHex();
+        System.out.println(encodedPassword + " --> HASHED PASSWORD");
+        return encodedPassword;   
+        }
+
+	private void passwordGenerator(String password, String salt, int iterations) {
+		int keyLength = 512;
+        char[] passwordChars = password.toCharArray();
+        byte[] saltBytes = salt.getBytes();
+        byte[] hashedBytes = PasswordUtil.hashPassword(passwordChars, saltBytes, iterations, keyLength);
+        String hashedPassword = Hex.encodeHexString(hashedBytes);     
+        System.out.println(hashedPassword + " OLD PASSWORD");
+	}
 }
