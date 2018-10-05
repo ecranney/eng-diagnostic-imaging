@@ -68,6 +68,17 @@ public class AppointmentServlet extends HttpServlet {
             Appointment appointment = as.findAppointment(appointment_id);
             List<Machine> appointment_machines = appointment.getMachines();
 
+            Cookie[] cookies = request.getCookies();
+
+            if (cookies != null) {
+             for (Cookie cookie : cookies) {
+               if (cookie.getName().equals("patient_draft_report_" + appointment_id)) {
+            	   request.setAttribute("patient_draft_report", cookie.getValue());
+                }
+              }
+            }
+            
+            
             request.setAttribute("available_machines", sd.getAvailableMachines(appointment_machines));
             request.setAttribute("appointment_machines", appointment.getMachines());
             request.setAttribute("appointment_states", Appointment.State.values());
@@ -94,10 +105,11 @@ public class AppointmentServlet extends HttpServlet {
         mode = request.getParameter("mode");
         if (mode.equalsIgnoreCase("update")) {
         	String patientReport = request.getParameter("patientReport").replaceAll(" ", "_");
-        	Cookie appointmentReport = new Cookie("patientReport", patientReport);
+        	Cookie appointmentReport = new Cookie("patient_draft_report_" + request.getParameter("appointmentid"), patientReport);
         	
         	// Set expiry date after 24 Hrs for the cookie.
         	appointmentReport.setMaxAge(60*60*24);
+        	
         	response.addCookie(appointmentReport);
         	response.setContentType("text/html");
         	

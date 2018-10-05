@@ -141,9 +141,10 @@
 		                 	class="input100" 
 		                 	name="patientReport"
 						    id="patientReport" 
-		                 	placeholder="Enter patient report..."><c:out value="${fn:replace(cookie.patientReport.value, '_', ' ')}"/></textarea>
+		                 	placeholder="Enter patient report..."><c:out value="${fn:replace(patient_draft_report, '_', ' ')}"/></textarea>
 		             <div>
-		             
+		             <c:set var="flag" value="true" />
+
 		             <c:forEach var="appointment_machine"
 	                        items="${appointment_machines}">
 	                        <img 
