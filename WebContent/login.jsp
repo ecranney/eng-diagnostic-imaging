@@ -17,6 +17,9 @@
               href="resources/styles/css-hamburgers/hamburgers.min.css">
     </head>
     <body>
+    	<c:if test="${not empty user}">
+        	<c:redirect url="/home"/>
+      	</c:if>
         <div class="limiter">
             <div class="container-login100">
                 <div class="wrap-login100">

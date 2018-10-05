@@ -69,10 +69,11 @@ public class LoginServlet extends HttpServlet {
         char[] passwordChars = password.toCharArray();
         byte[] saltBytes = salt.getBytes();
         byte[] hashedBytes = PasswordUtil.hashPassword(passwordChars, saltBytes, iterations, keyLength);
-        String hashedPassword = Hex.encodeHexString(hashedBytes);        
+        String hashedPassword = Hex.encodeHexString(hashedBytes);     
+        System.out.println(hashedPassword);
         
         UsernamePasswordToken token = new UsernamePasswordToken(username, hashedPassword);
-        token.setRememberMe(false);
+        token.setRememberMe(true);
         
         // get the currently executing user:
         Subject currentUser = SecurityUtils.getSubject();
