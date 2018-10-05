@@ -3,6 +3,7 @@
    pageEncoding="ISO-8859-1"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <%@ taglib prefix="mtform" tagdir="/WEB-INF/tags/forms"%>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <mtform:formtemplate title="DIES Booking View">
    <jsp:attribute name="content">
@@ -140,7 +141,7 @@
 		                 	class="input100" 
 		                 	name="patientReport"
 						    id="patientReport" 
-		                 	placeholder="Enter patient report..."><c:out value="${cookie.patientReport.value}"/></textarea>
+		                 	placeholder="Enter patient report..."><c:out value="${fn:replace(cookie.patientReport.value, '_', ' ')}"/></textarea>
 		             <div>
 		             
 		             <c:forEach var="appointment_machine"

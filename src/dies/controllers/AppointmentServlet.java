@@ -93,7 +93,9 @@ public class AppointmentServlet extends HttpServlet {
 
         mode = request.getParameter("mode");
         if (mode.equalsIgnoreCase("update")) {
-        	Cookie appointmentReport = new Cookie("patientReport", request.getParameter("patientReport"));
+        	String patientReport = request.getParameter("patientReport").replaceAll(" ", "_");
+        	Cookie appointmentReport = new Cookie("patientReport", patientReport);
+        	
         	// Set expiry date after 24 Hrs for the cookie.
         	appointmentReport.setMaxAge(60*60*24);
         	response.addCookie(appointmentReport);
