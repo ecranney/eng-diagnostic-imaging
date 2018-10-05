@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
     <mt:header/>
+    <mt:favicon />
     <head>
         <meta charset="ISO-8859-1">
         <title>500</title>

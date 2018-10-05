@@ -7,6 +7,7 @@
     <head>
         <title>DIES Login</title>
         <mt:header/>
+        <mt:favicon />
         <link rel="stylesheet" type="text/css"
               href="resources/styles/login-util.css">
         <link rel="stylesheet" type="text/css"

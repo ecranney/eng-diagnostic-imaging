@@ -8,6 +8,7 @@
     <head>
         <title>DIES Dashboard</title>
         <mt:header/>
+        <mt:favicon />
         <link rel="stylesheet" type="text/css"
               href="resources/styles/perfect-scrollbar/perfect-scrollbar.css">
         <link rel="stylesheet" type="text/css"
