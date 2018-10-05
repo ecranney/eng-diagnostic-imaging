@@ -6,6 +6,9 @@
 <!DOCTYPE html>
 <mtform:formtemplate title="DIES Booking View">
    <jsp:attribute name="content">
+   	  <c:if test="${empty user}">
+        	<c:redirect url="/login"/>
+      </c:if>
       <div>
          <nav class="navbar navbar-default navigation-clean-button">
             <div class="container">
@@ -126,28 +129,49 @@
 	                     </c:forEach>
                      </select>
                   </div>
-                  <c:if test="${user.getGroup() == 'RADIOLOGIST'}">
-                     <img id="reportImg" src="resources/uploads/xray.jpg"
-                        alt="X-RAY">
-                     <img id="reportImg" src="resources/uploads/cat.jpg"
-                        alt="X-RAY">
-                     <!-- The Modal -->
-                     <div id="reportModal" class="modal">
-                        <span class="close">&times;</span>
-                        <img class="modal-content" id="img01">
-                        <div id="caption"></div>
-                     </div>
-                     <!-- <button type="submit" name="mode"
-                        class="contact100-form-btn-report"
-                        value="report">
-                        <span> View Report <i
-                        class="fa fa-long-arrow-right m-l-7"
-                        aria-hidden="true"></i>
-                        </span>
-                        </button> -->
-                  </c:if>
-                  <span class="focus-input100"></span>
                </div>
+               <c:if test="${user.getGroup() == 'RADIOLOGIST'}">
+				   <span class="label-input100">Report</span> 
+		                 <div class="wrap-input100">
+		                 <textarea 
+		                     <c:if test="${(mode == 'view')}">
+						      <c:out value="readonly='readonly'"/>
+						    </c:if>
+		                 	class="input100" 
+		                 	name="patientReport"
+						    id="patientReport" 
+		                 	placeholder="Enter patient report..."><c:out value="${patientReport}"/></textarea>
+		             <div>
+		             
+		             <c:forEach var="appointment_machine"
+	                        items="${appointment_machines}">
+	                        
+	                        <img 
+				         		id="reportImg${appointment_machine.getType()}" 
+				         		src="resources/uploads/${appointment_machine.getType()}.jpg"
+				           		alt="X-RAY"
+				           		class="reportImg"
+				           		onclick="expandImage(this.id)">
+					</c:forEach>
+			            <!-- The Modal -->
+			            <div id="reportModal" class="modal">
+			            	<span class="close">&times;</span>
+			            	<img class="modal-content" id="img01">
+			            	<div id="caption"></div>
+			            </div>
+			            <!-- <button type="submit" name="mode"
+			            class="contact100-form-btn-report"
+			            value="report">
+			            <span> View Report <i
+			            class="fa fa-long-arrow-right m-l-7"
+			            aria-hidden="true"></i>
+			            </span>
+			            </button> -->
+			            <span class="focus-input100"></span>
+			       	 </div>
+			       </div>
+               </c:if>
+               
                <mtform:formpatient 
                   patientFirstName="${appointment.getPatient().getFirstName()}"
                   patientLastName="${appointment.getPatient().getLastName()}"
@@ -314,23 +338,27 @@
          });
       </script>
       <script>
-         // Get the modal
-         var modal = document.getElementById('reportModal');
-         // Get the image and insert it inside the modal - use its "alt" text as a caption
-         var img = document.getElementById('reportImg');
-         var modalImg = document.getElementById("img01");
-         var captionText = document.getElementById("caption");
-         img.onclick = function () {
-             modal.style.display = "block";
-             modalImg.src = this.src;
-             captionText.innerHTML = this.alt;
-         }
-         // Get the <span> element that closes the modal
-         var span = document.getElementsByClassName("close")[0];
-         // When the user clicks on <span> (x), close the modal
-         span.onclick = function () {
-             modal.style.display = "none";
-         }
+      	 function expandImage(Id) {
+	         // Get the modal
+	         var modal = document.getElementById('reportModal');
+	         // Get the image and insert it inside the modal - use its "alt" text as a caption
+	         
+	        	 var img = document.getElementById(Id);
+		         var modalImg = document.getElementById("img01");
+		         var captionText = document.getElementById("caption");
+		         img.onclick = function () {
+		             modal.style.display = "block";
+		             modalImg.src = this.src;
+		             captionText.innerHTML = this.alt;
+		         }
+	         
+	         // Get the <span> element that closes the modal
+	         var span = document.getElementsByClassName("close")[0];
+	         // When the user clicks on <span> (x), close the modal
+	         span.onclick = function () {
+	             modal.style.display = "none";
+	         }
+      	 }
       </script>
       <script>
       
