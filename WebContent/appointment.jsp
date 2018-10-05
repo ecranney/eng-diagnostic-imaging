@@ -140,16 +140,15 @@
 		                 	class="input100" 
 		                 	name="patientReport"
 						    id="patientReport" 
-		                 	placeholder="Enter patient report..."><c:out value="${patientReport}"/></textarea>
+		                 	placeholder="Enter patient report..."><c:out value="${cookie.patientReport.value}"/></textarea>
 		             <div>
 		             
 		             <c:forEach var="appointment_machine"
 	                        items="${appointment_machines}">
-	                        
 	                        <img 
 				         		id="reportImg${appointment_machine.getType()}" 
 				         		src="resources/uploads/${appointment_machine.getType()}.jpg"
-				           		alt="X-RAY"
+				           		alt="${appointment_machine.getType()}"
 				           		class="reportImg"
 				           		onclick="expandImage(this.id)">
 					</c:forEach>

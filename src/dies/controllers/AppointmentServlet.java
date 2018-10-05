@@ -8,6 +8,7 @@ import dies.services.AppointmentService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -92,6 +93,12 @@ public class AppointmentServlet extends HttpServlet {
 
         mode = request.getParameter("mode");
         if (mode.equalsIgnoreCase("update")) {
+        	Cookie appointmentReport = new Cookie("patientReport", request.getParameter("patientReport"));
+        	// Set expiry date after 24 Hrs for the cookie.
+        	appointmentReport.setMaxAge(60*60*24);
+        	response.addCookie(appointmentReport);
+        	response.setContentType("text/html");
+        	
             AppointmentService as = new AppointmentService();
             ServletParam sd = new ServletParam();
             Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
