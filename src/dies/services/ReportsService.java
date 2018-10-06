@@ -8,6 +8,7 @@ import java.util.*;
 
 import dies.models.*;
 import dies.mappers.*;
+import dies.locks.*;
 
 public class ReportsService {
 	
