@@ -11,7 +11,7 @@ import dies.models.*;
 
 import java.util.*;
 
-public class ReportFacade {
+public class AppointmentReportsFacade {
 	
 	public ReportDTO getReportDTO(int appointmentId) {
 		
@@ -39,7 +39,7 @@ public class ReportFacade {
 		for (Image image : images) {
 			ImageDTO imageDTO = new ImageDTO(
 				image.getId(),
-				image.getURL()
+				image.getUrl()
 			);
 			imageDTOs.add(imageDTO);
 		}
