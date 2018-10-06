@@ -53,15 +53,11 @@ public class DashboardServlet extends HttpServlet {
             page = Integer.parseInt(request.getParameter("page"));
         }
         
-        System.out.println("PAGE LIMIT" + (RECORDS_PER_PAGE) + " OFFSET " + ((page - 1) * RECORDS_PER_PAGE));
-        
 		List<Appointment> appointmentList = appointmentService.findAllAppointments(RECORDS_PER_PAGE ,
 				(page - 1) * RECORDS_PER_PAGE);
 
 		int noOfRecords = appointmentService.countAllAppointments();
-		System.out.println(noOfRecords);
 		int noOfPages = (int) Math.ceil((noOfRecords - 1) * 1.0 / RECORDS_PER_PAGE);
-		System.out.println(noOfPages + "noOfPages" + appointmentList.size());
 
 		request.setAttribute("appointmentList", appointmentList);
 		request.setAttribute("noOfPages", noOfPages);

@@ -18,55 +18,82 @@ public class AppointmentMapper extends DataMapper {
     private ResultSetMap rsm = new ResultSetMap();
 
     private DBConnection db = new DBConnection();
-    private String findAllAppointmentSQL = "\r\n" +
-            "select t1.id                   					as appointment_id,\r\n" +
-            "       to_char(t1.date, 'YYYY-MM-DD HH:MI') 		as appointment_date,\r\n" +
-            "       t1.state                					as appointment_state,\r\n" +
-            "       t1.patient_id           					as patient_id,\r\n" +
-            "       t2t6.first_name         as patient_first_name,\r\n" +
-            "       t2t6.last_name          as patient_last_name,\r\n" +
-            "       t2t6.medicare_no        as patient_medicare_no,\r\n" +
-            "       t2t6.phone              as patient_phone,\r\n" +
-            "       t2t6.email              as patient_email,\r\n" +
-            "       t2t6.patient_address_id as patient_address_id,\r\n" +
-            "       t2t6.unit_no            as patient_unit_no,\r\n" +
-            "       t2t6.street_no          as patient_street_no,\r\n" +
-            "       t2t6.street_name        as patient_street_name,\r\n" +
-            "       t2t6.city               as patient_city,\r\n" +
-            "       t2t6.state              as patient_state,\r\n" +
-            "       t2t6.post_code          as patient_post_code,\r\n" +
-            "       t3t4.id                 as technician_id,\r\n" +
-            "       t3t4.username           as technician_username,\r\n" +
-            "       t3t4.firstname          as technician_first_name,\r\n" +
-            "       t3t4.lastname           as technician_last_name,\r\n" +
-            "       t3t4.group_id           as technician_group,\r\n" +
-            "       t7t8.id                 as appointment_machine_id,\r\n" +
-            "       t7t8.serial_code        as machine_serial_code,\r\n" +
-            "       t7t8.type               as machine_type,\r\n" +
-            "       t7t8.image_url          as machine_image_url\r\n" +
-            "from KEYWORDTOBEREPLACE t1\r\n" +
-            "       left outer join (select t4.id, t4.username, t4.firstname, t4.lastname, t4.group_id\r\n" +
-            "                        from public.user t4\r\n" +
-            "                               inner join public.technician t3 on t4.id = t3.id) t3t4 on t3t4.id = t1.technician_id\r\n" +
-            "       inner join (select t2.id,\r\n" +
-            "                          t2.first_name,\r\n" +
-            "                          t2.last_name,\r\n" +
-            "                          t2.medicare_no,\r\n" +
-            "                          t2.phone,\r\n" +
-            "                          t2.email,\r\n" +
-            "                          t6.id as patient_address_id,\r\n" +
-            "                          t6.unit_no,\r\n" +
-            "                          t6.street_no,\r\n" +
-            "                          t6.street_name,\r\n" +
-            "                          t6.city,\r\n" +
-            "                          t6.state,\r\n" +
-            "                          t6.post_code\r\n" +
-            "                          from public.patient t2\r\n" +
-            "                                left outer join public.address t6 on t2.address_id = t6.id) t2t6 on t2t6.id = patient_id\r\n" +
-            "                                left outer join (select t7.id, t7.serial_code, t7.type, t8.appointment_id, t8.image_url\r\n" +
-            "                                from public.machine t7\r\n" +
-            "                                      right outer join public.appointment_machine t8 on t8.machine_id = t7.id) t7t8\r\n" +
-            "                                      on t7t8.appointment_id = t1.id";
+    private String findAllAppointmentSQL = "" + 
+    		"select t1.id                                as appointment_id,\r\n" + 
+    		"       to_char(t1.date, 'YYYY-MM-DD HH:MI') as appointment_date,\r\n" + 
+    		"       t1.state                             as appointment_state,\r\n" + 
+    		"       t1.patient_id                        as patient_id,\r\n" + 
+    		"       t2t6.first_name                      as patient_first_name,\r\n" + 
+    		"       t2t6.last_name                       as patient_last_name,\r\n" + 
+    		"       t2t6.medicare_no                     as patient_medicare_no,\r\n" + 
+    		"       t2t6.phone                           as patient_phone,\r\n" + 
+    		"       t2t6.email                           as patient_email,\r\n" + 
+    		"       t2t6.patient_address_id              as patient_address_id,\r\n" + 
+    		"       t2t6.unit_no                         as patient_unit_no,\r\n" + 
+    		"       t2t6.street_no                       as patient_street_no,\r\n" + 
+    		"       t2t6.street_name                     as patient_street_name,\r\n" + 
+    		"       t2t6.city                            as patient_city,\r\n" + 
+    		"       t2t6.state                           as patient_state,\r\n" + 
+    		"       t2t6.post_code                       as patient_post_code,\r\n" + 
+    		"       t3t4.id                              as technician_id,\r\n" + 
+    		"       t3t4.username                        as technician_username,\r\n" + 
+    		"       t3t4.firstname                       as technician_first_name,\r\n" + 
+    		"       t3t4.lastname                        as technician_last_name,\r\n" + 
+    		"       t3t4.group_id                        as technician_group,\r\n" + 
+    		"       t7t8.id                              as appointment_machine_id,\r\n" + 
+    		"       t7t8.serial_code                     as machine_serial_code,\r\n" + 
+    		"       t7t8.type                            as machine_type,\r\n" + 
+    		"       t7t8.image_url                       as machine_image_url,\r\n" + 
+    		"       t9t10t11.report_id                   as report_id,\r\n" + 
+    		"       t9t10t11.report_author_id            as report_author_id,\r\n" + 
+    		"       t9t10t11.report_author_firstname     as report_author_firstname,\r\n" + 
+    		"       t9t10t11.report_author_lastname      as report_author_lastname,\r\n" + 
+    		"       t9t10t11.report_reviewer_id          as report_reviewer_id,\r\n" + 
+    		"       t9t10t11.report_reviewer_firstname   as report_reviewer_firstname,\r\n" + 
+    		"       t9t10t11.report_reviewer_lastname    as report_reviewer_lastname,\r\n" + 
+    		"       t9t10t11.report_content              as report_content,\r\n" + 
+    		"       t9t10t11.report_date_created         as report_date_created,\r\n" + 
+    		"       t9t10t11.report_date_updated         as report_date_updated,\r\n" + 
+    		"       t9t10t11.report_state                as report_state\r\n" + 
+    		"from KEYWORDTOBEREPLACE t1\r\n" + 
+    		"       left outer join (select t4.id, t4.username, t4.firstname, t4.lastname, t4.group_id\r\n" + 
+    		"                        from public.user t4\r\n" + 
+    		"                               inner join public.technician t3 on t4.id = t3.id) t3t4 on t3t4.id = t1.technician_id\r\n" + 
+    		"       left outer join (select t9.id             as report_id,\r\n" + 
+    		"                               t9.appointment_id as appointment_id,\r\n" + 
+    		"                               t9.author_id      as report_author_id,\r\n" + 
+    		"                               t10.firstname     as report_author_firstname,\r\n" + 
+    		"                               t10.lastname      as report_author_lastname,\r\n" + 
+    		"                               t9.reviewer_id    as report_reviewer_id,\r\n" + 
+    		"                               t11.firstname     as report_reviewer_firstname,\r\n" + 
+    		"                               t11.lastname      as report_reviewer_lastname,\r\n" + 
+    		"                               t9.content        as report_content,\r\n" + 
+    		"                               t9.date_created   as report_date_created,\r\n" + 
+    		"                               t9.date_updated   as report_date_updated,\r\n" + 
+    		"                               t9.state          as report_state\r\n" + 
+    		"                        from public.appointment_report t9\r\n" + 
+    		"                               inner join public.user t10 on t9.author_id = t10.id\r\n" + 
+    		"                               inner join public.user t11 on t9.reviewer_id = t11.id) t9t10t11\r\n" + 
+    		"         on t9t10t11.appointment_id = t1.id\r\n" + 
+    		"       inner join (select t2.id,\r\n" + 
+    		"                          t2.first_name,\r\n" + 
+    		"                          t2.last_name,\r\n" + 
+    		"                          t2.medicare_no,\r\n" + 
+    		"                          t2.phone,\r\n" + 
+    		"                          t2.email,\r\n" + 
+    		"                          t6.id as patient_address_id,\r\n" + 
+    		"                          t6.unit_no,\r\n" + 
+    		"                          t6.street_no,\r\n" + 
+    		"                          t6.street_name,\r\n" + 
+    		"                          t6.city,\r\n" + 
+    		"                          t6.state,\r\n" + 
+    		"                          t6.post_code\r\n" + 
+    		"                   from public.patient t2\r\n" + 
+    		"                          left outer join public.address t6 on t2.address_id = t6.id) t2t6 on t2t6.id = patient_id\r\n" + 
+    		"       left outer join (select t7.id, t7.serial_code, t7.type, t8.appointment_id, t8.image_url\r\n" + 
+    		"                        from public.machine t7\r\n" + 
+    		"                               right outer join public.appointment_machine t8 on t8.machine_id = t7.id) t7t8\r\n" + 
+    		"         on t7t8.appointment_id = t1.id";
 
     private String findAppointmentSQL = findAllAppointmentSQL.replace("KEYWORDTOBEREPLACE","public.appointment") + " where t1.id = ?";
     private String findAllAppointmentWithLimitSQL = 
@@ -188,7 +215,6 @@ public class AppointmentMapper extends DataMapper {
                 }
             }
             appointmentList.addAll(appointmentMap.values());
-            System.out.println(appointmentList.size() + " <- MAPPER SIZE");
             con.close();
             return appointmentList;
         } catch (SQLException e1) {
