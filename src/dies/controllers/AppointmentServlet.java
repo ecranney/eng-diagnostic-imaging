@@ -72,11 +72,6 @@ public class AppointmentServlet extends HttpServlet {
             Appointment appointment = as.findAppointment(appointment_id);
             List<Machine> appointment_machines = appointment.getMachines();
             List<Image> appointment_images = appointment.getImages();
-            
-            for (Image image: appointment_images) {
-            	System.out.println(image.getImageURL());
-            }
-
             Cookie[] cookies = request.getCookies();
 
             if (cookies != null) {

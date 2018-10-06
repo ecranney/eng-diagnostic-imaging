@@ -103,7 +103,10 @@ public class AppointmentMapper extends DataMapper {
             while (rs.next()) {
                 try {
                     machines.add(rsm.getMachine(rs));
-                    images.add(rsm.getImage(rs));
+                    Image image = rsm.getImage(rs); 
+                    if (image != null) {
+                    	images.add(image);
+                    }
                     appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, images);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -168,7 +171,12 @@ public class AppointmentMapper extends DataMapper {
                     if (machine != null) {
                         machines.add(machine);
                     }
-                    images.add(rsm.getImage(rs));
+                    
+                    Image image = rsm.getImage(rs); 
+                    if (image != null) {
+                    	images.add(image);
+                    }
+                    
                     appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, images);
                     appointmentMap.put(appointment.getId(), appointment);
                 } catch (SQLException e) {
