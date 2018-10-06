@@ -1,6 +1,7 @@
 package dies.controllers;
 
 import dies.models.Appointment;
+import dies.models.Image;
 import dies.models.Machine;
 import dies.models.Patient;
 import dies.models.Technician;
@@ -70,6 +71,11 @@ public class AppointmentServlet extends HttpServlet {
             int appointment_id = sd.getAppointmentId(request);
             Appointment appointment = as.findAppointment(appointment_id);
             List<Machine> appointment_machines = appointment.getMachines();
+            List<Image> appointment_images = appointment.getImages();
+            
+            for (Image image: appointment_images) {
+            	System.out.println(image.getImageURL());
+            }
 
             Cookie[] cookies = request.getCookies();
 
@@ -81,6 +87,7 @@ public class AppointmentServlet extends HttpServlet {
               }
             }
             
+            request.setAttribute("available_images", appointment_images);
             request.setAttribute("available_machines", sd.getAvailableMachines(appointment_machines));
             request.setAttribute("appointment_machines", appointment.getMachines());
             request.setAttribute("appointment_states", Appointment.State.values());
@@ -92,7 +99,7 @@ public class AppointmentServlet extends HttpServlet {
         } else if (mode.equalsIgnoreCase("delete")) {
             AppointmentService as = new AppointmentService();
             ServletParam sd = new ServletParam();
-            as.finishDeleteAppointment(new Appointment(sd.getAppointmentId(request), null, null, null, null, null));
+            as.finishDeleteAppointment(new Appointment(sd.getAppointmentId(request), null, null, null, null, null, null));
             getServletContext().getRequestDispatcher("/home").forward(request, response);
         }
     }
@@ -113,7 +120,7 @@ public class AppointmentServlet extends HttpServlet {
             Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
             Technician technician = sd.getTechnicianDetails(request, "create");
             List<Machine> appointment_machines = sd.getMachineDetails(request, "create");
-            Appointment appointment = sd.getAppointmentDetails(request, patient, technician, appointment_machines);
+            Appointment appointment = sd.getAppointmentDetails(request, patient, technician, appointment_machines, null);
             as.finishUpdatePatient(patient);
             as.finishEditAppointment(appointment);
             response.sendRedirect("appointment?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
@@ -124,7 +131,7 @@ public class AppointmentServlet extends HttpServlet {
             Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
             Technician technician = sd.getTechnicianDetails(request, "create");
             List<Machine> appointment_machines = sd.getMachineDetails(request, "create");
-            Appointment appointment = sd.getAppointmentDetails(request, patient, technician, appointment_machines);
+            Appointment appointment = sd.getAppointmentDetails(request, patient, technician, appointment_machines, null);
             as.finishUpdatePatient(patient);
             as.finishCreateAppointment(appointment);
             getServletContext().getRequestDispatcher("/home").forward(request, response);

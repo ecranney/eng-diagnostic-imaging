@@ -15,7 +15,7 @@ public class ServletParam {
     }
 
     public Appointment getAppointmentDetails(HttpServletRequest request, Patient patient, Technician technician,
-                                             List<Machine> machines) {
+                                             List<Machine> machines, List<Image> images) {
         int appointment_id = 0;
 
         if (request.getParameterMap().containsKey("appointmentid")) {
@@ -25,7 +25,7 @@ public class ServletParam {
         LocalDateTime appointmentDate = getAppointmentDateTime(request);
 
         return new Appointment(appointment_id, appointmentDate, patient, technician, machines,
-                State.valueOf(request.getParameter("appointmentStatus")));
+                State.valueOf(request.getParameter("appointmentStatus")), images);
     }
 
     public LocalDateTime getAppointmentDateTime(HttpServletRequest request) {
