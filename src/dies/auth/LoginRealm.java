@@ -5,6 +5,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
 import dies.models.Radiologist;
 import dies.models.Receptionist;
@@ -24,12 +25,12 @@ public class LoginRealm extends JdbcRealm {
         UsernamePasswordToken userPassToken = (UsernamePasswordToken) token;
         final String username = userPassToken.getUsername();
         User user = loginService.findByUsername(username);
+        String salt2 = "da54efb7f430504f6463f01f3760dc0c";
         
         if (user == null) {
             return null;
         }
-        System.out.println(" calling doGetAuthenticationInfo");
-        return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+        return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), ByteSource.Util.bytes(username + salt2), getName());
     }
 
     @Override

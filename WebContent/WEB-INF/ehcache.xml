@@ -1,0 +1,8 @@
+<cache name= "shiro-activeSessionCache"  
+       maxEntriesLocalHeap= "10000"  
+       overflowToDisk= "false"  
+       Eternal= "false"  
+       diskPersistent= "false"  
+       timeToLiveSeconds= "0"  
+       timeToIdleSeconds= "0"  
+       Statistics= "true" />

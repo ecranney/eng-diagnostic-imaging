@@ -18,6 +18,8 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 
 import java.io.IOException;
@@ -63,16 +65,10 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String salt = "dies*";
-        int iterations = 10000;
-        int keyLength = 512;
-        char[] passwordChars = password.toCharArray();
-        byte[] saltBytes = salt.getBytes();
-        byte[] hashedBytes = PasswordUtil.hashPassword(passwordChars, saltBytes, iterations, keyLength);
-        String hashedPassword = Hex.encodeHexString(hashedBytes);     
-        System.out.println(hashedPassword);
         
-        UsernamePasswordToken token = new UsernamePasswordToken(username, hashedPassword);
+        passwordGenerator(username, password);
+        
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(true);
         
         // get the currently executing user:
@@ -91,4 +87,16 @@ public class LoginServlet extends HttpServlet {
             requestDispatcher.forward(request, response);
 		}
     }
+
+	private void passwordGenerator(String username, String password) {
+		int hashIterations = 10000;
+        String algorithmName =  "md5" ;  
+        String salt1 = username;  
+        //String salt2 =  new  SecureRandomNumberGenerator().nextBytes().toHex();  
+        String salt2 = "da54efb7f430504f6463f01f3760dc0c";
+          
+        SimpleHash hash =  new  SimpleHash(algorithmName, password, salt1 + salt2, hashIterations);  
+        String encodedPassword = hash.toHex();
+        System.out.println(encodedPassword);
+	}
 }
