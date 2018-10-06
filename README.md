@@ -7,7 +7,7 @@ This project dynamically configured settings for Heroku support
 
 ### Live Demo URL
 
-* https://diags.herokuapp.com/
+https://diags.herokuapp.com/
   Default 
   ````
   user: admin, password: admin
@@ -60,7 +60,12 @@ Following external libraries are in 'lib' folder under 'WEB-INF' folder
 
 `servlet-api.jar` Has all the Java servlet related classes for the project
 `postgresql-42.2.5.jar` Contains the java client for the database and java. (Not this version only support from version 8 up)
-`log4j-api-2.11.1.jar` and `log4j-core-2.11.1.jar` to support logging 
+`log4j-api-2.11.1.jar` and `log4j-core-2.11.1.jar` and `log4j-web-2.11.1.jar` to support logging 
+`commons-codec-1.11.jar` to support customized password generator [DEPRECATED]
+`javax.servlet.jsp.jstl-1.2.5.jar` JSTL support
+`javax.servlet.jsp.jstl-api-1.2.2.jar` JSTL support
+`json-20180813.jar` 
+`jcl-over-slf4j-1.7.25.jar`, `shiro-ehcache-1.2.2.jar`, `shiro-web-1.3.2.jar` Apache Shiro support
 
 # Database
 This project supports PostgreSQL database. Currently the settings for the database in DBConnection.java file 
