@@ -3,6 +3,7 @@ package dies.controllers;
 import dies.auth.LoginSession;
 import dies.models.User;
 import dies.services.LoginService;
+import dies.util.PasswordUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -63,7 +64,7 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String encodedPassword = passwordGenerator(username, password, loginService.findPasswordHash(username));
+        String encodedPassword = PasswordUtil.passwordGenerator(username, password, loginService.findPasswordHash(username));
         
         UsernamePasswordToken token = new UsernamePasswordToken(username, encodedPassword);
         token.setRememberMe(true);
@@ -84,17 +85,4 @@ public class LoginServlet extends HttpServlet {
             requestDispatcher.forward(request, response);
 		}
     }
-
-	private String passwordGenerator(String username, String password, String passowrdHash) {
-		int hashIterations = 10000;
-        String algorithmName =  "SHA-512";  
-        String salt1 = username;  
-        String salt2 =  new  SecureRandomNumberGenerator().nextBytes().toHex();  
-        if (passowrdHash != null) {
-        	salt2 =  passowrdHash;
-        }
-        SimpleHash hash =  new  SimpleHash(algorithmName, password, salt1 + salt2, hashIterations);  
-        String encodedPassword = hash.toHex();
-        return encodedPassword;
-	}
 }
