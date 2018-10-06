@@ -34,13 +34,20 @@ public class ResultSetMap {
         }
         return null;
     }
+    
+    public Image getImage(ResultSet rs) throws SQLException {
+        if (rs.getString("machine_image_url") != null) {
+            return new Image(0, rs.getString("machine_image_url"), rs.getString("machine_type"));
+        }
+        return null;
+    }
 
-    public Appointment getAppointment(ResultSet rs, Patient patient, Technician technician, List<Machine> machines) throws SQLException {
+    public Appointment getAppointment(ResultSet rs, Patient patient, Technician technician, List<Machine> machines, List<Image> images) throws SQLException {
         LocalDateTime appointmentDate = LocalDateTime.parse(rs.getString("appointment_date"),
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         return new Appointment(rs.getInt("appointment_id"), appointmentDate, patient,
-                technician, machines, Appointment.State.valueOf(rs.getString("appointment_state")));
+                technician, machines, Appointment.State.valueOf(rs.getString("appointment_state")), images);
     }
 
     public User getUser(ResultSet rs) {

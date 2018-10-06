@@ -12,6 +12,8 @@
  */
 package dies.models;
 
+import com.sun.prism.Image;
+
 public class Machine implements IDomainObject {
 
     // identity field, used for database lookup

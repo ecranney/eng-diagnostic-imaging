@@ -3,6 +3,7 @@ package dies.mappers;
 import db.DBConnection;
 import dies.models.Appointment;
 import dies.models.IDomainObject;
+import dies.models.Image;
 import dies.models.Machine;
 
 import java.sql.*;
@@ -41,7 +42,8 @@ public class AppointmentMapper extends DataMapper {
             "       t3t4.group_id           as technician_group,\r\n" +
             "       t7t8.id                 as appointment_machine_id,\r\n" +
             "       t7t8.serial_code        as machine_serial_code,\r\n" +
-            "       t7t8.type               as machine_type\r\n" +
+            "       t7t8.type               as machine_type,\r\n" +
+            "       t7t8.image_url          as machine_image_url\r\n" +
             "from public.appointment t1\r\n" +
             "       left outer join (select t4.id, t4.username, t4.firstname, t4.lastname, t4.group_id\r\n" +
             "                        from public.user t4\r\n" +
@@ -61,7 +63,7 @@ public class AppointmentMapper extends DataMapper {
             "                          t6.post_code\r\n" +
             "                          from public.patient t2\r\n" +
             "                                left outer join public.address t6 on t2.address_id = t6.id) t2t6 on t2t6.id = patient_id\r\n" +
-            "                                left outer join (select t7.id, t7.serial_code, t7.type, t8.appointment_id\r\n" +
+            "                                left outer join (select t7.id, t7.serial_code, t7.type, t8.appointment_id, t8.image_url\r\n" +
             "                                from public.machine t7\r\n" +
             "                                      right outer join public.appointment_machine t8 on t8.machine_id = t7.id) t7t8\r\n" +
             "                                      on t7t8.appointment_id = t1.id";
@@ -70,9 +72,9 @@ public class AppointmentMapper extends DataMapper {
     private String findAllAppointmentWithLimitSQL = findAllAppointmentSQL + " limit ? offset ?";
     private String countSQL = "select count(*) from public.appointment";
     //	private String insertSQL = ""
-//			+ "with rows as (insert into public.appointment (date, patient_id, technician_id, state) "
-//			+ "values (?, ?, ?, ?) returning id) "
-//			+ "insert into public.appointment_machine (appointment_id, machine_id) select id, ? from rows ";
+    //			+ "with rows as (insert into public.appointment (date, patient_id, technician_id, state) "
+    //			+ "values (?, ?, ?, ?) returning id) "
+    //			+ "insert into public.appointment_machine (appointment_id, machine_id) select id, ? from rows ";
     private String insertAppointmentSQL = ""
             + "insert into public.appointment (date, patient_id, technician_id, state) "
             + "values (?, ?, ?, ?) returning id ";
@@ -96,11 +98,16 @@ public class AppointmentMapper extends DataMapper {
             ResultSet rs = statement.executeQuery();
             Appointment appointment = null;
             List<Machine> machines = new ArrayList<Machine>();
+            List<Image> images = new ArrayList<Image>();
 
             while (rs.next()) {
                 try {
                     machines.add(rsm.getMachine(rs));
-                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines);
+                    Image image = rsm.getImage(rs); 
+                    if (image != null) {
+                    	images.add(image);
+                    }
+                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, images);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -121,13 +128,15 @@ public class AppointmentMapper extends DataMapper {
             ResultSet rs = statement.executeQuery();
             Appointment appointment = null;
             List<Machine> machines = new ArrayList<Machine>();
+            List<Image> images = new ArrayList<Image>();
             ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
             Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
 
             while (rs.next()) {
                 try {
                     machines.add(rsm.getMachine(rs));
-                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines);
+                    images.add(rsm.getImage(rs));
+                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, images);
                     appointmentMap.put(appointment.getId(), appointment);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -152,6 +161,7 @@ public class AppointmentMapper extends DataMapper {
             ResultSet rs = statement.executeQuery();
             Appointment appointment = null;
             List<Machine> machines = new ArrayList<Machine>();
+            List<Image> images = new ArrayList<Image>();
             ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
             Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
 
@@ -161,7 +171,13 @@ public class AppointmentMapper extends DataMapper {
                     if (machine != null) {
                         machines.add(machine);
                     }
-                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines);
+                    
+                    Image image = rsm.getImage(rs); 
+                    if (image != null) {
+                    	images.add(image);
+                    }
+                    
+                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, images);
                     appointmentMap.put(appointment.getId(), appointment);
                 } catch (SQLException e) {
                     e.printStackTrace();

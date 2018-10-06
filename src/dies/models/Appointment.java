@@ -25,16 +25,19 @@ public class Appointment implements IDomainObject {
 
     // the machines to be used in the appointment
     private List<Machine> machines;
-    private State state;
+    private List<Image> images;
+    
+    private State state;	
 
     public Appointment(int id, LocalDateTime date, Patient patient,
-                       Technician technician, List<Machine> machines, State state) {
+                       Technician technician, List<Machine> machines, State state, List<Image> images) {
         this.id = id;
         this.date = date;
         this.patient = patient;
         this.technician = technician;
         this.machines = machines;
         this.state = state;
+        this.images = images;
     }
 
     public int getId() {
@@ -83,6 +86,10 @@ public class Appointment implements IDomainObject {
 
     public void removeMachine(Machine machine) {
         this.machines.remove(machine);
+    }
+    
+    public List<Image> getImages() {
+        return images;
     }
 
     // the current state of an appointment

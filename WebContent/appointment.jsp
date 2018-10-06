@@ -144,12 +144,12 @@
 		                 	placeholder="Enter patient report..."><c:out value="${fn:replace(patient_draft_report, '_', ' ')}"/></textarea>
 		             <div>
 
-		             <c:forEach var="appointment_machine"
-	                        items="${appointment_machines}">
+		             <c:forEach var="available_images"
+	                        items="${available_images}">
 	                        <img 
-				         		id="reportImg${appointment_machine.getType()}" 
-				         		src="resources/uploads/${appointment_machine.getType()}.jpg"
-				           		alt="${appointment_machine.getType()}"
+				         		id="reportImg${available_images.getType()}"
+				         		src="${available_images.getURL()}"
+				           		alt="${available_images.getType()}"
 				           		class="reportImg"
 				           		onclick="expandImage(this.id)">
 					</c:forEach>
