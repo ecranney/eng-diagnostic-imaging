@@ -17,13 +17,15 @@ import dies.mappers.ResultSetMap;
 public class Radiologist extends User {
 
     // note, identity field inherited from User
+	
 	private static ResultSetMap rsm = new ResultSetMap();
 	
     // Australian medical practitioners registration number
     private String registrationNo;
 
     public Radiologist(int id, String username, String password,
-                       String registrationNo, String firstName, String lastName, String group, String hash) {
+    		String registrationNo, String firstName, String lastName,
+    		String group, String hash) {
         super(id, username, password, firstName, lastName, group, hash);
         this.registrationNo = registrationNo;
     }
@@ -36,6 +38,8 @@ public class Radiologist extends User {
         this.registrationNo = registrationNo;
     }
     
+    
+    // NOTE: check what this does
     public static User load(ResultSet rs) {
     	User user = rsm.getUser(rs);
     	
