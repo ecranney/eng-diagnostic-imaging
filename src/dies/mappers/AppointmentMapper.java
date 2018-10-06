@@ -44,7 +44,7 @@ public class AppointmentMapper extends DataMapper {
     		"       t7t8.serial_code                     as machine_serial_code,\r\n" + 
     		"       t7t8.type                            as machine_type,\r\n" + 
     		"       t7t8.image_url                       as machine_image_url,\r\n" + 
-    		"       t9t10t11.report_id                   as report_id,\r\n" + 
+    		"       t1.report_id                         as report_id,\r\n" + 
     		"       t9t10t11.report_author_id            as report_author_id,\r\n" + 
     		"       t9t10t11.report_author_firstname     as report_author_firstname,\r\n" + 
     		"       t9t10t11.report_author_lastname      as report_author_lastname,\r\n" + 
@@ -60,7 +60,6 @@ public class AppointmentMapper extends DataMapper {
     		"                        from public.user t4\r\n" + 
     		"                               inner join public.technician t3 on t4.id = t3.id) t3t4 on t3t4.id = t1.technician_id\r\n" + 
     		"       left outer join (select t9.id             as report_id,\r\n" + 
-    		"                               t9.appointment_id as appointment_id,\r\n" + 
     		"                               t9.author_id      as report_author_id,\r\n" + 
     		"                               t10.firstname     as report_author_firstname,\r\n" + 
     		"                               t10.lastname      as report_author_lastname,\r\n" + 
@@ -71,10 +70,10 @@ public class AppointmentMapper extends DataMapper {
     		"                               t9.date_created   as report_date_created,\r\n" + 
     		"                               t9.date_updated   as report_date_updated,\r\n" + 
     		"                               t9.state          as report_state\r\n" + 
-    		"                        from public.appointment_report t9\r\n" + 
+    		"                        from public.report t9\r\n" + 
     		"                               inner join public.user t10 on t9.author_id = t10.id\r\n" + 
     		"                               inner join public.user t11 on t9.reviewer_id = t11.id) t9t10t11\r\n" + 
-    		"         on t9t10t11.appointment_id = t1.id\r\n" + 
+    		"         on t9t10t11.report_id = t1.report_id\r\n" + 
     		"       inner join (select t2.id,\r\n" + 
     		"                          t2.first_name,\r\n" + 
     		"                          t2.last_name,\r\n" + 
