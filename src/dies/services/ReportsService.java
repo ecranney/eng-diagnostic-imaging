@@ -39,7 +39,7 @@ public class ReportsService {
 	}
 	
 	public Report findReport(int id) {
-		return reportMapper.find(id);
+		return (Report) reportMapper.find(id);
 	}
 	
 	public void submitReport(Report report) {

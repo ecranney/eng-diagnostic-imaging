@@ -40,5 +40,4 @@ public class Image implements IDomainObject {
     public void setType(String type) {
         this.url = type;
     }
-	
 }
