@@ -96,6 +96,4 @@ public class Appointment implements IDomainObject {
     public enum State {
         FUTURE, INVOICED, PAID, MISSED, CANCELLED
     }
-
-
 }

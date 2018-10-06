@@ -22,7 +22,7 @@ public class Image implements IDomainObject {
 	public int getId() {
 		return id;
 	}
-	
+
 	public String getImageURL() {
         return imageURL;
     }
@@ -31,5 +31,4 @@ public class Image implements IDomainObject {
         this.imageURL = imageURL;
     }
 	
-
 }

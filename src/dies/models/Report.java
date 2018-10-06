@@ -18,7 +18,7 @@ public class Report implements IDomainObject {
 	private Radiologist author;
 	private Radiologist reviewer;
 	
-	// appointment that the report has been written for
+	// the appointment that the report has been written for
 	private Appointment appointment; 
 	
 	// the report content, implemented simply as text
@@ -50,7 +50,7 @@ public class Report implements IDomainObject {
 	
 	// constructor used to load an existing report
 	public Report(int id, Radiologist author, Radiologist reviewer, 
-			Image image, String content, LocalDateTime dateCreated,
+			Appointment appointment, String content, LocalDateTime dateCreated,
 			LocalDateTime dateUpdated, State state) {
 		this.id = id;
 		this.author = author;
