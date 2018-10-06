@@ -64,6 +64,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
+        System.out.println(loginService.findPasswordHash(username) + " > PASSWORD HASH");
         String encodedPassword = passwordGenerator(username, password, loginService.findPasswordHash(username));
         
         UsernamePasswordToken token = new UsernamePasswordToken(username, encodedPassword);
@@ -88,14 +89,13 @@ public class LoginServlet extends HttpServlet {
 
 	private String passwordGenerator(String username, String password, String passowrdHash) {
 		int hashIterations = 10000;
-        String algorithmName =  "SHA-256" ;  
+        String algorithmName =  "SHA-512";  
         String salt1 = username;  
         String salt2 =  new  SecureRandomNumberGenerator().nextBytes().toHex();  
-        System.out.println(salt2);
         if (passowrdHash != null) {
         	salt2 =  passowrdHash;
         }
-          
+        System.out.println(salt2);
         SimpleHash hash =  new  SimpleHash(algorithmName, password, salt1 + salt2, hashIterations);  
         String encodedPassword = hash.toHex();
         System.out.println(encodedPassword);

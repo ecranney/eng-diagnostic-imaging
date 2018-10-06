@@ -24,6 +24,7 @@ public class LoginRealm extends JdbcRealm {
         // identify account to log to
         UsernamePasswordToken userPassToken = (UsernamePasswordToken) token;
         final String username = userPassToken.getUsername();
+        
         User user = loginService.findByUsername(username);
         String salt2 = "";
         

@@ -45,7 +45,6 @@ public class ResultSetMap {
 
     public User getUser(ResultSet rs) {
         try {
-        	System.out.println("returning the login details from mapper");
             return new User(0, rs.getString("username"), rs.getString("password"), rs.getString("first_name"),
                     rs.getString("last_name"), rs.getString("group"), rs.getString("password_hash")) {
             };
