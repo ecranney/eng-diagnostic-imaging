@@ -12,23 +12,33 @@ public class Image implements IDomainObject {
 	
 	// identity field, used for database lookup
 	private final int id;
-	private String imageURL;
+	private String url;
+	private String type;
 	
-	public Image(int id, String imageURL) {
+	public Image(int id, String url, String type) {
 		this.id = id;
-		this.imageURL = imageURL;
+		this.url = url;
+		this.type = type;
 	}
 	
 	public int getId() {
 		return id;
 	}
 
-	public String getImageURL() {
-        return imageURL;
+	public String getURL() {
+        return url;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setURL(String imageURL) {
+        this.url = imageURL;
+    }
+    
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.url = type;
     }
 	
 }

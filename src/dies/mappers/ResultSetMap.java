@@ -37,7 +37,7 @@ public class ResultSetMap {
     
     public Image getImage(ResultSet rs) throws SQLException {
         if (rs.getString("machine_image_url") != null) {
-            return new Image(0, rs.getString("machine_image_url"));
+            return new Image(0, rs.getString("machine_image_url"), rs.getString("machine_type"));
         }
         return null;
     }

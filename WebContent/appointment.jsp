@@ -147,9 +147,9 @@
 		             <c:forEach var="available_images"
 	                        items="${available_images}">
 	                        <img 
-				         		id="reportImg"
-				         		src="${available_images.getImageURL()}"
-				           		alt="${available_images.getImageURL()}"
+				         		id="reportImg${available_images.getType()}"
+				         		src="${available_images.getURL()}"
+				           		alt="${available_images.getType()}"
 				           		class="reportImg"
 				           		onclick="expandImage(this.id)">
 					</c:forEach>
