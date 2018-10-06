@@ -25,11 +25,11 @@ public class Image implements IDomainObject {
 		return id;
 	}
 
-	public String getURL() {
+	public String getUrl() {
         return url;
     }
 
-    public void setURL(String imageURL) {
+    public void setUrl(String imageURL) {
         this.url = imageURL;
     }
     
@@ -40,5 +40,4 @@ public class Image implements IDomainObject {
     public void setType(String type) {
         this.url = type;
     }
-	
 }

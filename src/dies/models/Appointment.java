@@ -27,6 +27,9 @@ public class Appointment implements IDomainObject {
     private List<Machine> machines;
     private List<Image> images;
     
+    // the report written by a radioliogist
+    private Report report;
+    
     // the current state of an appointment
     public enum State {
         FUTURE, INVOICED, PAID, MISSED, CANCELLED
@@ -35,15 +38,31 @@ public class Appointment implements IDomainObject {
     private State state;	
 
     public Appointment(int id, LocalDateTime date, Patient patient,
-                       Technician technician, List<Machine> machines, State state, List<Image> images) {
+    		Technician technician, List<Machine> machines,
+    		State state, List<Image> images) {
         this.id = id;
         this.date = date;
         this.patient = patient;
         this.technician = technician;
         this.machines = machines;
         this.state = state;
+        this.report = null;
         this.images = images;
     }
+    
+    public Appointment(int id, LocalDateTime date, Patient patient,
+            Technician technician, List<Machine> machines,
+            State state, Report report, List<Image> images) {
+		this.id = id;
+		this.date = date;
+		this.patient = patient;
+		this.technician = technician;
+		this.machines = machines;
+		this.state = state;
+		this.report = report;
+		this.images = images;
+	}
+    
 
     public int getId() {
         return id;
@@ -91,6 +110,10 @@ public class Appointment implements IDomainObject {
 
     public void removeMachine(Machine machine) {
         this.machines.remove(machine);
+    }
+    
+    public Report getReport() {
+    	return report;
     }
     
     public List<Image> getImages() {
