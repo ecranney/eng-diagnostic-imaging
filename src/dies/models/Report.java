@@ -94,7 +94,27 @@ public class Report implements IDomainObject {
 		return dateUpdated;
 	}
 	
-	public void setDateUpdated() {
+	public void setDateUpdated(LocalDateTime dateUpdated) {
 		this.dateUpdated = dateUpdated;
+	}
+	
+	public State getState() {
+		return state;
+	}
+	
+	public void markIncomplete() {
+		this.state = State.INCOMPLETE;
+	}
+	
+	public void markCompelte() {
+		this.state = State.INCOMPLETE;
+	}
+	
+	public void markPassed() {
+		this.state = State.REVIEW_PASSED;
+	}
+	
+	public void markFailed() {
+		this.state = State.REVIEW_FAILED;
 	}
 }
