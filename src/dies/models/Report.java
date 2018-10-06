@@ -18,8 +18,8 @@ public class Report implements IDomainObject {
 	private Radiologist author;
 	private Radiologist reviewer;
 	
-	// image that the report has been written for
-	private Image image; 
+	// appointment that the report has been written for
+	private Appointment appointment; 
 	
 	// the report content, implemented simply as text
 	private String content;
@@ -36,12 +36,12 @@ public class Report implements IDomainObject {
 	private State state;
 	
 	// constructor for when report is first created
-	public Report(int id, Radiologist author, Image image,
+	public Report(int id, Radiologist author, Appointment appointment,
 			LocalDateTime dateCreated) {
 		this.id = id;
 		this.author = author;
 		this.reviewer = null;
-		this.image = image;
+		this.appointment = appointment;
 		this.content = "";
 		this.dateCreated = dateCreated;
 		this.dateUpdated = dateCreated;
@@ -55,7 +55,7 @@ public class Report implements IDomainObject {
 		this.id = id;
 		this.author = author;
 		this.reviewer = reviewer;
-		this.image = image;
+		this.appointment = appointment;
 		this.content = content;
 		this.dateCreated = dateCreated;
 		this.dateUpdated = dateUpdated;
@@ -74,8 +74,8 @@ public class Report implements IDomainObject {
 		return reviewer;
 	}
 	
-	public Image getImage() {
-		return image;
+	public Appointment getAppointment() {
+		return appointment;
 	}
 	
 	public String getContent() {
