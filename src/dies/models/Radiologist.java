@@ -23,8 +23,8 @@ public class Radiologist extends User {
     private String registrationNo;
 
     public Radiologist(int id, String username, String password,
-                       String registrationNo, String firstName, String lastName, String group) {
-        super(id, username, password, firstName, lastName, group);
+                       String registrationNo, String firstName, String lastName, String group, String hash) {
+        super(id, username, password, firstName, lastName, group, hash);
         this.registrationNo = registrationNo;
     }
 
@@ -40,7 +40,7 @@ public class Radiologist extends User {
     	User user = rsm.getUser(rs);
     	
 		return new Radiologist(user.getId(), user.getUsername(), user.getPassword(), "", user.getFirstName(),
-				user.getLastName(), user.getGroup());
+				user.getLastName(), user.getGroup(), user.getHash());
     }
 
 }

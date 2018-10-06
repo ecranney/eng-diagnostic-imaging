@@ -25,10 +25,12 @@ public class LoginRealm extends JdbcRealm {
         UsernamePasswordToken userPassToken = (UsernamePasswordToken) token;
         final String username = userPassToken.getUsername();
         User user = loginService.findByUsername(username);
-        String salt2 = "da54efb7f430504f6463f01f3760dc0c";
+        String salt2 = "";
         
         if (user == null) {
             return null;
+        } else {
+        	salt2 = user.getHash();
         }
         return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), ByteSource.Util.bytes(username + salt2), getName());
     }

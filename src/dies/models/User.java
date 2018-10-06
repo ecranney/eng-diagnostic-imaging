@@ -21,15 +21,17 @@ public abstract class User implements IDomainObject {
     private String firstName;
     private String lastName;
     private String group;
+    private String hash;
 
     public User(int id, String username, String password, String firstName,
-                String lastName, String group) {
+                String lastName, String group, String hash) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.group = group;
+        this.hash = hash;
     }
 
     public int getId() {
@@ -75,4 +77,12 @@ public abstract class User implements IDomainObject {
     public void setGroup(String group) {
         this.group = group;
     }
+
+    public void setHash(String hash) {
+    	this.hash =  hash;
+	}
+    
+	public String getHash() {
+		return this.hash;
+	}
 }

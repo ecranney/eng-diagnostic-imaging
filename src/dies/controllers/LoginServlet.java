@@ -3,7 +3,6 @@ package dies.controllers;
 import dies.auth.LoginSession;
 import dies.models.User;
 import dies.services.LoginService;
-import dies.util.PasswordUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.codec.binary.Hex;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -66,9 +64,9 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
-        passwordGenerator(username, password);
+        String encodedPassword = passwordGenerator(username, password, loginService.findPasswordHash(username));
         
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, encodedPassword);
         token.setRememberMe(true);
         
         // get the currently executing user:
@@ -88,15 +86,19 @@ public class LoginServlet extends HttpServlet {
 		}
     }
 
-	private void passwordGenerator(String username, String password) {
+	private String passwordGenerator(String username, String password, String passowrdHash) {
 		int hashIterations = 10000;
-        String algorithmName =  "md5" ;  
+        String algorithmName =  "SHA-256" ;  
         String salt1 = username;  
-        //String salt2 =  new  SecureRandomNumberGenerator().nextBytes().toHex();  
-        String salt2 = "da54efb7f430504f6463f01f3760dc0c";
+        String salt2 =  new  SecureRandomNumberGenerator().nextBytes().toHex();  
+        System.out.println(salt2);
+        if (passowrdHash != null) {
+        	salt2 =  passowrdHash;
+        }
           
         SimpleHash hash =  new  SimpleHash(algorithmName, password, salt1 + salt2, hashIterations);  
         String encodedPassword = hash.toHex();
         System.out.println(encodedPassword);
+        return encodedPassword;
 	}
 }

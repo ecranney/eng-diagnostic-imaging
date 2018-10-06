@@ -18,12 +18,19 @@ public class UserMapper extends DataMapper {
     private ResultSetMap rsm = new ResultSetMap();
     private DBConnection db = new DBConnection();
     private String findUserSQL = "" +
-            "select t1.username, t1.password, t1.firstname as first_name, t1.lastname as last_name, t2.name as group\r\n" +
+            "select "
+            + "t1.username, "
+            + "t1.password, "
+            + "t1.firstname as first_name, "
+            + "t1.lastname as last_name, "
+            + "t1.hash as password_hash, "
+            + "t2.name as group\r\n" +
             "from public.user t1\r\n" +
             "       inner join public.group t2 on t1.group_id = t2.id\r\n";
     
     private String findUserByUsernameSQL = findUserSQL + " where t1.username = ?\r\n";
     private String findUserByUserIdSQL =  findUserSQL + " where id = ?\r\n";
+    private String findPasswordHashSQL =  "select hash from public.user where username = ?";
     private String findTechnicianSQL = ""
             + "select t1.id as technician_id, "
             + "t1.username as technician_username, "
@@ -92,6 +99,28 @@ public class UserMapper extends DataMapper {
             e.printStackTrace();
         }
         return user;
+    }
+    
+    public String findHash(String username) {
+        Connection con = null;
+        ResultSet rs = null;
+        String hash = "";
+
+        try {
+            con = db.getConnection();
+            PreparedStatement statement = null;
+            statement = con.prepareStatement(findPasswordHashSQL);
+            statement.setString(1, username);
+
+            rs = statement.executeQuery();
+            while (rs.next()) {            	
+                hash = rs.getString("hash");
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return hash;
     }
 
     public ArrayList<Technician> findAllTechnicians() {

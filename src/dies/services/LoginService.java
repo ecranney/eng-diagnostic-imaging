@@ -35,5 +35,12 @@ public class LoginService {
         User user = userMapper.find(userid);
         return user;
     }
+    
+    public String findPasswordHash(String username) {
+
+        // fetch the user (or null) from the database
+        String hash = userMapper.findHash(username);
+        return hash;
+    }
 
 }
