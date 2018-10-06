@@ -9,5 +9,16 @@
 package dies.models;
 
 public class Image implements IDomainObject {
+	
+	// identity field, used for database lookup
+	private final int id;
+	
+	public Image(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
+	}
 
 }
