@@ -63,8 +63,6 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
-        System.out.println(loginService.findPasswordHash(username) + " > PASSWORD HASH");
         String encodedPassword = passwordGenerator(username, password, loginService.findPasswordHash(username));
         
         UsernamePasswordToken token = new UsernamePasswordToken(username, encodedPassword);

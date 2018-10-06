@@ -44,7 +44,7 @@ public class AppointmentMapper extends DataMapper {
             "       t7t8.serial_code        as machine_serial_code,\r\n" +
             "       t7t8.type               as machine_type,\r\n" +
             "       t7t8.image_url          as machine_image_url\r\n" +
-            "from public.appointment t1\r\n" +
+            "from KEYWORDTOBEREPLACE t1\r\n" +
             "       left outer join (select t4.id, t4.username, t4.firstname, t4.lastname, t4.group_id\r\n" +
             "                        from public.user t4\r\n" +
             "                               inner join public.technician t3 on t4.id = t3.id) t3t4 on t3t4.id = t1.technician_id\r\n" +
@@ -68,12 +68,13 @@ public class AppointmentMapper extends DataMapper {
             "                                      right outer join public.appointment_machine t8 on t8.machine_id = t7.id) t7t8\r\n" +
             "                                      on t7t8.appointment_id = t1.id";
 
-    private String findAppointmentSQL = findAllAppointmentSQL + " where t1.id = ?";
-    private String findAllAppointmentWithLimitSQL = findAllAppointmentSQL + " "
-    		+ " order by\r\n" + 
-    		" t1.date DESC,\r\n" + 
-    		" t1.state ASC limit ? offset ?";
+    private String findAppointmentSQL = findAllAppointmentSQL.replace("KEYWORDTOBEREPLACE","public.appointment") + " where t1.id = ?";
+    private String findAllAppointmentWithLimitSQL = 
+    		"with limited_parents as (select * from public.appointment limit ? offset ?) " + 
+    		findAllAppointmentSQL.replace("KEYWORDTOBEREPLACE","limited_parents") + 
+    		" order by t1.date";
     private String countSQL = "select count(*) from public.appointment";
+    
     //	private String insertSQL = ""
     //			+ "with rows as (insert into public.appointment (date, patient_id, technician_id, state) "
     //			+ "values (?, ?, ?, ?) returning id) "
@@ -134,7 +135,7 @@ public class AppointmentMapper extends DataMapper {
             List<Image> images = new ArrayList<Image>();
             ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
             Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
-
+            
             while (rs.next()) {
                 try {
                     machines.add(rsm.getMachine(rs));
@@ -187,7 +188,7 @@ public class AppointmentMapper extends DataMapper {
                 }
             }
             appointmentList.addAll(appointmentMap.values());
-
+            System.out.println(appointmentList.size() + " <- MAPPER SIZE");
             con.close();
             return appointmentList;
         } catch (SQLException e1) {
