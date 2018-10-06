@@ -5,6 +5,11 @@ import dies.models.IDomainObject;
 public class ImageMapper extends DataMapper{
 
 	@Override
+	public Image find(int id) {
+		// TODO
+	}
+	
+	@Override
 	public void update(IDomainObject obj) {
 		// TODO Auto-generated method stub
 		
