@@ -58,7 +58,6 @@ public class AppointmentService {
     // load an appointment object by id
     public Appointment findAppointment(int id) {
         Appointment appointment = appointmentMapper.find(id);
-        ;
         transaction.registerClean(appointment); // start EDIT transaction
         return appointment;
     }
