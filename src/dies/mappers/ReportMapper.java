@@ -21,4 +21,10 @@ public class ReportMapper extends DataMapper{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public IDomainObject find(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

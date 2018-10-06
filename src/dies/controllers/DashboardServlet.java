@@ -52,8 +52,8 @@ public class DashboardServlet extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-
-		List<Appointment> appointmentList = appointmentService.findAllAppointments(RECORDS_PER_PAGE + 1,
+        
+		List<Appointment> appointmentList = appointmentService.findAllAppointments(RECORDS_PER_PAGE ,
 				(page - 1) * RECORDS_PER_PAGE);
 
 		int noOfRecords = appointmentService.countAllAppointments();

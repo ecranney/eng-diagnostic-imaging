@@ -81,23 +81,30 @@ public class MachineMapper extends DataMapper {
         return macnineList;
     }
 
-    public Machine find(int id) throws SQLException {
-        Connection con = db.getConnection();
-        PreparedStatement statement = con.prepareStatement(findMachineSQL);
-        statement.setInt(1, id);
-        Machine machine = null;
-        ResultSet rs = statement.executeQuery();
+	public Machine find(int id) {
+		Connection con;
+		Machine machine = null;
 
-        while (rs.next()) {
-            try {
-                machine = new Machine(rs.getInt("id"), rs.getString("serial_code"),
-                        Machine.Type.valueOf(rs.getString("type")));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return machine;
-    }
+		try {
+			con = db.getConnection();
+			PreparedStatement statement = con.prepareStatement(findMachineSQL);
+			statement.setInt(1, id);
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()) {
+				try {
+					machine = new Machine(rs.getInt("id"), rs.getString("serial_code"),
+							Machine.Type.valueOf(rs.getString("type")));
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return machine;
+	}
 
     public void insert(IDomainObject machine) {
         try {
