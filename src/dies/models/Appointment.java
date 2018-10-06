@@ -27,6 +27,11 @@ public class Appointment implements IDomainObject {
     private List<Machine> machines;
     private List<Image> images;
     
+    // the current state of an appointment
+    public enum State {
+        FUTURE, INVOICED, PAID, MISSED, CANCELLED
+    }
+    
     private State state;	
 
     public Appointment(int id, LocalDateTime date, Patient patient,
@@ -91,9 +96,8 @@ public class Appointment implements IDomainObject {
     public List<Image> getImages() {
         return images;
     }
-
-    // the current state of an appointment
-    public enum State {
-        FUTURE, INVOICED, PAID, MISSED, CANCELLED
+    
+    public boolean isCompleted() {
+    	return (state == State.INVOICED || state == State.PAID);
     }
 }
