@@ -72,12 +72,12 @@
                         <table id="patientsTable">
                             <thead>
                                 <tr class="table100-head">
-                                    <th class="column1">Date</th>
-                                    <th class="column2">Patient Name</th>
-                                    <th class="column3">Medicare No</th>
-                                    <th class="column4">Status</th>
-                                    <th class="column5"></th>
-                                    <th class="column6"></th>
+                                    <th class="column1 th-sm">Date<i class="fa fa-sort float-right" aria-hidden="true"></i></th>
+                                    <th class="column2 th-sm">Patient Name<i class="fa fa-sort float-right" aria-hidden="true"></i></th>
+                                    <th class="column3 th-sm">Medicare No<i class="fa fa-sort float-right" aria-hidden="true"></i></th>
+                                    <th class="column4 th-sm">Status<i class="fa fa-sort float-right" aria-hidden="true"></i></th>
+                                    <th class="column5 th-sm"></th>
+                                    <th class="column6 th-sm"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -188,6 +188,14 @@
             $(document).ready(function () {
                 $('[data-toggle="popover"]').popover();
             });
+        </script>
+        <script type="text/javascript">
+        $(document).ready(function () {
+        	  $('#patientsTable').DataTable({
+        	    "ordering": true // false to disable sorting (or any other option)
+        	  });
+        	  $('.dataTables_length').addClass('bs-select');
+        });
         </script>
     </body>
 </html>

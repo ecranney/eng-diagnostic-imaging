@@ -9,6 +9,7 @@ import dies.models.*;
 import dies.mappers.*;
 
 import org.apache.shiro.*;
+import org.apache.shiro.session.Session;
 
 public class LockingMapper extends DataMapper {
 
@@ -26,7 +27,12 @@ public class LockingMapper extends DataMapper {
 	
 	public IDomainObject find(int id) {
 		// grab a read lock to do this
-		lockManager.acquireReadLock(id);
+		try {
+			lockManager.acquireReadLock(id);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return mapper.find(id);
 		// TODO: find some way of releasing the read lock when a user
 		//   just closes browser, presses back, or session expires
@@ -34,7 +40,12 @@ public class LockingMapper extends DataMapper {
 	
 	public void insert(IDomainObject object) {
 		// grab a write lock to do this
-		lockManager.acquireReadLock(object.getId());
+		try {
+			lockManager.acquireReadLock(object.getId());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// TODO: maybe don't block... instead throw an error and let the
 		//   user continue with their work
 		mapper.insert(object);
@@ -43,7 +54,12 @@ public class LockingMapper extends DataMapper {
 	
 	public void update (IDomainObject object) {
 		// grab a write lock to do this
-		lockManager.acquireReadLock(object.getId());
+		try {
+			lockManager.acquireReadLock(object.getId());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// TODO: maybe don't block... instead throw an error and let the
 		//   user continue with their work
 		mapper.insert(object);
@@ -52,10 +68,20 @@ public class LockingMapper extends DataMapper {
 	
 	public void delete(IDomainObject object) {
 		// grab a write lock to do this
-		lockManager.acquireWriteLock(object.getId());
+		try {
+			lockManager.acquireWriteLock(object.getId());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// TODO: maybe don't block... instead throw an error and let the
 		//   user continue with their work
 		mapper.delete(object);
-		lockManager.releaseWriteLock(object.getId());
+		try {
+			lockManager.releaseWriteLock(object.getId());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

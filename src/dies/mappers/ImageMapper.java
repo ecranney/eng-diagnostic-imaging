@@ -1,12 +1,13 @@
 package dies.mappers;
 
 import dies.models.IDomainObject;
+import dies.models.Image;
 
 public class ImageMapper extends DataMapper{
 
 	@Override
 	public Image find(int id) {
-		// TODO
+		return null;
 	}
 	
 	@Override

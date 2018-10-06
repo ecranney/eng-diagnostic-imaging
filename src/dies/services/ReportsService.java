@@ -7,6 +7,7 @@ package dies.services;
 import java.util.*;
 
 import dies.models.*;
+import dies.locks.LockingMapper;
 import dies.mappers.*;
 
 public class ReportsService {
@@ -38,7 +39,7 @@ public class ReportsService {
 	}
 	
 	public Report findReport(int id) {
-		return reportMapper.find(id);
+		return (Report) reportMapper.find(id);
 	}
 	
 	public void submitReport(Report report) {
