@@ -123,7 +123,7 @@
                                                                value=<c:out
                                                                 value="${appointmentList.getId()}"/>>
                                                     </div>
-                                                    <c:if test="${group == 'STAFF'}">
+                                                    <c:if test="${user.getGroup() == 'RECEPTIONIST'}">
                                                         <button type="submit"
                                                                 class="table100-form-btn table100-form-delete-btn alert alert-danger"
                                                                 name="mode"

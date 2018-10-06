@@ -69,7 +69,10 @@ public class AppointmentMapper extends DataMapper {
             "                                      on t7t8.appointment_id = t1.id";
 
     private String findAppointmentSQL = findAllAppointmentSQL + " where t1.id = ?";
-    private String findAllAppointmentWithLimitSQL = findAllAppointmentSQL + " limit ? offset ?";
+    private String findAllAppointmentWithLimitSQL = findAllAppointmentSQL + " "
+    		+ " order by\r\n" + 
+    		" t1.date DESC,\r\n" + 
+    		" t1.state ASC limit ? offset ?";
     private String countSQL = "select count(*) from public.appointment";
     //	private String insertSQL = ""
     //			+ "with rows as (insert into public.appointment (date, patient_id, technician_id, state) "

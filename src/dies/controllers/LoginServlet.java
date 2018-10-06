@@ -95,10 +95,8 @@ public class LoginServlet extends HttpServlet {
         if (passowrdHash != null) {
         	salt2 =  passowrdHash;
         }
-        System.out.println(salt2);
         SimpleHash hash =  new  SimpleHash(algorithmName, password, salt1 + salt2, hashIterations);  
         String encodedPassword = hash.toHex();
-        System.out.println(encodedPassword);
         return encodedPassword;
 	}
 }
