@@ -9,4 +9,5 @@
 package dies.models;
 
 public interface IDomainObject {
+	public abstract int getId();
 }

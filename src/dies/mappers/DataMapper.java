@@ -29,6 +29,8 @@ public abstract class DataMapper {
         return maps.get(c);
     }
 
+    public abstract IDomainObject find(int id);
+    
     public abstract void update(IDomainObject obj);
 
     public abstract void insert(IDomainObject obj);

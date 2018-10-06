@@ -65,7 +65,7 @@ public class LockManager {
 		getReadWriteLock(toLock).unlockWrite();
 	}
 	
-	// release all locks
+	// release all locks for all resources
 	public synchronized void releaseAllLocks() {
 		for (Map.Entry<Object, ReadWriteLock> entry : lockMap.entrySet()) {
 			entry.getValue().unlock();

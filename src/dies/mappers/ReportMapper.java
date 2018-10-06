@@ -21,7 +21,4 @@ public class ReportMapper extends DataMapper{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-
 }
