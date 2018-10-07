@@ -51,141 +51,20 @@
             <span class="contact100-form-title"> Report [${appointment.getPatient().getFirstName()} ${appointment.getPatient().getLastName()}]</span>
 			    
             <div class="row">
-            	<div class="col-sm-4" >REPORT </div>
-			    <div class="col-sm-8"">
-			    	<div class="wrap-input100 validate-input"
-	                  data-validate="Date is required">
-	                  <span class="label-input100">Appointment Date and Time</span>
-	                  <input disabled="disabled"
-		                  class="input100 form_datetime" 
-		                  type="text"
-		                  name="appointmentDateTime"
-		                  id="appointmentDateTime"
-		                  placeholder="Enter a date"
-		                  value="<c:out value="${appointment.getDate()}"/>"
-		                  required>
-	                  <span class="focus-input100"></span>
-	               </div>
-	               <div class="wrap-input100 input100-select">
-	                  <span class="label-input100">Appointment Status</span>
-	                  <div>
-	                     <select
-		                     disabled="disabled"
-		                     class="selection-2" 
-		                     name="appointmentStatus"
-		                     required>
-		                     <c:forEach var="appointment_state"
-		                        items="${appointment_states}">
-		                        <option value="${appointment_state.name()}">${appointment_state.name()}</option>
-		                     </c:forEach>
-	                     </select>
-	                  </div>
-	                  <span class="focus-input100"></span>
-	               </div>
-	               <div class="wrap-input100 input100-select">
-	                  <span class="label-input100">Examination Type</span>
-	                  <div class="selection-2-multiple-fixed">
-	                     <select style="width: 200px;"
-		                     disabled="disabled"
-		                     class="selection-2"
-		                     multiple='multiple'
-		                     data-live-search="true"
-		                     name="machineType" 
-		                     id="machineType"
-	                     	required>
-		                     <c:forEach var="appointment_machine"
-		                        items="${appointment_machines}">
-		                        <option selected='selected'
-		                           value="${appointment_machine.getType()}">${appointment_machine.getType()}</option>
-		                     </c:forEach>
-		                     <c:forEach var="available_machine"
-		                        items="${available_machines}">
-		                        <option value="${available_machine.getType()}">${available_machine.getType()}</option>
-		                     </c:forEach>
-	                     </select>
-	                  </div>
-	               </div>
-	               <c:if test="${user.getGroup() == 'RADIOLOGIST'}">
-					   <span class="label-input100">Report</span> 
-			                 <div class="wrap-input100">
-			                 <textarea 
-			                     <c:if test="${(mode == 'view')}">
-							      <c:out value="readonly='readonly'"/>
-							    </c:if>
-			                 	class="input100" 
-			                 	name="patientReport"
-							    id="patientReport" 
-			                 	placeholder="Enter patient report..."><c:out value="${fn:replace(patient_draft_report, '_', ' ')}"/></textarea>
-			             <div>
-	
-			             <c:forEach var="available_images"
-		                        items="${available_images}">
-		                        <img 
-					         		id="reportImg${available_images.getType()}"
-					         		src="${available_images.getUrl()}"
-					           		alt="${available_images.getType()}"
-					           		class="reportImg"
-					           		onclick="expandImage(this.id)">
-						</c:forEach>
-				            <!-- The Modal -->
-				            <div id="reportModal" class="modal">
-				            	<span class="close">&times;</span>
-				            	<img class="modal-content" id="img01">
-				            	<div id="caption"></div>
-				            </div>
-				            <span class="focus-input100"></span>
-				       	 </div>
-				       </div>
-	               </c:if>
-	               
-	               
-	               
-	               <div class="wrap-input100 validate-input"
-	                  data-validate="Message is required">
-	                  <span class="label-input100">Additional Details</span>
-	                  <textarea class="input100" name="message"
-	                     placeholder="Message here..."></textarea>
-	                  <span class="focus-input100"></span>
-	               </div>
-	               
-
-
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">Open modal for @fat</button>
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
-					
-					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					        
-					      </div>
-						  	<mtform:formpatient 
-			                  patientFirstName="${appointment.getPatient().getFirstName()}"
-			                  patientLastName="${appointment.getPatient().getLastName()}"
-			                  patientUnitNo="${appointment.getPatient().getAddress().getUnitNo()}" 
-			                  patientStreetName="${appointment.getPatient().getAddress().getStreetName()}"
-			                  patientCity="${appointment.getPatient().getAddress().getCity()}" 
-			                  patientState="${appointment.getPatient().getAddress().getState()}"
-			                  patientPostCode="${appointment.getPatient().getAddress().getPostCode()}" 
-			                  patientEmail="${appointment.getPatient().getEmail()}" 
-			                  patientMedicareNo="${appointment.getPatient().getMedicareNo()}" 
-			                  patientPhone="${appointment.getPatient().getPhone()}" 
-			               />
-					    </div>
-					  </div>
+            	<div class="col-sm-4" >
+	            	<span class="label-input100">Report</span> 
+					<div class="wrap-textarea100">
+						<textarea 
+				                     <c:if test="${(mode == 'view')}">
+								      <c:out value="readonly='readonly'"/>
+								    </c:if>
+				                 	class="input100" 
+				                 	name="patientReport"
+								    id="patientReport" 
+				                 	placeholder="Enter patient report..."><c:out value="${fn:replace(patient_draft_report, '_', ' ')}"/>
+						</textarea>
 					</div>
-
-
-
-						                
-	               <div class="container-contact100-form-btn">
+					<div class="container-contact100-form-btn">
 	                  <div class="wrap-contact100-form-btn">
 	                     <div class="contact100-form-bgbtn"></div>
 	                     <c:if test="${param.mode != 'create'}">
@@ -237,6 +116,74 @@
 	                     </c:choose>
 	                  </div>
 	               </div>
+				</div>
+			    <div class="col-sm-8">
+			    	<div class="wrap-input100">
+			    		 <span class="label-input100">Results</span>
+			             <div>
+				             <c:forEach var="available_images"
+			                        items="${available_images}">
+			                        <img 
+						         		id="reportImg${available_images.getType()}"
+						         		src="${available_images.getUrl()}"
+						           		alt="${available_images.getType()}"
+						           		class="reportImg"
+						           		onclick="expandImage(this.id)">
+							</c:forEach>
+					            <!-- The Modal -->
+					            <div id="reportModal" class="modal">
+					            	<span class="close">&times;</span>
+					            	<img class="modal-content" id="img01">
+					            	<div id="caption"></div>
+					            </div>
+					            <span class="focus-input100"></span>
+				       	 </div>
+				    </div>
+				    <div class="wrap-input100 input100-select">
+				    <span class="contact100-form-sub-title1"> Appointment Information</span>
+		               <div class="row">
+			               <div class="col-sm-4" >
+			               	<div class="custom-row"><span class="label-input100">Date                 : </span></div>
+			               	<div class="custom-row"><span class="label-input100">Status               : </span></div>
+			               	<div class="custom-row"><span class="label-input100">Examinations         : </span></div>
+	
+						   </div>
+						   <div class="col-sm-8">
+							    <div class="custom-row"><span class="input100">${appointment.getDate()}</span></div>
+							    <div class="custom-row"><span class="input100">${appointment.getState()}</span></div>
+							    <div class="custom-row">
+								    <span class="input100">
+								    <c:forEach 
+								    	var="appointment_machine"
+				                        items="${appointment_machines}">
+				                        <div class="select2-container--default select2-selection--multiple select2-selection__choice"
+													title="CAT">${appointment_machine.getType()} </div>
+				                    </c:forEach>
+								    </span>
+							   </div>
+						  </div>
+					</div>
+					</div>
+			    	
+	               <div class="wrap-input100 input100-select">
+	                  <span class="focus-input100"></span>
+					   <span class="contact100-form-sub-title1"> Patient Information</span>
+		               <div class="row">
+			               <div class="col-sm-4" >
+			               	<div class="custom-row"><span class="label-input100">Medicare No  : </span></div>
+			               	<div class="custom-row"><span class="label-input100">Email        : </span></div>
+			               	<div class="custom-row"><span class="label-input100">Phone        : </span></div>
+	
+						   </div>
+						   <div class="col-sm-8">
+						    <div class="custom-row"><span class="input100">${appointment.getPatient().getMedicareNo()}</span></div>
+						    <div class="custom-row"><span class="input100">${appointment.getPatient().getEmail()}</span></div>
+						    <div class="custom-row"><span class="input100">${appointment.getPatient().getPhone()}</span></div>
+						   </div>
+					   </div>
+	                  
+	               </div>
+	               
 			    </div>
 			</div>
 	               
@@ -245,6 +192,8 @@
       </div>
       <div id="dropDownSelect1"></div>
    </jsp:attribute>
+   
+   
    <jsp:attribute name="scripts">
       <script type="text/javascript"
          src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
@@ -323,17 +272,6 @@
 	             modal.style.display = "none";
 	         }
       	 }
-      </script>
-      <script>
-	  	$('#exampleModal').on('show.bs.modal', function (event) {
-	    	  var button = $(event.relatedTarget) // Button that triggered the modal
-	    	  var recipient = button.data('whatever') // Extract info from data-* attributes
-	    	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-	    	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-	    	  var modal = $(this)
-	    	  modal.find('.modal-title').text('New message to ' + recipient)
-	    	  modal.find('.modal-body input').val(recipient)
-	  	})
       </script>
    </jsp:attribute>
 </mtform:formtemplate>

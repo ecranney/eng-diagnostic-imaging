@@ -764,3 +764,34 @@ textarea.input100 {
     cursor: pointer;
 }
 
+.custom-row{
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.wrap-textarea100 {
+	margin-top: 10px;
+    width: 100%;
+    position: relative;
+    border: 2px solid #d9d9d9;
+    padding-bottom: 13px;
+    margin-bottom: 27px;
+    height: 75%;
+    border-radius: 20px;
+}
+
+.contact100-form-sub-title1 {
+    display: block;
+    /* font-family: Poppins-Bold; */
+    font-size: 18px;
+    color: #333333;
+    line-height: 1.2;
+    text-align: left;
+    padding-bottom: 19px;
+}
