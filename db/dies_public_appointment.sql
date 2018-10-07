@@ -1,0 +1,16 @@
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (56, '2018-10-17 10:50:00.000000', 14, 3, 'FUTURE', 4);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (58, '2018-10-11 06:30:00.000000', 25, 3, 'FUTURE', 2);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (54, '2018-10-19 10:50:00.000000', 19, 3, 'INVOICED', 10);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (61, '2018-10-18 10:50:00.000000', 14, 0, 'FUTURE', 14);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (45, '2020-12-16 09:45:00.000000', 51, 2, 'FUTURE', 1);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (52, '2018-10-17 10:50:00.000000', 19, 1, 'FUTURE', 5);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (63, '2018-10-18 10:50:00.000000', 14, 0, 'FUTURE', 16);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (62, '2018-10-18 10:50:00.000000', 14, 0, 'FUTURE', 15);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (53, '2018-10-11 06:30:00.000000', 16, 3, 'CANCELLED', 9);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (49, '2018-09-13 10:50:00.000000', 15, 3, 'FUTURE', 6);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (46, '2018-09-07 07:35:00.000000', 13, 1, 'FUTURE', 3);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (60, '2018-10-18 10:50:00.000000', 14, 0, 'FUTURE', 13);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (55, '2018-10-20 11:55:00.000000', 10, 2, 'PAID', 8);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (59, '2018-10-18 10:50:00.000000', 14, 0, 'FUTURE', 12);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (57, '2018-10-17 09:45:00.000000', 12, 1, 'INVOICED', 11);
+INSERT INTO public.appointment (id, date, patient_id, technician_id, state, report_id) VALUES (51, '2018-09-06 06:30:00.000000', 7, 0, 'FUTURE', 7);

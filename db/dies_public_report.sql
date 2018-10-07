@@ -1,0 +1,16 @@
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (1, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (2, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (3, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (4, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (5, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (6, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (7, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (9, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (11, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (12, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (13, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (14, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (15, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (16, null, null, null, null, null, 'INCOMPLETE');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (8, 3, null, 'sj_alkhaskj''lsjsajjka[pjsajs', null, null, 'AWAITING_REVIEW');
+INSERT INTO public.report (id, author_id, reviewer_id, content, date_created, date_updated, state) VALUES (10, 3, 3, 'slhajldshgfjh_shdfjlvh_sdfljh_sdfhsbvdf_kjbl_sdfv_', null, null, 'REVIEW_PASSED');
