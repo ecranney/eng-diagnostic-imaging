@@ -67,21 +67,11 @@
 					<div class="container-contact100-form-btn">
 	                  <div class="wrap-contact100-form-btn">
 	                     <div class="contact100-form-bgbtn"></div>
-	                     <c:if test="${param.mode != 'create'}">
-	                        <input type="hidden" id="app_id"
+	                     <input 
+	                     	type="hidden" 
+	                     	id="app_id"
 	                        name="appointmentid"
 	                        value="<c:out value="${appointment.getId()}"/>">
-	                     </c:if>
-	                     <input
-		                     <c:if test="${mode == 'view'}">
-		                        <c:out value="readonly='readonly'"/>
-		                     </c:if>
-		                     type="hidden" id="patientid"
-		                     name="patientid"
-		                     value="<c:out value="${appointment.getPatient().getId()}"/>">
-	                     <input type="hidden" id="patientAddressid"
-		                     name="patientAddressid"
-		                     value="<c:out value="${appointment.getPatient().getAddress().getId()}"/>">
 	                     <c:choose>
 	                        <c:when test="${mode == 'view'}">
 	                           <button type="submit" name="mode"
@@ -103,16 +93,6 @@
 	                           </span>
 	                           </button>
 	                        </c:when>
-	                        <c:otherwise>
-	                           <button type="submit" name="mode"
-	                              class="contact100-form-btn"
-	                              value="create">
-	                           <span> Create <i
-	                              class="fa fa-long-arrow-right m-l-7"
-	                              aria-hidden="true"></i>
-	                           </span>
-	                           </button>
-	                        </c:otherwise>
 	                     </c:choose>
 	                  </div>
 	               </div>

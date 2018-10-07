@@ -43,29 +43,7 @@ public class ReportServlet extends HttpServlet {
         mode = request.getParameter("mode");
 
         if (mode.equalsIgnoreCase("savedraft")){
-        	System.out.println(" CALLLING SAVEDRAFT");
         	createDraftReportCookie(request, response);
-        	
-        } else if (mode.equalsIgnoreCase("autocomplete")) {
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            AppointmentService as = new AppointmentService();
-            LocalDateTime appointmentDate = LocalDateTime.parse(request.getParameter("appointmentdatetime"),
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-            List<Machine> machines = as.findAvailableMachines(appointmentDate);
-            for (Machine m : machines) {
-                out.print(
-                        "<option value=" + m.getType() + ">" + m.getType() + "</option>"
-                );
-            }
-            
-        } else if (mode.equalsIgnoreCase("create")) {
-            ServletParam sd = new ServletParam();
-            request.setAttribute("available_machines", sd.getAvailableMachines(null));
-            request.setAttribute("appointment_states", Appointment.State.values());
-            getServletContext().getRequestDispatcher("/report.jsp?mode=create")
-                    .forward(request, response);
-            
         } else if (mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("edit")) {
             AppointmentService as = new AppointmentService();
             ServletParam sd = new ServletParam();
@@ -82,21 +60,14 @@ public class ReportServlet extends HttpServlet {
                 }
               }
             }
-            
             request.setAttribute("available_images", appointment_images);
             request.setAttribute("available_machines", sd.getAvailableMachines(appointment_machines));
             request.setAttribute("appointment_machines", appointment.getMachines());
             request.setAttribute("appointment_states", Appointment.State.values());
             request.setAttribute("appointment", as.findAppointment(appointment_id));
             request.setAttribute("mode", request.getParameter("mode"));
-            getServletContext().getRequestDispatcher("/report.jsp?id=" + appointment_id)
+            getServletContext().getRequestDispatcher("/report.jsp?appointmentid=" + appointment_id)
                     .forward(request, response);
-            
-        } else if (mode.equalsIgnoreCase("delete")) {
-            AppointmentService as = new AppointmentService();
-            ServletParam sd = new ServletParam();
-            as.finishDeleteAppointment(new Appointment(sd.getAppointmentId(request), null, null, null, null, null, null));
-            getServletContext().getRequestDispatcher("/home").forward(request, response);
         }
     }
 
@@ -109,28 +80,29 @@ public class ReportServlet extends HttpServlet {
 
         mode = request.getParameter("mode");
         if (mode.equalsIgnoreCase("update")) {
-        	createDraftReportCookie(request, response);
-        	
-            AppointmentService as = new AppointmentService();
-            ServletParam sd = new ServletParam();
-            Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
-            Technician technician = sd.getTechnicianDetails(request, "create");
-            List<Machine> appointment_machines = sd.getMachineDetails(request, "create");
-            Appointment appointment = sd.getAppointmentDetails(request, patient, technician, appointment_machines, null);
-            as.finishUpdatePatient(patient);
-            as.finishEditAppointment(appointment);
-            response.sendRedirect("report?id=" + request.getParameter("appointmentid") + "&mode=view");
+        	Cookie[] cookies = request.getCookies();
 
-        } else if (mode.equalsIgnoreCase("create")) {
-            AppointmentService as = new AppointmentService();
+        	if (cookies != null) {
+        	 for (Cookie cookie : cookies) {
+        	   if (cookie.getName().equals("patient_draft_report_" + request.getParameter("appointmentid"))) {
+        		   cookie.setPath("/");
+        		   cookie.setValue("");
+        		   cookie.setMaxAge(0);
+        		   response.addCookie(cookie);
+        	    }
+        	  }
+        	}
+        	
+            /*AppointmentService as = new AppointmentService();
             ServletParam sd = new ServletParam();
             Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
             Technician technician = sd.getTechnicianDetails(request, "create");
             List<Machine> appointment_machines = sd.getMachineDetails(request, "create");
             Appointment appointment = sd.getAppointmentDetails(request, patient, technician, appointment_machines, null);
             as.finishUpdatePatient(patient);
-            as.finishCreateAppointment(appointment);
-            getServletContext().getRequestDispatcher("/home").forward(request, response);
+            as.finishEditAppointment(appointment);*/
+            response.sendRedirect("report?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
+
         } else if (request.getParameter("back") != null) {
             getServletContext().getRequestDispatcher("/home").forward(request, response);
         }
