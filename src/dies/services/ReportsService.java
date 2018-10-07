@@ -7,6 +7,7 @@ package dies.services;
 import java.util.*;
 
 import dies.models.*;
+import dies.models.Appointment.State;
 import dies.locks.LockingMapper;
 import dies.mappers.*;
 
@@ -37,6 +38,26 @@ public class ReportsService {
 		
 		return filtered;
 	}
+	
+	// load limited appointment set objects
+    public List<Appointment> findAllCompletedAppointments(int limit, int offset) {
+    	// fetch the list of all appointments
+    	List<Appointment.State> complatedStates = new ArrayList<Appointment.State>();
+    	complatedStates.add(Appointment.State.PAID);
+    	complatedStates.add(Appointment.State.INVOICED);
+    	
+    	ArrayList<Appointment> appointments = appointmentMapper.findAll(limit, offset, complatedStates);
+    	return appointments;
+    }
+    
+    // load all appointment objects
+    public int countAllAppointments() {
+    	List<Appointment.State> complatedStates = new ArrayList<Appointment.State>();
+    	complatedStates.add(Appointment.State.PAID);
+    	complatedStates.add(Appointment.State.INVOICED);
+    	
+        return appointmentMapper.countAll(complatedStates);
+    }
 	
 	public Report findReport(int id) {
 		return (Report) reportMapper.find(id);

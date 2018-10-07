@@ -35,6 +35,28 @@ public class ResultSetMap {
         return null;
     }
     
+    public Report getReport(ResultSet rs) throws SQLException {
+    	
+    	Radiologist author = new Radiologist(rs.getInt("report_author_id"), null, null, null, rs.getString("report_author_firstname"), rs.getString("report_author_lastname"), null, null);
+    	Radiologist reviewer = new Radiologist(rs.getInt("report_reviewer_id"), null, null, null, rs.getString("report_reviewer_firstname"), rs.getString("report_reviewer_lastname"), null, null);
+    	
+    	String reportCreatedD = rs.getString("report_date_created");
+    	String reportUpdatedD = rs.getString("report_date_updated");
+    	LocalDateTime reportCreatedDate= null;
+    	LocalDateTime reportUpdatedDate = null;
+    	
+    	if (reportCreatedD != null) {
+    		reportCreatedDate = LocalDateTime.parse(rs.getString("report_date_created"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    	}
+    	
+    	if (reportUpdatedD != null) {
+    		reportUpdatedDate = LocalDateTime.parse(rs.getString("report_date_updated"),
+        			DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    	}
+    	return new Report(rs.getInt("report_id"), author, reviewer, null, rs.getString("report_content"), reportCreatedDate, reportUpdatedDate, Report.State.valueOf(rs.getString("report_state")));
+    }
+    
     public Image getImage(ResultSet rs) throws SQLException {
         if (rs.getString("machine_image_url") != null) {
             return new Image(0, rs.getString("machine_image_url"), rs.getString("machine_type"));
@@ -42,12 +64,12 @@ public class ResultSetMap {
         return null;
     }
 
-    public Appointment getAppointment(ResultSet rs, Patient patient, Technician technician, List<Machine> machines, List<Image> images) throws SQLException {
+    public Appointment getAppointment(ResultSet rs, Patient patient, Technician technician, List<Machine> machines, Report report, List<Image> images) throws SQLException {
         LocalDateTime appointmentDate = LocalDateTime.parse(rs.getString("appointment_date"),
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         return new Appointment(rs.getInt("appointment_id"), appointmentDate, patient,
-                technician, machines, Appointment.State.valueOf(rs.getString("appointment_state")), images);
+                technician, machines, Appointment.State.valueOf(rs.getString("appointment_state")), report, images);
     }
 
     public User getUser(ResultSet rs) {

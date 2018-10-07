@@ -74,43 +74,90 @@
                                 <tr class="table100-head">
                                     <th class="column1 th-sm">Date<i class="fa fa-sort float-right" aria-hidden="true"></i></th>
                                     <th class="column2 th-sm">Patient Name<i class="fa fa-sort float-right" aria-hidden="true"></i></th>
-                                    <th class="column3 th-sm">Medicare No<i class="fa fa-sort float-right" aria-hidden="true"></i></th>
+                                    <th class="column3 th-sm">
+                                    		<c:choose>
+												<c:when test="${user.getGroup() == 'RADIOLOGIST'}">
+											        Report Author
+												</c:when>
+												<c:otherwise>
+											        Medicare No
+												</c:otherwise>
+											</c:choose> 
+                                    <i class="fa fa-sort float-right" aria-hidden="true"></i></th>
                                     <th class="column4 th-sm">Status<i class="fa fa-sort float-right" aria-hidden="true"></i></th>
                                     <th class="column5 th-sm"></th>
                                     <th class="column6 th-sm"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="appointmentList"
+                                <c:forEach var="appointment"
                                            items="${appointmentList}">
                                     <tr>
                                         <td class="column1"><c:out
-                                                value="${appointmentList.getDate()}"/></td>
-                                        <td class="column2"><c:out
-                                                value="${appointmentList.getPatient().getFirstName()} ${appointmentList.getPatient().getLastName()}"/></td>
-                                        <td class="column3"><c:out
-                                                value="${appointmentList.getPatient().getMedicareNo()}"/></td>
-                                        <td class="column4"><c:out
-                                                value="${appointmentList.getState()}"/></td>
+                                                value="${appointment.getDate()}"/></td>
+                                        <td class="column2"> <c:out
+                                                value="${appointment.getPatient().getFirstName()} ${appointment.getPatient().getLastName()}"/></td>
+                                        <td class="column3">
+                                        	<c:choose>
+												<c:when test="${user.getGroup() == 'RADIOLOGIST'}">
+											        <c:out value="${appointment.getReport().getAuthor().getFirstName()}"/>
+												</c:when>
+												<c:otherwise>
+											        <c:out value="${appointment.getPatient().getMedicareNo()}"/>
+												</c:otherwise>
+											</c:choose> 
+                                        </td>
+                                        <td class="column4">
+                                        	<c:choose>
+												<c:when test="${user.getGroup() == 'RADIOLOGIST'}">
+											        <c:out value="${appointment.getReport().getState()}"/>
+												</c:when>
+												<c:otherwise>
+											        <c:out value="${appointment.getState()}"/>
+												</c:otherwise>
+											</c:choose> 
+										</td>
                                         <td class="column5">
-                                            <form action="appointment"
-                                                  method="GET">
-                                                <div class="container-login100-form-btn">
-                                                    <div class="hidden-item">
-                                                        <input type="hidden"
-                                                               class="hidden-item"
-                                                               name="appointmentid"
-                                                               value=<c:out
-                                                                value="${appointmentList.getId()}"/>>
-                                                    </div>
-                                                    <button type="submit"
-                                                            class="table100-form-btn table100-form-edit-btn"
-                                                            name="mode"
-                                                            value="view">
-                                                        <i class="fa fa-edit fa-fw"></i>View
-                                                    </button>
-                                                </div>
-                                            </form>
+                                       	<c:choose>
+											<c:when test="${user.getGroup() == 'RADIOLOGIST'}">
+												<form action="report"  method="GET">
+	                                                <div class="container-login100-form-btn">
+	                                                    <div class="hidden-item">
+															<input type="hidden"
+	                                                        	class="hidden-item"
+	                                                            name="appointmentid"
+	                                                            value=<c:out
+	                                                            value="${appointment.getId()}"/>>
+	                                                    </div>
+															<button type="submit"
+		                                                    	class="table100-form-btn table100-form-edit-btn"
+		                                                        name="mode"
+		                                                        value="view">
+			                                                    <i class="fa fa-edit fa-fw"></i>View
+		                                                   	</button>
+	                                                </div>
+                                            	</form>
+                                            </c:when>
+											<c:otherwise>
+												<form action="appointment"  method="GET">
+	                                            	<div class="container-login100-form-btn">
+	                                                    <div class="hidden-item">
+															<input type="hidden"
+	                                                        	class="hidden-item"
+	                                                            name="appointmentid"
+	                                                            value=<c:out
+	                                                            value="${appointment.getId()}"/>>
+	                                                    </div>
+															<button type="submit"
+		                                                    	class="table100-form-btn table100-form-edit-btn"
+		                                                        name="mode"
+		                                                        value="view">
+			                                                    <i class="fa fa-edit fa-fw"></i>View
+		                                                   	</button>
+	                                                </div>
+                                            	</form>
+											</c:otherwise>
+										</c:choose>
                                         </td>
                                         <td class="column6">
                                             <form action="appointment"
@@ -121,7 +168,7 @@
                                                                class="hidden-item"
                                                                name="appointmentid"
                                                                value=<c:out
-                                                                value="${appointmentList.getId()}"/>>
+                                                                value="${appointment.getId()}"/>>
                                                     </div>
                                                     <c:if test="${user.getGroup() == 'RECEPTIONIST'}">
                                                         <button type="submit"

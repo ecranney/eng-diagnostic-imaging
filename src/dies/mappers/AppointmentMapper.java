@@ -2,6 +2,7 @@ package dies.mappers;
 
 import db.DBConnection;
 import dies.models.Appointment;
+import dies.models.Appointment.State;
 import dies.models.IDomainObject;
 import dies.models.Image;
 import dies.models.Machine;
@@ -71,8 +72,8 @@ public class AppointmentMapper extends DataMapper {
     		"                               t9.date_updated   as report_date_updated,\r\n" + 
     		"                               t9.state          as report_state\r\n" + 
     		"                        from public.report t9\r\n" + 
-    		"                               inner join public.user t10 on t9.author_id = t10.id\r\n" + 
-    		"                               inner join public.user t11 on t9.reviewer_id = t11.id) t9t10t11\r\n" + 
+    		"                               left outer join public.user t10 on t9.author_id = t10.id\r\n" + 
+    		"                               left outer join public.user t11 on t9.reviewer_id = t11.id) t9t10t11\r\n" + 
     		"         on t9t10t11.report_id = t1.report_id\r\n" + 
     		"       inner join (select t2.id,\r\n" + 
     		"                          t2.first_name,\r\n" + 
@@ -99,12 +100,12 @@ public class AppointmentMapper extends DataMapper {
     		"with limited_parents as (select * from public.appointment limit ? offset ?) " + 
     		findAllAppointmentSQL.replace("KEYWORDTOBEREPLACE","limited_parents") + 
     		" order by t1.date";
+    private String findAllAppointmentWithLimitAndWhereSQL = 
+    		"with limited_parents as (select * from public.appointment where (state = ? or state = ?) limit ? offset ?) " + 
+    		findAllAppointmentSQL.replace("KEYWORDTOBEREPLACE","limited_parents") + 
+    		" order by t1.date";
     private String countSQL = "select count(*) from public.appointment";
-    
-    //	private String insertSQL = ""
-    //			+ "with rows as (insert into public.appointment (date, patient_id, technician_id, state) "
-    //			+ "values (?, ?, ?, ?) returning id) "
-    //			+ "insert into public.appointment_machine (appointment_id, machine_id) select id, ? from rows ";
+    private String countWhereSQL = "select count(*) from public.appointment where (state = ? or state = ?)";
     private String insertAppointmentSQL = ""
             + "insert into public.appointment (date, patient_id, technician_id, state) "
             + "values (?, ?, ?, ?) returning id ";
@@ -137,7 +138,7 @@ public class AppointmentMapper extends DataMapper {
                     if (image != null) {
                     	images.add(image);
                     }
-                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, images);
+                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, rsm.getReport(rs), images);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -166,7 +167,7 @@ public class AppointmentMapper extends DataMapper {
                 try {
                     machines.add(rsm.getMachine(rs));
                     images.add(rsm.getImage(rs));
-                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, images);
+                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, rsm.getReport(rs), images);
                     appointmentMap.put(appointment.getId(), appointment);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -207,7 +208,7 @@ public class AppointmentMapper extends DataMapper {
                     	images.add(image);
                     }
                     
-                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, images);
+                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, rsm.getReport(rs), images);
                     appointmentMap.put(appointment.getId(), appointment);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -221,7 +222,74 @@ public class AppointmentMapper extends DataMapper {
             return null;
         }
     }
+    
+	public ArrayList<Appointment> findAll(int limit, int offset, List<State> states) {
+		try {
+            Connection con = db.getConnection();            
+            PreparedStatement statement = con.prepareStatement(findAllAppointmentWithLimitAndWhereSQL);
+            for (int x = 0; x < states.size(); x++) {
+            	statement.setString(x + 1, states.get(x).name());
+            }
+            statement.setInt(3, limit);
+            statement.setInt(4, offset);
+            
+            System.out.println(statement);
+                        
+            ResultSet rs = statement.executeQuery();
+            Appointment appointment = null;
+            List<Machine> machines = new ArrayList<Machine>();
+            List<Image> images = new ArrayList<Image>();
+            ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
+            Map<Integer, Appointment> appointmentMap = new HashMap<Integer, Appointment>();
 
+            while (rs.next()) {
+                try {
+                    Machine machine = rsm.getMachine(rs);
+                    if (machine != null) {
+                        machines.add(machine);
+                    }
+                    
+                    Image image = rsm.getImage(rs); 
+                    if (image != null) {
+                    	images.add(image);
+                    }
+                    
+                    appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, rsm.getReport(rs), images);
+                    appointmentMap.put(appointment.getId(), appointment);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            appointmentList.addAll(appointmentMap.values());
+            con.close();
+            return appointmentList;
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            return null;
+        }
+	}
+
+    public int countAll(List<State> states) {
+        try {
+            Connection con = db.getConnection();
+            PreparedStatement statement = con.prepareStatement(countWhereSQL);
+            for (int x = 0; x < states.size(); x++) {
+            	statement.setString(x + 1, states.get(x).name());
+            }
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                int numberOfRows = rs.getInt(1);
+                return numberOfRows;
+            } else {
+                return 0;
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            return 0;
+        }
+    }
+    
     public int countAll() {
         try {
             Connection con = db.getConnection();
@@ -309,4 +377,5 @@ public class AppointmentMapper extends DataMapper {
             e1.printStackTrace();
         }
     }
+
 }
