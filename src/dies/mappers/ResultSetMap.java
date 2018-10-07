@@ -74,7 +74,7 @@ public class ResultSetMap {
 
     public User getUser(ResultSet rs) {
         try {
-            return new User(0, rs.getString("username"), rs.getString("password"), rs.getString("first_name"),
+            return new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("first_name"),
                     rs.getString("last_name"), rs.getString("group"), rs.getString("password_hash")) {
             };
         } catch (SQLException e) {

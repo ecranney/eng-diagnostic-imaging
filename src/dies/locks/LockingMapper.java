@@ -60,7 +60,7 @@ public class LockingMapper extends DataMapper {
 		}
 		// TODO: maybe don't block... instead throw an error and let the
 		//   user continue with their work
-		mapper.insert(object);
+		mapper.update(object);
 		lockManager.releaseReadLock(object.getId());
 	}
 	

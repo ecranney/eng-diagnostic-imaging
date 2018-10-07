@@ -98,6 +98,24 @@
 	                           </span>
 	                           </button>
 	                        </c:when>
+	                        <c:when test="${mode == 'review'}">
+	                           <button type="submit" name="mode"
+	                              class="contact100-form-btn"
+	                              value="approve">
+		                           <span> Approve <i
+		                              class="fa fa-long-arrow-right m-l-7"
+		                              aria-hidden="true"></i>
+		                           </span>
+	                           </button>
+	                           <button type="submit" name="mode"
+	                              class="contact100-form-reject-btn"
+	                              value="reject">
+		                           <span> Reject <i
+		                              class="fa fa-long-arrow-right m-l-7"
+		                              aria-hidden="true"></i>
+		                           </span>
+	                           </button>
+	                        </c:when>
 	                     </c:choose>
 	                  </div>
 	               </div>

@@ -44,7 +44,7 @@ public class ReportServlet extends HttpServlet {
 
         if (mode.equalsIgnoreCase("savedraft")){
         	createDraftReportCookie(request, response);
-        } else if (mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("edit")) {
+        } else if (mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("edit") || mode.equalsIgnoreCase("review") ) {
             AppointmentService as = new AppointmentService();
             ServletParam sd = new ServletParam();
             int appointment_id = sd.getAppointmentId(request);
@@ -104,10 +104,26 @@ public class ReportServlet extends HttpServlet {
             rs.submitReport(report);            
             response.sendRedirect("report?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
 
+        } else if (mode.equalsIgnoreCase("reject")) {
+        	ReportsService rs = new ReportsService();
+        	int reportId = Integer.valueOf(Integer.parseInt(request.getParameter("reportid")));
+        	Radiologist reviewer = new Radiologist(LoginSession.getUser().getId(), null, null, null, null, null, null, null);
+        	Report report = new Report(reportId, null, reviewer, null, null, null, null, Report.State.REVIEW_FAILED );
+        	rs.submitReview(report);
+        	response.sendRedirect("report?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
+        	
+        } else if (mode.equalsIgnoreCase("approve")) {
+        	ReportsService rs = new ReportsService();
+        	int reportId = Integer.valueOf(Integer.parseInt(request.getParameter("reportid")));
+        	Radiologist reviewer = new Radiologist(LoginSession.getUser().getId(), null, null, null, null, null, null, null);
+        	Report report = new Report(reportId, null, reviewer, null, null, null, null, Report.State.REVIEW_PASSED );
+        	rs.submitReview(report);
+        	response.sendRedirect("report?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
+        	
         } else if (request.getParameter("back") != null) {
             getServletContext().getRequestDispatcher("/home").forward(request, response);
         }
-    }
+    } 
 
 	private void createDraftReportCookie(HttpServletRequest request, HttpServletResponse response) {
 		ServletParam sd = new ServletParam();
