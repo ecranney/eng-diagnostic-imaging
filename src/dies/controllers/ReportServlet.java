@@ -43,6 +43,7 @@ public class ReportServlet extends HttpServlet {
         mode = request.getParameter("mode");
 
         if (mode.equalsIgnoreCase("savedraft")){
+        	System.out.println(" CALLLING SAVEDRAFT");
         	createDraftReportCookie(request, response);
         	
         } else if (mode.equalsIgnoreCase("autocomplete")) {
@@ -62,7 +63,7 @@ public class ReportServlet extends HttpServlet {
             ServletParam sd = new ServletParam();
             request.setAttribute("available_machines", sd.getAvailableMachines(null));
             request.setAttribute("appointment_states", Appointment.State.values());
-            getServletContext().getRequestDispatcher("/appointment.jsp?mode=create")
+            getServletContext().getRequestDispatcher("/report.jsp?mode=create")
                     .forward(request, response);
             
         } else if (mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("edit")) {
@@ -118,7 +119,7 @@ public class ReportServlet extends HttpServlet {
             Appointment appointment = sd.getAppointmentDetails(request, patient, technician, appointment_machines, null);
             as.finishUpdatePatient(patient);
             as.finishEditAppointment(appointment);
-            response.sendRedirect("appointment?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
+            response.sendRedirect("report?id=" + request.getParameter("appointmentid") + "&mode=view");
 
         } else if (mode.equalsIgnoreCase("create")) {
             AppointmentService as = new AppointmentService();
@@ -135,9 +136,10 @@ public class ReportServlet extends HttpServlet {
         }
     }
 
-	private void createDraftReportCookie(HttpServletRequest request, HttpServletResponse response) {
+	private static void createDraftReportCookie(HttpServletRequest request, HttpServletResponse response) {
 		String patientReport = request.getParameter("patientReport").replaceAll(" ", "_");
-		Cookie appointmentReport = new Cookie("patient_draft_report_" + request.getParameter("appointmentid"), patientReport);
+		String trimmedPatientReport = patientReport.replaceAll("\\s+","");
+		Cookie appointmentReport = new Cookie("patient_draft_report_" + request.getParameter("appointmentid"), trimmedPatientReport);
 		
 		// Set expiry date after 24 Hrs for the cookie.
 		appointmentReport.setMaxAge(60*60*24);

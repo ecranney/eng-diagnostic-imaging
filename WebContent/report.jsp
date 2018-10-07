@@ -37,7 +37,7 @@
       </div>
       <div class="container-contact100">
          <div class="wrap-contact100">
-            <form action="appointment"
+            <form action="report"
             method=
             <c:choose>
                <c:when test="${mode == 'view'}">
@@ -199,24 +199,6 @@
          src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
          charset="UTF-8"></script>
       <script type="text/javascript">
-         $("#appointmentDateTime").attr('readonly', true);
-         $("#appointmentDateTime").datetimepicker({
-             format: 'yyyy-mm-dd hh:ii',
-             inline: true,
-             sideBySide: true
-         }).on('change.dp', function (e) {
-             $appointmentdatetime = $('#appointmentDateTime');
-             $.ajax({
-                 type: "GET",
-                 url: "appointment?mode=autocomplete",
-                 data: {appointmentdatetime: $appointmentdatetime.val()},
-                 success: function (data) {
-                     $("#machineType").html(data)
-                 }
-             });
-         });
-      </script>
-      <script type="text/javascript">
       		$("#patientReport").on('keyup', function () {
       			  $patientReport = $('#patientReport');
       			  $appointmentid = ${appointment.getId()};
@@ -227,18 +209,12 @@
       		     
 	      		  $.ajax({
 	                  type: "GET",
-	                  url: "appointment?mode=savedraft",
+	                  url: "report?mode=savedraft",
 	                  data: data,
 	                  success: function (data) {
 	                  }
 	              });
       		});
-      </script>
-      <script>
-         $(".selection-2").select2({
-             minimumResultsForSearch: 20,
-             dropdownParent: $('#dropDownSelect1')
-         });
       </script>
       <script>
          window.dataLayer = window.dataLayer || [];

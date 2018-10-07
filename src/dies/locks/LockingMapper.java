@@ -15,14 +15,12 @@ public class LockingMapper extends DataMapper {
 
 	private DataMapper mapper;
 	private LockManager lockManager;
-	private Session session;
 	
 	public LockingMapper(DataMapper mapper) {
 		this.mapper = mapper;
 		this.lockManager = LockManager.getInstance();
 		
 		// STUB - add the actual session id here
-		this.session = SecurityUtils.getSubject().getSession();
 	}
 	
 	public IDomainObject find(int id) {
