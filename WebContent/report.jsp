@@ -53,12 +53,12 @@
             <div class="row">
             	<div class="col-sm-4" >
 	            	<span class="label-input100">Report</span> 
-					<div class="wrap-textarea100">
+					<div class="wrap-textarea100-div">
 						<textarea 
 				                     <c:if test="${(mode == 'view')}">
 								      <c:out value="readonly='readonly'"/>
 								    </c:if>
-				                 	class="input100" 
+				                 	class="wrap-textarea100" 
 				                 	name="patientReport"
 								    id="patientReport" 
 				                 	placeholder="Enter patient report..."><c:out value="${fn:replace(patient_draft_report, '_', ' ')}"/>

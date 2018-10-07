@@ -775,7 +775,7 @@ textarea.input100 {
     padding-bottom: 10px;
 }
 
-.wrap-textarea100 {
+.wrap-textarea100-div {
 	margin-top: 10px;
     width: 100%;
     position: relative;
@@ -784,6 +784,14 @@ textarea.input100 {
     margin-bottom: 27px;
     height: 75%;
     border-radius: 20px;
+}
+
+.wrap-textarea100{
+	margin-top: 15px;
+    margin: 10px;
+    width: 95%;
+    position: relative;
+    height: 95%;
 }
 
 .contact100-form-sub-title1 {
