@@ -55,7 +55,7 @@
 	            	<span class="label-input100">Report</span> 
 					<div class="wrap-textarea100-div">
 						<textarea 
-				                     <c:if test="${(mode == 'view')}">
+				                    <c:if test="${(mode == 'view')}">
 								      <c:out value="readonly='readonly'"/>
 								    </c:if>
 				                 	class="wrap-textarea100" 
@@ -64,9 +64,24 @@
 				                 	placeholder="Enter patient report..."><c:out value="${fn:replace(patient_draft_report, '_', ' ')}"/>
 						</textarea>
 					</div>
+					 <c:choose>
+	                        <c:when test="${mode == 'review'}">
+						<div class="row">
+						               <div class="col-sm-4" >
+						               		<div class="custom-row"><span class="label-input100">Report Status: </span></div>
+									   </div>
+									   <div class="col-sm-8">
+										    <div class="custom-row"><span class="input100">${appointment.getReport().getState()}</span></div>
+									  </div>
+					    </div>
+							</c:when>
+	                </c:choose>
 					<div class="container-contact100-form-btn">
+					
 	                  <div class="wrap-contact100-form-btn">
+	                  
 	                     <div class="contact100-form-bgbtn"></div>
+	                     
 	                     <input 
 	                     	type="hidden" 
 	                     	id="app_id"
@@ -79,7 +94,7 @@
 	                        value="<c:out value="${appointment.getReport().getId()}"/>">
 	                     <c:choose>
 	                        <c:when test="${mode == 'view'}">
-	                           <button type="submit" name="mode"
+	                          <button type="submit" name="mode"
 	                              class="contact100-form-btn"
 	                              value="edit">
 	                           <span> Edit <i
@@ -165,7 +180,7 @@
 								    </span>
 							   </div>
 						  </div>
-					</div>
+					  </div>
 					</div>
 			    	
 	               <div class="wrap-input100 input100-select">

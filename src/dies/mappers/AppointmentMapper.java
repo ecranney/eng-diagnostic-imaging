@@ -171,6 +171,7 @@ public class AppointmentMapper extends DataMapper {
                     images.add(rsm.getImage(rs));
                     appointment = rsm.getAppointment(rs, rsm.getPatient(rs, rsm.getPatientAddress(rs)), rsm.getTechnician(rs), machines, rsm.getReport(rs), images);
                     appointmentMap.put(appointment.getId(), appointment);
+                   
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

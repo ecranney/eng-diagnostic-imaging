@@ -110,7 +110,7 @@ public class ReportServlet extends HttpServlet {
         	Radiologist reviewer = new Radiologist(LoginSession.getUser().getId(), null, null, null, null, null, null, null);
         	Report report = new Report(reportId, null, reviewer, null, null, null, null, Report.State.REVIEW_FAILED );
         	rs.submitReview(report);
-        	response.sendRedirect("report?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
+        	response.sendRedirect("report?appointmentid=" + request.getParameter("appointmentid") + "&mode=review");
         	
         } else if (mode.equalsIgnoreCase("approve")) {
         	ReportsService rs = new ReportsService();
@@ -118,7 +118,7 @@ public class ReportServlet extends HttpServlet {
         	Radiologist reviewer = new Radiologist(LoginSession.getUser().getId(), null, null, null, null, null, null, null);
         	Report report = new Report(reportId, null, reviewer, null, null, null, null, Report.State.REVIEW_PASSED );
         	rs.submitReview(report);
-        	response.sendRedirect("report?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
+        	response.sendRedirect("report?appointmentid=" + request.getParameter("appointmentid") + "&mode=review");
         	
         } else if (request.getParameter("back") != null) {
             getServletContext().getRequestDispatcher("/home").forward(request, response);
