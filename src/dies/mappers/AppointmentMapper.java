@@ -232,8 +232,6 @@ public class AppointmentMapper extends DataMapper {
             }
             statement.setInt(3, limit);
             statement.setInt(4, offset);
-            
-            System.out.println(statement);
                         
             ResultSet rs = statement.executeQuery();
             Appointment appointment = null;

@@ -107,9 +107,7 @@ public class AppointmentServlet extends HttpServlet {
             throws ServletException, IOException {
 
         mode = request.getParameter("mode");
-        if (mode.equalsIgnoreCase("update")) {
-        	createDraftReportCookie(request, response);
-        	
+        if (mode.equalsIgnoreCase("update")) {        	
             AppointmentService as = new AppointmentService();
             ServletParam sd = new ServletParam();
             Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));

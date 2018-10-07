@@ -7,7 +7,6 @@ package dies.services;
 import java.util.*;
 
 import dies.models.*;
-import dies.models.Appointment.State;
 import dies.locks.LockingMapper;
 import dies.mappers.*;
 
@@ -35,7 +34,6 @@ public class ReportsService {
 				filtered.add(appointment);
 			}
 		}
-		
 		return filtered;
 	}
 	

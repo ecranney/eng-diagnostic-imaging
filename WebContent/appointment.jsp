@@ -171,7 +171,7 @@
 	                     name="patientAddressid"
 	                     value="<c:out value="${appointment.getPatient().getAddress().getId()}"/>">
                      <c:choose>
-                        <c:when test="${mode == 'view'}">
+                        <c:when test="${mode == 'view' && user.getGroup() == 'RECEPTIONIST'}">
                            <button type="submit" name="mode"
                               class="contact100-form-btn"
                               value="edit">
@@ -191,7 +191,7 @@
                            </span>
                            </button>
                         </c:when>
-                        <c:otherwise>
+                        <c:when test="${user.getGroup() == 'RECEPTIONIST'}">
                            <button type="submit" name="mode"
                               class="contact100-form-btn"
                               value="create">
@@ -200,7 +200,7 @@
                               aria-hidden="true"></i>
                            </span>
                            </button>
-                        </c:otherwise>
+                        </c:when>
                      </c:choose>
                   </div>
                </div>
@@ -247,24 +247,6 @@
                  }
              });
          });
-      </script>
-      <script type="text/javascript">
-      		$("#patientReport").on('keyup', function () {
-      			  $patientReport = $('#patientReport');
-      			  $appointmentid = ${appointment.getId()};
-	      		  data = {
-	      			patientReport: $patientReport.val(),
-	      			appointmentid: $appointmentid
-	      		  }
-      		     
-	      		  $.ajax({
-	                  type: "GET",
-	                  url: "appointment?mode=savedraft",
-	                  data: data,
-	                  success: function (data) {
-	                  }
-	              });
-      		});
       </script>
       <script>
          $(".selection-2").select2({
@@ -314,32 +296,6 @@
                  }
              });
          });
-      </script>
-      <script>
-      	 function expandImage(Id) {
-	         // Get the modal
-	         var modal = document.getElementById('reportModal');
-	         // Get the image and insert it inside the modal - use its "alt" text as a caption
-	         
-	        	 var img = document.getElementById(Id);
-		         var modalImg = document.getElementById("img01");
-		         var captionText = document.getElementById("caption");
-		         img.onclick = function () {
-		             modal.style.display = "block";
-		             modalImg.src = this.src;
-		             captionText.innerHTML = this.alt;
-		         }
-	         
-	         // Get the <span> element that closes the modal
-	         var span = document.getElementsByClassName("close")[0];
-	         // When the user clicks on <span> (x), close the modal
-	         span.onclick = function () {
-	             modal.style.display = "none";
-	         }
-      	 }
-      </script>
-      <script>
-      
       </script>
    </jsp:attribute>
 </mtform:formtemplate>

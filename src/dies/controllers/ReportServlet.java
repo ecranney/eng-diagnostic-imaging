@@ -88,7 +88,7 @@ public class ReportServlet extends HttpServlet {
             request.setAttribute("appointment_states", Appointment.State.values());
             request.setAttribute("appointment", as.findAppointment(appointment_id));
             request.setAttribute("mode", request.getParameter("mode"));
-            getServletContext().getRequestDispatcher("/appointment.jsp?appointmentid=" + appointment_id)
+            getServletContext().getRequestDispatcher("/report.jsp?id=" + appointment_id)
                     .forward(request, response);
             
         } else if (mode.equalsIgnoreCase("delete")) {
