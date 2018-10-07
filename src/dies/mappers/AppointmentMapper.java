@@ -6,6 +6,7 @@ import dies.models.Appointment.State;
 import dies.models.IDomainObject;
 import dies.models.Image;
 import dies.models.Machine;
+import dies.models.Report;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -106,9 +107,10 @@ public class AppointmentMapper extends DataMapper {
     		" order by t1.date";
     private String countSQL = "select count(*) from public.appointment";
     private String countWhereSQL = "select count(*) from public.appointment where (state = ? or state = ?)";
+    private String insertReportSQL = " insert into pulic.report (state) values (" + Report.State.INCOMPLETE + ") returning id ";
     private String insertAppointmentSQL = ""
-            + "insert into public.appointment (date, patient_id, technician_id, state) "
-            + "values (?, ?, ?, ?) returning id ";
+            + "insert into public.appointment (date, patient_id, technician_id, state, report_id) "
+            + "values (?, ?, ?, ?, ?) returning id ";
     private String insertAppointmentMachineSQL = ""
             + "insert into public.appointment_machine (appointment_id, machine_id) values (?, ?)";
     private String updateSQL = ""
@@ -309,19 +311,27 @@ public class AppointmentMapper extends DataMapper {
     public void insert(IDomainObject appointment) {
         try {
             int appointmentId = 0;
+            int reportId = 0;
             Connection con = db.getConnection();
-            PreparedStatement statement = con.prepareStatement(insertAppointmentSQL);
+            PreparedStatement statement = con.prepareStatement(insertReportSQL);
+            PreparedStatement statement1 = con.prepareStatement(insertAppointmentSQL);
             PreparedStatement statement2 = con.prepareStatement(insertAppointmentMachineSQL);
 
-            Appointment m = (Appointment) appointment;
-            statement.setTimestamp(1, Timestamp.valueOf(m.getDate()));
-            statement.setInt(2, m.getPatient().getId());
-            statement.setInt(3, m.getTechnician().getId());
-            statement.setString(4, m.getState().name());
             ResultSet rs = statement.executeQuery();
-
             if (rs.next()) {
-                appointmentId = rs.getInt(1);
+            	reportId = rs.getInt(1);
+            }
+            
+            Appointment m = (Appointment) appointment;
+            statement1.setTimestamp(1, Timestamp.valueOf(m.getDate()));
+            statement1.setInt(2, m.getPatient().getId());
+            statement1.setInt(3, m.getTechnician().getId());
+            statement1.setString(4, m.getState().name());
+            statement1.setInt(5, reportId);
+            ResultSet rs1 = statement1.executeQuery();
+
+            if (rs1.next()) {
+                appointmentId = rs1.getInt(1);
             }
 
             for (Machine machine : m.getMachines()) {

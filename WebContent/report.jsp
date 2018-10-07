@@ -59,8 +59,8 @@
 								      <c:out value="readonly='readonly'"/>
 								    </c:if>
 				                 	class="wrap-textarea100" 
-				                 	name="patientReport"
-								    id="patientReport" 
+				                 	name="patientreport"
+								    id="patientreport" 
 				                 	placeholder="Enter patient report..."><c:out value="${fn:replace(patient_draft_report, '_', ' ')}"/>
 						</textarea>
 					</div>
@@ -72,6 +72,11 @@
 	                     	id="app_id"
 	                        name="appointmentid"
 	                        value="<c:out value="${appointment.getId()}"/>">
+	                     <input 
+	                     	type="hidden" 
+	                     	id="report_id"
+	                        name="reportid"
+	                        value="<c:out value="${appointment.getReport().getId()}"/>">
 	                     <c:choose>
 	                        <c:when test="${mode == 'view'}">
 	                           <button type="submit" name="mode"
@@ -179,11 +184,11 @@
          src="resources/js/datetimepicker/bootstrap-datetimepicker.min.js"
          charset="UTF-8"></script>
       <script type="text/javascript">
-      		$("#patientReport").on('keyup', function () {
-      			  $patientReport = $('#patientReport');
+      		$("#patientreport").on('keyup', function () {
+      			  $patientreport = $('#patientreport');
       			  $appointmentid = ${appointment.getId()};
 	      		  data = {
-	      			patientReport: $patientReport.val(),
+	      		    patientreport: $patientreport.val(),
 	      			appointmentid: $appointmentid
 	      		  }
       		     

@@ -109,4 +109,11 @@ public class ServletParam {
         }
         return available_machines;
     }
+    
+    public String getPatientReport(HttpServletRequest request) {
+		String patientReport = request.getParameter("patientreport").replaceAll(" ", "_");
+		String trimmedPatientReport = patientReport.replaceAll("\\s+","");
+		return trimmedPatientReport;
+	}
 }
+

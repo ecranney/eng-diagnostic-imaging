@@ -1,11 +1,13 @@
 package dies.controllers;
 
+import dies.auth.LoginSession;
 import dies.models.Appointment;
 import dies.models.Image;
 import dies.models.Machine;
-import dies.models.Patient;
-import dies.models.Technician;
+import dies.models.Radiologist;
+import dies.models.Report;
 import dies.services.AppointmentService;
+import dies.services.ReportsService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,9 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -93,14 +93,15 @@ public class ReportServlet extends HttpServlet {
         	  }
         	}
         	
-            /*AppointmentService as = new AppointmentService();
-            ServletParam sd = new ServletParam();
-            Patient patient = sd.getPatientDetails(request, sd.getAddressDetails(request));
-            Technician technician = sd.getTechnicianDetails(request, "create");
-            List<Machine> appointment_machines = sd.getMachineDetails(request, "create");
-            Appointment appointment = sd.getAppointmentDetails(request, patient, technician, appointment_machines, null);
-            as.finishUpdatePatient(patient);
-            as.finishEditAppointment(appointment);*/
+        	ReportsService rs = new ReportsService();
+        	ServletParam sd = new ServletParam();
+        	Radiologist author = new Radiologist(LoginSession.getUser().getId(), null, null, null, null, null, null, null);
+        	String trimmedReport = sd.getPatientReport(request);
+        	int reportId = Integer.valueOf(Integer.parseInt(request.getParameter("reportid")));
+        	LocalDateTime date = LocalDateTime.now();
+        	Report report = new Report(reportId, author, null, null, trimmedReport, date, date, Report.State.AWAITING_REVIEW );
+            System.out.println(" UPDATING THE REPORT");
+            rs.submitReport(report);            
             response.sendRedirect("report?appointmentid=" + request.getParameter("appointmentid") + "&mode=view");
 
         } else if (request.getParameter("back") != null) {
@@ -108,9 +109,9 @@ public class ReportServlet extends HttpServlet {
         }
     }
 
-	private static void createDraftReportCookie(HttpServletRequest request, HttpServletResponse response) {
-		String patientReport = request.getParameter("patientReport").replaceAll(" ", "_");
-		String trimmedPatientReport = patientReport.replaceAll("\\s+","");
+	private void createDraftReportCookie(HttpServletRequest request, HttpServletResponse response) {
+		ServletParam sd = new ServletParam();
+		String trimmedPatientReport = sd.getPatientReport(request);
 		Cookie appointmentReport = new Cookie("patient_draft_report_" + request.getParameter("appointmentid"), trimmedPatientReport);
 		
 		// Set expiry date after 24 Hrs for the cookie.
@@ -119,4 +120,5 @@ public class ReportServlet extends HttpServlet {
 		response.addCookie(appointmentReport);
 		response.setContentType("text/html");
 	}
+
 }
